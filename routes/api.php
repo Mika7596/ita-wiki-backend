@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Auth\GitHubAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::prefix('auth/github')->group(function () {
+    Route::get('redirect', [GitHubAuthController::class, 'redirectToGitHub'])->name('github.redirect');
+    Route::get('callback', [GitHubAuthController::class, 'handleGitHubCallback'])->name('github.callback');
+});
