@@ -11,6 +11,8 @@ return new class () extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->string('github_id')->primary();
+            $table->string('nickname')->nullable(false);
+            $table->timestamps();
         });
     }
 
