@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,12 +15,12 @@ class UserController extends Controller
             'github_id' => 'required|string|min:25'
         ]);
 
-            User::updateOrCreate(
-                ['github_id' => $request->github_id]
-            );
+        User::updateOrCreate(
+            ['github_id' => $request->github_id]
+        );
 
-            return response()->json([
-                'message' => 'User saved successfully',
-            ], 200);
+        return response()->json([
+            'message' => 'User saved successfully',
+        ], 200);
     }
 }

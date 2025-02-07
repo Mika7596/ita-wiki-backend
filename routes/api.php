@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-Route::post('user/save',[UserController::class,'store'])->name('user.save');
+Route::post('user/save', [UserController::class,'store'])->name('user.save');
