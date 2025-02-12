@@ -22,8 +22,7 @@ services:
         restart: unless-stopped
         working_dir: /var/www/html
         depends_on:
-            mariadb:
-                condition: service_healthy
+            - mariadb
         volumes:
             - ./:/var/www/html
             - ./entrypoint.sh:/root/entrypoint.sh
@@ -44,11 +43,6 @@ services:
             - mariadb-data:/var/lib/mariadb
         networks:
             - app-network
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "mariadb"]
-            interval: 10s
-            retries: 3
-            timeout: 5s
 
 volumes:
     mariadb-data:
