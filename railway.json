@@ -7,6 +7,7 @@
         "region": "us-west2",
         "runtime": "V2",
         "numReplicas": 1,
+        "startCommand": "php artisan migrate --force && php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear",
         "sleepApplication": false,
         "multiRegionConfig": {
             "us-west2": {
