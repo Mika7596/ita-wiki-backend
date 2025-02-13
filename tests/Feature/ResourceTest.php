@@ -11,14 +11,14 @@ class ResourceTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function canGetList(): void
+    public function testCanGetList(): void
     {
         $response = $this->get('/resources/lists');
 
         $response->assertStatus(200);
     }
 
-/*     public function canStoreResource(): void
+/*     public function testCanStoreResource(): void
     {
         $response = $this->post('/resources', [
             'id_github' => '123',
@@ -29,7 +29,7 @@ class ResourceTest extends TestCase
         $response->assertStatus(201);
     }
     
-    public function canDeleteResource(): void
+    public function testCanDeleteResource(): void
     {
         $response = $this->delete('/resources/1');
 
