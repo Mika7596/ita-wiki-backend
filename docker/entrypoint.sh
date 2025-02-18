@@ -7,6 +7,7 @@ if [ -f /var/www/html/bootstrap/cache/config.php ]; then
 fi
 
 echo "Installing Composer dependencies..."
+cd /var/www/html
 composer install --no-dev --optimize-autoloader
 
 if [ ! -f .env ]; then
