@@ -7,7 +7,7 @@ if [ -f /var/www/html/bootstrap/cache/config.php ]; then
 fi
 
 echo "Installing Composer dependencies..."
-composer install --no-dev --optimize-autoloader
+composer install
 
 if [ ! -f .env ]; then
     echo "[WARNING] - .env File Not Found! Using .env.docker File as .env"
