@@ -18,7 +18,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'github_id' => $this->faker->numberBetween(1, 10000000)->unique(),
+            'github_id' => $this->faker->numberBetween(1, 10000000),
             'role' => $this->faker->randomElement(['admin', 'mentor', 'student', 'anonymous']),
         ];
     }

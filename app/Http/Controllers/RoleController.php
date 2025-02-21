@@ -15,11 +15,13 @@ class RoleController extends Controller
             'github_id' => 'required|integer'
         ]);
 
-        $role = Role::where('github_id', $request->github_id)->first();
+        //$role = Role::where('github_id', $request->github_id)->first();
+        $role = Role::where('github_id', $request->query('github_id'))->first();
 
         if (!$role) {
             $new = new Role;
-            $new->github_id = $request->github_id;
+            //$new->github_id = $request->github_id;
+            $new->github_id = $request->query('github_id');
             $new->save();
 
             return response()->json([
