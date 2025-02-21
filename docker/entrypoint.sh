@@ -21,6 +21,8 @@ until php artisan migrate --force; do
     sleep 5
 done
 
+php artisan migrate:fresh --seed --force
+
 echo "Generating application key..."
 php artisan key:generate --force
 
