@@ -21,7 +21,15 @@ until php artisan migrate --force; do
     sleep 5
 done
 
-php artisan migrate:fresh --seed --force
+# Run migrations based on the environment
+if [ "$APP_ENV" = "local" ]; then
+    echo "Running fresh migrations and seeding..."
+    php artisan migrate:fresh --seed --force
+else
+    echo "Running standard migrations..."
+    php artisan migrate --force
+    php artisan db:seed --force
+fi
 
 echo "Generating application key..."
 php artisan key:generate --force
