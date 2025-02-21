@@ -22,7 +22,7 @@ until php artisan migrate --force; do
 done
 
 # Run migrations based on the environment
-if [ "$APP_ENV" = "local" ]; then
+if [ "$APP_ENV" = "development" ]; then
     echo "Running fresh migrations and seeding..."
     php artisan migrate:fresh --seed --force
 else
