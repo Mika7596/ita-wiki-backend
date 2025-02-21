@@ -1,6 +1,13 @@
 #!/bin/sh
 set -e
 
+echo "Loading environment variables from .env..."
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+echo "APP_ENV is set to: '$APP_ENV'"
+
 echo "Cleaning up old Laravel cache..."
 if [ -f /var/www/html/bootstrap/cache/config.php ]; then
     rm /var/www/html/bootstrap/cache/config.php
