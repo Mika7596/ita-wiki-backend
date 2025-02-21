@@ -4,7 +4,8 @@ WORKDIR /var/www/html
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    libonig-dev libxml2-dev libicu-dev libssl-dev git zip unzip && \
+    libonig-dev libxml2-dev libicu-dev libssl-dev git zip unzip \
+    default-mysql-client && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install pdo pdo_mysql mbstring bcmath gd && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
