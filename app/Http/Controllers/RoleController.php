@@ -11,7 +11,7 @@ class RoleController extends Controller
     public function getRoleByGithubId(Request $request)
     {
         $request->headers->set('Accept', 'application/json');
-        $validated = $request->validate([
+        $request->validate([
             'github_id' => 'required|integer'
         ]);
 
@@ -23,16 +23,23 @@ class RoleController extends Controller
             //$new->github_id = $request->github_id;
             $new->github_id = $request->query('github_id');
             $new->save();
+            $new = Role::where('github_id', $request->query('github_id'))->first();
 
             return response()->json([
                 'message' => 'Role not found. Created as new anonymous user.',
-                'role' => 'anonymous'
+                'role' => [
+                    'github_id' => $new->github_id,
+                    'role' => $new->role
+                ]
             ], 201);
         }
 
         return response()->json([
             'message' => 'Role found.',
-            'role' => $role
+            'role' => [
+                'github_id' => $role->github_id,
+                'role' => $role->role
+            ]
         ], 200);
     }
 }
