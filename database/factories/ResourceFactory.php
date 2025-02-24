@@ -17,8 +17,9 @@ class ResourceFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_github' => $this->faker->numberBetween(1, 100),
+            'github_id' => $this->faker->text(15),
             'title' => $this->faker->sentence(6),
+            'description' => $this->faker->sentence(50),
             'url' => $this->faker->url(),
         ];
     }
