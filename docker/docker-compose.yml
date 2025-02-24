@@ -44,6 +44,22 @@ services:
         networks:
             - app-network
 
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        ports:
+        - "8080:80" 
+        environment:
+        - PMA_HOST=mysql 
+        - PMA_PORT=3306
+        - PMA_USER=user
+        - PMA_PASSWORD=password
+        - MYSQL_ROOT_PASSWORD=root
+        depends_on:
+        - mysql
+        networks:
+        - app-network
+
 volumes:
     mysql-data:
 
