@@ -38,7 +38,31 @@ class CreateResourceTest extends TestCase
         $response = $this->postJson('/non-existent-route', []);
 
         $response->assertStatus(404);
-    }      
+    } 
+    
+    public function testItCanShowStatus422WithDuplicateGithubId()
+    {
+        $resource = Resource::factory()->create();
+
+        $data = $this->GetResourceData();
+        $data['github_id'] = $resource->github_id;
+
+        $response = $this->postJson(route('resource.create'), $data);
+
+        $response->assertStatus(422);
+    }
+
+    public function testItCanShowStatus422WithDuplicateUrl()
+    {
+        $resource = Resource::factory()->create();
+
+        $data = $this->GetResourceData();
+        $data['url'] = $resource->url;
+
+        $response = $this->postJson(route('resource.create'), $data);
+
+        $response->assertStatus(422);
+    }    
 
     #[DataProvider('resourceValidationProvider')]
     public function testItCanShowStatus422WithInvalidData(array $invalidData)
@@ -56,7 +80,7 @@ class CreateResourceTest extends TestCase
         return[
             // github_id
             'missing github_id' => [['github_id' => null]],
-            'invalid github_id (is not a string)' => [['github_id' => 2345]],
+            'invalid github_id (is not a string)' => [['github_id' => 2345]],            
             // title
             'missing title' => [['title' => null]],
             'invalid title (too short)' => [['title' => 'a']],
