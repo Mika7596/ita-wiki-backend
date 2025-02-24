@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('id_github');
+            $table->bigInteger('id_github')->unsigned();
             $table->foreign('id_github')
                 ->references('github_id')
                 ->on('roles')
