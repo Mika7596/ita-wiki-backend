@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace Tests\Feature;
 
 use App\Models\Resource;
@@ -18,9 +20,9 @@ class ResourceTest extends TestCase
         Role::factory(10)->create();
         Resource::factory()->count(5)->create();
 
-        $response = $this->get('/api/resources/lists');
+        $response = $this->get(route('resources.list'));
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertJsonCount(5);
     }
 
 }

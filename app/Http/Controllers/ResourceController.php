@@ -10,14 +10,14 @@ use App\Models\Resource;
 
 class ResourceController extends Controller
 {
-   public function create(CreateResourceFormRequest $request)
+   public function store(CreateResourceFormRequest $request)
     {
         $validated = $request->validated();
         $resource = Resource::create($validated);
         return response()->json($resource, 201);
     }
 
-    public function get()
+    public function index()
     {
         $resources = Resource::all();
         return response()->json($resources, 200);

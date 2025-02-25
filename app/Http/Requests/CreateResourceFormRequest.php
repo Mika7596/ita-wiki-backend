@@ -26,15 +26,19 @@ class CreateResourceFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'github_id' => 'required|integer|gt:0',
-            'title' => 'required|string|min:5|max:255',
-            'description' => 'required|string|min:10|max:1000',
-            'url' => 'required|url',
+            'github_id' => ['required', 'integer', 'gt:0', 'unique:resources,github_id'],
+            'title' => ['required', 'string', 'min:5', 'max:255'],
+            'description' => ['required', 'string', 'min:10', 'max:1000'],
+            'url' => ['required', 'url'],
         ];
     }
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json($validator->errors(), 422));
-    }    
+        if ($this->expectsJson()) {
+            throw new HttpResponseException(response()->json($validator->errors(), 422));
+        }
+
+        parent::failedValidation($validator);
+    }  
 }

@@ -24,12 +24,12 @@ class CreateResourceTest extends TestCase
     private function GetResourceData(): array
     {
         Role::factory(10)->create();
-        return Resource::factory()->make()->toArray();
+        return Resource::factory()->raw(); 
     }
 
     public function testItCanCreateAResource()
     {
-        $response = $this->postJson(route('resource.create'), $this->GetResourceData());
+        $response = $this->postJson(route('resource.store'), $this->GetResourceData());
 
         $response->assertStatus(201);
     }
@@ -42,12 +42,18 @@ class CreateResourceTest extends TestCase
     }      
 
     #[DataProvider('resourceValidationProvider')]
-    public function testItCanShowStatus422WithInvalidData(array $invalidData)
+    public function testItCanShowStatus422WithInvalidData(array $invalidData, string $fieldName)
     {
         $data = $this->GetResourceData();
         $data = array_merge($data, $invalidData);
 
-        $response = $this->postJson(route('resource.create'), $data);
+        $response = $this->postJson(route('resource.store'), $data);
+
+        $response->assertStatus(422)
+        //This verifies that the field $fieldName exists in the response and has at least one error message.
+        ->assertJsonPath($fieldName, function ($errors) {
+            return is_array($errors) && count($errors) > 0;
+        });        
 
         $response->assertStatus(422);
     }
@@ -56,23 +62,23 @@ class CreateResourceTest extends TestCase
     {
         return[
             // github_id
-            'missing github_id' => [['github_id' => null]],
-            'invalid github_id (is not an integer)' => [['github_id' => "this is not an integer"]],       
-            'is not a positive integer' => [['github_id' => -1]], 
+            'missing github_id' => [['github_id' => null], 'github_id'],
+            'invalid github_id (is not an integer)' => [['github_id' => "this is not an integer"], 'github_id'],
+            'is not a positive integer' => [['github_id' => -1], 'github_id'],
             // title
-            'missing title' => [['title' => null]],
-            'invalid title (too short)' => [['title' => 'a']],
-            'invalid title (too long)' => [['title' => self::generateLongText(256)]],
-            'invalid title (array)' => [['title' => []]],
+            'missing title' => [['title' => null], 'title'],
+            'invalid title (too short)' => [['title' => 'a'], 'title'],
+            'invalid title (too long)' => [['title' => self::generateLongText(256)], 'title'],
+            'invalid title (array)' => [['title' => []], 'title'],
             // description
-            'invalid description (too short)' => [['description' => 'a']],
-            'invalid description (too long)' => [['description' => self::generateLongText(1001)]],
-            'invalid description (array)' => [['description' => []]],
+            'invalid description (too short)' => [['description' => 'a'], 'description'],
+            'invalid description (too long)' => [['description' => self::generateLongText(1001)], 'description'],
+            'invalid description (array)' => [['description' => []], 'description'],
             // url
-            'missing url' => [['url' => null]],
-            'invalid url (not a url)' => [['url' => 'not a url']],
-            'invalid url (array)' => [['url' => []]],
-            'invalid url (integer)' => [['url' => 123]],
+            'missing url' => [['url' => null], 'url'],
+            'invalid url (not a url)' => [['url' => 'not a url'], 'url'],
+            'invalid url (array)' => [['url' => []], 'url'],
+            'invalid url (integer)' => [['url' => 123], 'url'],
         ];
     }
 
