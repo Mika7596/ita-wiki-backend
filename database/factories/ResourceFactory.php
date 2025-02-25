@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,15 @@ class ResourceFactory extends Factory
      */
     public function definition(): array
     {
+        $role = Role::where('role', '!=', 'anonymous')
+        ->inRandomOrder()
+        ->first();
+
         return [
-            'github_id' => $this->faker->text(15),
+            'id_github' => $role->github_id,
             'title' => $this->faker->sentence(6),
             'description' => $this->faker->sentence(50),
-            'url' => $this->faker->url(),
+            'url' => $this->faker->url()
         ];
     }
 }

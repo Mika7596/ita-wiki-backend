@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -17,4 +18,10 @@ class Resource extends Model
         'title',
         'url',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
 }

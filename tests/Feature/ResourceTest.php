@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Resource;
+use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,8 +15,8 @@ class ResourceTest extends TestCase
      */
     public function testCanGetList(): void
     {
-        $result = Resource::factory()->count(5)->create();
-        var_dump($result);
+        Role::factory(10)->create();
+        Resource::factory()->count(5)->create();
 
         $response = $this->get('/api/resources/lists');
 
