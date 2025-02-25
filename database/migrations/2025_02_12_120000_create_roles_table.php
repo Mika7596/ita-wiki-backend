@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('github_id')->unsigned()->unique();
             $table->enum('role', ['admin', 'mentor', 'student', 'anonymous'])->default('anonymous');
+            //$table->boolean('terms_accepted')->default(false); adding column
             $table->timestamps();
         });
     }
