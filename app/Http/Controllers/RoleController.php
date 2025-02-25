@@ -13,8 +13,18 @@ class RoleController extends Controller
         $request->headers->set('Accept', 'application/json');
         $request->validate([
             'github_id' => 'required|integer'
+            /*Validate de terms an condition box with a boolean
+            terms_accepted' => 'required|boolean'*/
         ]);
 
+        /*verify if the terms and conditions were accepted
+        if (!$request->input('terms_accepted')) {
+            return response()->json([
+                'message' => 'You must accept the terms and conditions to log in.',
+            ], 400); // Error 400: Bad Request
+        }*/
+
+        //Get githubId
         $githubId = $request->input('github_id', $request->query('github_id'));
         $role = Role::where('github_id', $githubId)->first();
 
