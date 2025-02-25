@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->string('id_github');
+            $table->unsignedInteger('id_github');
+            $table->foreign('id_github')
+                ->references('github_id')
+                ->on('roles')
+                ->onUpdate('cascade') // Updates if github_id is modified in roles
+                ->onDelete('restrict'); // Stays if github_id is destroyed in roles
             $table->string('title');
             $table->string('url');
             $table->timestamps();
