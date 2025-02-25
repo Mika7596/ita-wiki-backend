@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace Database\Factories;
 
 use App\Models\Role;
@@ -22,9 +24,9 @@ class ResourceFactory extends Factory
         ->first();
 
         return [
-            'id_github' => $role->github_id,
-            'title' => $this->faker->sentence(6),
-            'description' => $this->faker->sentence(50),
+            'github_id' => $role->github_id,
+            'title' => $this->faker->sentence(4),
+            'description' => $this->faker->sentence(6),
             'url' => $this->faker->url()
         ];
     }

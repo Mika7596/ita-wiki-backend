@@ -14,10 +14,10 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = new Role;
-        $role->github_id = 6729608;
-        $role->role = 'student';
-        $role->save();
+        Role::create([
+            'github_id' => 6729608,
+            'role' => 'student',
+        ]);
 
         Role::factory(20)->create();
     }

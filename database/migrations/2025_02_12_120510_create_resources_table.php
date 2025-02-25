@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('github_id')->unique()->nullable(false);
-            $table->foreign('id_github')
-                ->references('github_id')
-                ->on('roles')
-                ->onUpdate('cascade') // Updates if github_id is modified in roles
-                ->onDelete('restrict'); // Stays if github_id is destroyed in roles
-            $table->string('title')->nullable(false);
+            $table->bigInteger('github_id')->unsigned();
+            $table->foreign('github_id')
+            ->references('github_id')
+            ->on('roles')
+            ->onUpdate('cascade') // Updates if github_id is modified in roles
+            ->onDelete('restrict'); // Stays if github_id is destroyed in roles
+            $table->string('title');
             $table->string('description');
-            $table->string('url')->nullable(false);
+            $table->string('url');
             $table->timestamps();
         });
     }

@@ -26,10 +26,10 @@ class CreateResourceFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'github_id' => 'required|unique:resources,github_id|string',
+            'github_id' => 'required|integer|gt:0',
             'title' => 'required|string|min:5|max:255',
             'description' => 'required|string|min:10|max:1000',
-            'url' => 'required|unique:resources,url|url',
+            'url' => 'required|url',
         ];
     }
 
