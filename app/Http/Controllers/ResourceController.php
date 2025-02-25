@@ -1,28 +1,27 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateResourceFormRequest;
 use App\Http\Requests\StoreResourceRequest;
 use App\Models\Resource;
 
 class ResourceController extends Controller
 {
-/*     public function store(StoreResourceRequest $request)
+   public function store(CreateResourceFormRequest $request)
     {
         $validated = $request->validated();
         $resource = Resource::create($validated);
         return response()->json($resource, 201);
-    } */
+    }
 
-    public function get()
+    public function index()
     {
         $resources = Resource::all();
         return response()->json($resources, 200);
     }
 
-/*     public function destroy(Resource $resource)
-    {
-        $resource->delete();
-        return response()->json(null, 204);
-    } */
+
 }

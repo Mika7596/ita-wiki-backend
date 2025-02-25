@@ -1,11 +1,12 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace Tests\Feature;
 
 use App\Models\Resource;
 use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ResourceTest extends TestCase
@@ -19,26 +20,9 @@ class ResourceTest extends TestCase
         Role::factory(10)->create();
         Resource::factory()->count(5)->create();
 
-        $response = $this->get('/api/resources/lists');
+        $response = $this->get(route('resources.list'));
 
         $response->assertStatus(200)->assertJsonCount(5);
     }
 
-/*     public function testCanStoreResource(): void
-    {
-        $response = $this->post('/resources', [
-            'id_github' => '123',
-            'title' => 'Test',
-            'url' => 'http://test.com',
-        ]);
-
-        $response->assertStatus(201);
-    }
-    
-    public function testCanDeleteResource(): void
-    {
-        $response = $this->delete('/resources/1');
-
-        $response->assertStatus(204);
-    } */
 }

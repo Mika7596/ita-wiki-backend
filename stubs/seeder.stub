@@ -2,18 +2,18 @@
 
 declare (strict_types= 1);
 
-namespace Database\Seeders;
+namespace {{ namespace }};
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ResourceSeeder extends Seeder
+class {{ class }} extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        \App\Models\Resource::factory(10)->create();
+        //
     }
 }

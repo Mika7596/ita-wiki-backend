@@ -13,7 +13,8 @@ class Resource extends Model
 
     protected $fillable = [
         'id',
-        'id_github',
+        'github_id',
+        'description',
         'title',
         'url',
     ];
