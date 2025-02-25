@@ -15,7 +15,12 @@ class Role extends Model
     protected $fillable = [
         'github_id',
         'role'
+        //'terms_accepted'
     ];
+
+    /*protected $casts = [
+        'terms_accepted' => 'boolean',
+    ]; To make sure is a boolean*/ 
 
     public function resources()
     {
