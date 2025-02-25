@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('github_id')->unique();
+            $table->bigInteger('github_id')->unsigned()->unique();
             $table->enum('role', ['admin', 'mentor', 'student', 'anonymous'])->default('anonymous');
             $table->timestamps();
         });
