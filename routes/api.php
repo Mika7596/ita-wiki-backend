@@ -8,8 +8,9 @@ use App\Http\Controllers\ResourceEditController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/resources/lists', [ResourceController::class, 'get']);
-/*Route::post('/resources', [ResourceController::class, 'store']);
-Route::delete('/resources/{resource}', [ResourceController::class, 'destroy']);*/
+Route::post('/resource', [ResourceController::class, 'store'])->name('resource.store');
+
+//Route::delete('/resources/{resource}', [ResourceController::class, 'destroy']);
 Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resource.update');
 
 Route::get('/users/user-signedin-as', [RoleController::class, 'getRoleByGithubId']);
