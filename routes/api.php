@@ -7,9 +7,9 @@ use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ResourceEditController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/resources/lists', [ResourceController::class, 'get']);
-Route::post('/resource', [ResourceController::class, 'store'])->name('resource.store');
 
+Route::post('/resource', [ResourceController::class, 'store'])->name('resource.store');
+Route::get('/resources/lists', [ResourceController::class, 'index'])->name('resources.list');
 //Route::delete('/resources/{resource}', [ResourceController::class, 'destroy']);
 Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resource.update');
 
