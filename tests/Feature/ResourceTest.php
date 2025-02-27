@@ -20,7 +20,7 @@ class ResourceTest extends TestCase
         Role::factory(10)->create();
         Resource::factory()->count(5)->create();
 
-        $response = $this->get(route('resources.list'));
+        $response = $this->get(route('resources'));
 
         $response->assertStatus(200)->assertJsonCount(5);
     }

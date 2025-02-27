@@ -29,7 +29,7 @@ class CreateResourceTest extends TestCase
 
     public function testItCanCreateAResource()
     {
-        $response = $this->postJson(route('resource.store'), $this->GetResourceData());
+        $response = $this->postJson(route('resources.store'), $this->GetResourceData());
 
         $response->assertStatus(201);
     }
@@ -47,7 +47,7 @@ class CreateResourceTest extends TestCase
         $data = $this->GetResourceData();
         $data = array_merge($data, $invalidData);
 
-        $response = $this->postJson(route('resource.store'), $data);
+        $response = $this->postJson(route('resources.store'), $data);
 
         $response->assertStatus(422)
         //This verifies that the field $fieldName exists in the response and has at least one error message.
