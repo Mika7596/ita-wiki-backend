@@ -6,9 +6,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ResourceController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/resource', [ResourceController::class, 'store'])->name('resource.store');
+Route::post('/resources', [ResourceController::class, 'store'])->name('resources.store');
 
-Route::get('/resources/lists', [ResourceController::class, 'index'])->name('resources.list');
+Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
 Route::get('/users/user-signedin-as', [RoleController::class, 'getRoleByGithubId']);
 /* BURN AFTER READING
