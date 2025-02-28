@@ -48,7 +48,7 @@ class CreateResourceTest extends TestCase
         $data = $this->GetResourceData();
         $data['github_id'] = $anonymousGithubId;
     
-        $response = $this->postJson(route('resource.store'), $data);
+        $response = $this->postJson(route('resources.store'), $data);
 
         $response->assertStatus(422)
             ->assertJsonPath('github_id', function ($errors) {
