@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
-    /**
-     * @OA\Info(
-     *  title="Swagger Documentation for ITA-Wiki",
-     *  version="1.0.0.0",
-     *  description="Project ITA-Wiki documentation wall"
-     * )
-     */
+
 class RoleController extends Controller
 {
-    /   /**
+    /**
     * @OA\Get(
     *     path="/api/roles",
     *     summary="Retrieve a role by GitHub ID",

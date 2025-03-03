@@ -32,6 +32,53 @@
                     }
                 }
             }
+        },
+        "/api/roles": {
+            "get": {
+                "summary": "Retrieve a role by GitHub ID",
+                "description": "Fetches a role using the provided GitHub ID. If the role does not exist, it creates a new role for the user as anonymous.",
+                "operationId": "191581065659b730e9c5171735405640",
+                "responses": {
+                    "200": {
+                        "description": "Role found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role found."
+                                        },
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Role not found, created as a new anonymous user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role not found. Created as new anonymous user."
+                                        },
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -62,6 +109,42 @@
                         "format": "url",
                         "example": "https://www.hola.com",
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "description": "Role object representing a user's role and associated GitHub ID",
+                "properties": {
+                    "github_id": {
+                        "description": "The GitHub ID of the user",
+                        "type": "integer",
+                        "example": 6729608
+                    },
+                    "role": {
+                        "description": "The role of the user",
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "isAdmin": {
+                        "description": "Check if the user is an admin",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "isStudent": {
+                        "description": "Check if the user is a student",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "isMentor": {
+                        "description": "Check if the user is a mentor",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "isAnonymous": {
+                        "description": "Check if the user is anonymous",
+                        "type": "boolean",
+                        "example": false
                     }
                 },
                 "type": "object"
