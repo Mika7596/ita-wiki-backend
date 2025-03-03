@@ -1,0 +1,71 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger Documentation for ITA-Wiki",
+        "description": "Project ITA-Wiki documentation wall",
+        "version": "1.0.0.0"
+    },
+    "paths": {
+        "/api/resources/lists": {
+            "get": {
+                "summary": "Get all resources",
+                "description": "return a list of all resources",
+                "operationId": "9e5d89c5eb6c40040231787df8926fda",
+                "responses": {
+                    "200": {
+                        "description": "Resource list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "resources": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Resource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Resource": {
+                "title": "Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "github_id": {
+                        "type": "integer",
+                        "example": 12345
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Lorem Ipsum ...",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Lorem Ipsum ...",
+                        "nullable": true
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://www.hola.com",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
