@@ -33,8 +33,8 @@ class UpdateResourceFormRequest extends FormRequest
     public function validated($key = null, $default = null)
     {
         $validated = parent::validated($key, $default);
-        unset($validated['github_id']);
-        return $validated;
+        // Filtramos para no tener que utilizar github_id
+        return array_diff_key($validated, ['github_id' => true]);
     }
     public function failedValidation(Validator $validator)
     {
