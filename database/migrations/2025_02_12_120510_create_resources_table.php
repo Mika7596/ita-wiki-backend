@@ -27,7 +27,7 @@ return new class extends Migration
             $table->enum('category', ['Node', 'React', 'Angular', 'Javascript', 'Java', 'Fullstack PHP', 'Data Science', 'BBDD']);
             $table->enum('theme', ['All', 'Components', 'UseState & UseEffect', 'Eventos' , 'Renderizado condicional', 'Listas', 'Estilos', 'Debugging', 'React Router']);
             $table->enum('type', ['Video', 'Cursos', 'Blog']);
-            $table->int('votes');
+            $table->integer('votes');
             $table->timestamps();
         });
     }

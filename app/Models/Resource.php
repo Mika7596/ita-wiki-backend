@@ -29,6 +29,10 @@ class Resource extends Model
         'description',
         'title',
         'url',
+        'category',
+        'theme',
+        'type',
+        'votes'
     ];
 
     public function role()
