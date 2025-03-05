@@ -1,8 +1,10 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace App\Http\Requests;
 
-use App\Models\Role;
+use App\Rules\RoleAnonymousRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,28 +26,24 @@ class StoreResourceRequest extends FormRequest
      */
     public function rules(): array
     {
-        /*
         return [
-            'id_github' => 'required',
-            'title' => 'required',
-            'url' => 'required',
-        ];
-        */
-
-        return [
-            'id_github' => [
+            'github_id' => [
                 'required',
-                'integer',
-                'exists:roles,github_id',
-                function ($_, $value, $fail) {
-                    $role = Role::findOrFail($value);
-                    if ($role->isAnonymous()) {
-                        $fail('Cannot create resource for anonymous role.');
-                    }
-                },
+                new RoleAnonymousRule(),
             ],
-            'title' => 'required|string|max:255',
-            'url' => 'required|url',
+            'description' => ['required', 'string', 'min:10', 'max:1000'],
+            'title' => ['required', 'string', 'min:5', 'max:255'],
+            'url' => ['required', 'url'],
         ];
+       
     }
+
+    public function failedValidation(Validator $validator)
+    {
+        if ($this->expectsJson()) {
+            throw new HttpResponseException(response()->json($validator->errors(), 422));
+        }
+
+        parent::failedValidation($validator);
+    }    
 }

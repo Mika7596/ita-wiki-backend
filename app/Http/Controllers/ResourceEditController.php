@@ -14,6 +14,7 @@ class ResourceEditController extends Controller
         unset($validated['github_id']);
         //Actualizamos los datos
         $resource->update($validated);
+
         //Devolvemos la respuesta
         return response()->json($resource, 200);
     }

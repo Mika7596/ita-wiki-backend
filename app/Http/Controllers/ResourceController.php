@@ -4,18 +4,41 @@ declare (strict_types= 1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateResourceFormRequest;
 use App\Http\Requests\StoreResourceRequest;
 use App\Models\Resource;
 
+    /**
+     * @OA\Info(
+     *  title="Swagger Documentation for ITA-Wiki",
+     *  version="1.0.0.0",
+     *  description="Project ITA-Wiki documentation wall"
+     * )
+     */
+
 class ResourceController extends Controller
 {
-   public function store(CreateResourceFormRequest $request)
+   public function store(StoreResourceRequest $request)
     {
         $validated = $request->validated();
         $resource = Resource::create($validated);
         return response()->json($resource, 201);
     }
+
+    /**
+     * @OA\Get(
+     *  path="/api/resources/lists",
+     *  summary="Get all resources",
+     *  description="return a list of all resources",
+     *  @OA\Response(
+     *     response=200,
+     *     description="Resource list",
+     *     @OA\JsonContent(
+     *      type="object",
+     *      @OA\Property(property="resources", type="array", @OA\Items(ref="#/components/schemas/Resource"))
+     *      )
+     *     )
+     * )
+     */
 
     public function index()
     {
