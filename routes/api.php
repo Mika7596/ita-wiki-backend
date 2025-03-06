@@ -27,5 +27,5 @@ THEN : it's convenient to store any verified GitHub account in Roles Migration a
 (the more, the merrier)
 */
 
-Route::get('/bookmarks', [BookmarkController::class,'bookmarkSwitcherAndRetriever']);
-Route::post('/bookmarks', [BookmarkController::class,'bookmarkSwitcherAndRetriever']);
+Route::get('/bookmarks', [BookmarkController::class,'bookmarkSwitcherAndRetriever']); // retrieves bookmarks of a given student
+Route::post('/bookmarks', [BookmarkController::class,'bookmarkSwitcherAndRetriever']); // creates or deletes a bookmark of a given student
