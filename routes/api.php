@@ -2,6 +2,7 @@
 
 declare (strict_types= 1);
 
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ResourceController;
 use Illuminate\Support\Facades\Route;
@@ -18,3 +19,6 @@ Given that mentor needs students to be signed-up as 'anonymous' to update their 
 THEN : it's convenient to store any verified GitHub account in Roles Migration as anonymous when endpoint FAILS.
 (the more, the merrier)
 */
+
+Route::get('/bookmarks', [BookmarkController::class,'BookmarkSwitcher']);
+Route::post('/bookmarks', [BookmarkController::class,'BookmarkSwitcher']);
