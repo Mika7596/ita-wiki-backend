@@ -59,11 +59,6 @@ class BookmarkControllerTest extends TestCase
 
     public function testDestroyBookmark(): void
     {
-        dump(Bookmark::all()->toArray());
-        dump(Resource::all()->toArray());
-        dump(Role::all()->toArray());
-
-
         $response = $this->post('api/bookmarks', [
             'github_id' => $this->student->github_id,
             'resource_id' => $this->bookmarks[1]->resource_id

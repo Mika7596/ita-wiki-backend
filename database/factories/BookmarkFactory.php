@@ -19,18 +19,11 @@ class BookmarkFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
-        do {
-            $github_id = Role::where('role', 'student')->inRandomOrder()->firstOrFail()->value('github_id');
-            $resource_id = Resource::inRandomOrder()->firstOrFail()->value('id');
-        } while (Bookmark::where('github_id', $github_id)->where('resource_id', $resource_id)->exists());
-
         return [
-            'github_id' => $github_id,
-            'resource_id' => $resource_id
-            //'github_id' => Role::where('role', 'student')->inRandomOrder()->first()->github_id,
-            //'resource_id' => Resource::inRandomOrder()->first()->id
+            'github_id' => Role::where('role', 'student')->inRandomOrder()->first()->github_id,
+            'resource_id' => Resource::inRandomOrder()->first()->id,
         ];
     }
 }
