@@ -6,11 +6,11 @@
         "version": "1.0.0.0"
     },
     "paths": {
-        "/api/resources/lists": {
+        "/api/resources": {
             "get": {
                 "summary": "Get all resources",
                 "description": "return a list of all resources",
-                "operationId": "9e5d89c5eb6c40040231787df8926fda",
+                "operationId": "ee96de2f37d473ea4740b7700ddd1daf",
                 "responses": {
                     "200": {
                         "description": "Resource list",
