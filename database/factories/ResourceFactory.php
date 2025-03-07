@@ -27,7 +27,11 @@ class ResourceFactory extends Factory
             'github_id' => $role->github_id,
             'title' => $this->faker->sentence(4),
             'description' => $this->faker->sentence(6),
-            'url' => $this->faker->url()
+            'url' => $this->faker->url(),
+            'category' => $this->faker->randomElement(['Node', 'React', 'Angular', 'Javascript', 'Java', 'Fullstack PHP', 'Data Science', 'BBDD']),
+            'theme' => $this->faker->randomElement(['All', 'Components', 'UseState & UseEffect', 'Eventos' , 'Renderizado condicional', 'Listas', 'Estilos', 'Debugging', 'React Router']),
+            'type' => $this->faker->randomElement(['Video', 'Cursos', 'Blog']),
+            'votes' => $this->faker->numberBetween(0,50)
         ];
     }
 }
