@@ -21,9 +21,11 @@ class BookmarkFactory extends Factory
      */
     public function definition()
     {
+        /*
         return [
             'github_id' => Role::where('role', 'student')->inRandomOrder()->first()->github_id,
             'resource_id' => Resource::inRandomOrder()->first()->id,
         ];
+        */
     }
 }
