@@ -25,7 +25,7 @@ services:
             - mysql
         volumes:
             - ../:/var/www/html
-            - ./entrypoint.sh:/root/entrypoint.sh
+            - ./entrypoint.sh:/usr/local/bin/entrypoint.sh
         networks:
             - app-network
 
@@ -48,9 +48,9 @@ services:
         container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin
         ports:
-        - "8080:80" 
+        - "8080:80"
         environment:
-        - PMA_HOST=mysql 
+        - PMA_HOST=mysql
         - PMA_PORT=3306
         - PMA_USER=user
         - PMA_PASSWORD=password
