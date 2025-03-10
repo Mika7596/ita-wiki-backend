@@ -57,6 +57,12 @@ class BookmarkControllerTest extends TestCase
             ]);
     }
 
+    public function testGetBookmarksForUnexistentRoleFails(): void {
+        $nonExistentGithubId = 92920;
+        $response = $this->get('api/bookmarks/?github_id=' . $nonExistentGithubId);
+        $response->assertStatus(422);
+    }
+
     public function testDestroyBookmark(): void
     {
         $response = $this->post('api/bookmarks', [
@@ -85,6 +91,22 @@ class BookmarkControllerTest extends TestCase
             'github_id' => $this->student->github_id,
             'resource_id' => $this->resources[2]->id
         ]);
+    }
+
+    public function testCreateBookmarkForNonexistentRoleFails(): void {
+        $response = $this->post('api/bookmarks', [
+            'github_id' => 9384758,
+            'resource_id' => $this->resources[2]->id
+        ]);
+        $response->assertStatus(422);
+    }
+
+    public function testCreateBookmarkForNonexistentResourceFails(): void {
+        $response = $this->post('api/bookmarks', [
+            'github_id' => $this->student->github_id,
+            'resource_id' => 447012
+        ]);
+        $response->assertStatus(422);
     }
 
     public function testCreateAnonymousBookmarkFails() : void {
