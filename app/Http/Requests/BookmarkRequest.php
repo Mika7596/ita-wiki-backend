@@ -36,32 +36,10 @@ class BookmarkRequest extends FormRequest
                 new RoleStudentRule(), // Ensure role is "student"
             ],
         ];
-        /*
-        $rules = [
-            'github_id' => [
-                'required',
-                'integer',
-                'min:1',
-                'exists:roles,github_id',
-                function ($attribute, $value, $fail) {
-                    $role = Role::where('github_id', $value)->first();
-                    if (!$role || $role->role !== 'student') {
-                        $fail('The github_id must belong to a student role.');
-                    }
-                },
-            ],
-        ];
-        */
 
         if ($this->isMethod('post') || $this->isMethod('delete')) {
             $rules['resource_id'] = 'required|integer|exists:resources,id';
         }
-
-        /*
-        if ($this->isMethod('delete')) {
-            $rules['resource_id'] = 'required|integer|exists:resources,id';
-        }
-        */
 
         return $rules;
     }
