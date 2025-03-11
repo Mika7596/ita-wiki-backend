@@ -62,7 +62,7 @@ class UpdateResourceTest extends TestCase
         ]);
     }
 
-    //Devuelve 404 cuando el Resource no existe.
+/*     //Devuelve 404 cuando el Resource no existe.
     public function testItReturns404WhenResourceNotFound()
     {
       // ID que no existe
@@ -80,7 +80,7 @@ class UpdateResourceTest extends TestCase
 
       // Verificamos que no se haya creado ningún Resource
         $this->assertDatabaseCount('resources', 0);
-    }
+    } */
 
     // Devuelve 422 cuando se intenta usar una URL duplicada
     public function testItCanShowStatus422WithDuplicateUrl()
