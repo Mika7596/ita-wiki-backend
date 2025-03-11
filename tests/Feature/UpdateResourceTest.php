@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Models\Resource;
 use App\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class UpdateResourceTest extends TestCase
