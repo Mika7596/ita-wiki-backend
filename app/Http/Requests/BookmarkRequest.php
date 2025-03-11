@@ -5,7 +5,9 @@ declare (strict_types= 1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Role;
+use App\Rules\GithubIdRule;
+use App\Rules\RoleStudentRule;
+//use App\Models\Role;
 
 class BookmarkRequest extends FormRequest
 {
@@ -30,6 +32,13 @@ class BookmarkRequest extends FormRequest
 
         $rules = [
             'github_id' => [
+                new GithubIdRule(), // General validation for github_id
+                new RoleStudentRule(), // Ensure role is "student"
+            ],
+        ];
+        /*
+        $rules = [
+            'github_id' => [
                 'required',
                 'integer',
                 'min:1',
@@ -42,14 +51,17 @@ class BookmarkRequest extends FormRequest
                 },
             ],
         ];
+        */
 
-        if ($this->isMethod('post')) {
+        if ($this->isMethod('post') || $this->isMethod('delete')) {
             $rules['resource_id'] = 'required|integer|exists:resources,id';
         }
 
+        /*
         if ($this->isMethod('delete')) {
             $rules['resource_id'] = 'required|integer|exists:resources,id';
         }
+        */
 
         return $rules;
     }
