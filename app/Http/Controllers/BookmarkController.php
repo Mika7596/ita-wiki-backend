@@ -10,14 +10,25 @@ use App\Models\Bookmark;
 
 class BookmarkController extends Controller
 {
-    public function studentBookmarkCreate(BookmarkRequest $request)
+    public function createStudentBookmark(BookmarkRequest $request)
     {
         $validated = $request->validated();
+
+        $existingBookmark = Bookmark::where('github_id', $validated['github_id'])
+        ->where('resource_id', $validated['resource_id'])
+        ->first();
+
+        if ($existingBookmark) {
+            return response()->json([
+                'message' => 'Bookmark already exists.',
+            ], 409); // HTTP 409 Conflict
+        }
+
         $bookmark = Bookmark::create($validated);
         return response()->json($bookmark, 201);
     }
 
-    public function studentBookmarkDelete(BookmarkRequest $request)
+    public function deleteStudentBookmark(BookmarkRequest $request)
     {
         $validated = $request->validated();
         $bookmark = Bookmark::where('github_id', $validated['github_id'])
@@ -30,7 +41,7 @@ class BookmarkController extends Controller
         return response()->json(['error' => 'Bookmark not found'], 404);
     }
 
-    public function studentBookmarksGetter(BookmarkRequest $request, $github_id)
+    public function getStudentBookmarks(BookmarkRequest $request, $github_id)
     {
         $bookmarks = Bookmark::where('github_id', $github_id)->get();
         return response()->json($bookmarks, 200);
