@@ -2,8 +2,8 @@
 set -e
 
 echo "Loading environment variables from .env..."
-if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+if [ -f /var/www/html/.env ]; then
+    export $(grep -v '^#' /var/www/html/.env | xargs)
 fi
 
 echo "APP_ENV is set to: '$APP_ENV'"
@@ -16,9 +16,9 @@ fi
 echo "Installing Composer dependencies..."
 composer install
 
-if [ ! -f .env ]; then
+if [ ! -f /var/www/html/.env ]; then
     echo "[WARNING] - .env File Not Found! Using .env.docker File as .env"
-    cp .env.docker .env
+    cp /var/www/html/.env.docker /var/www/html/.env
 fi
 
 # Wait for the database to be ready before running migrations
