@@ -27,7 +27,7 @@ class BookmarkRequest extends FormRequest
         if ($this->route('github_id')) {
             $this->merge(['github_id' => $this->route('github_id')]);
         }
-        
+
         $rules = [
             'github_id' => [
                 'required',
@@ -44,6 +44,10 @@ class BookmarkRequest extends FormRequest
         ];
 
         if ($this->isMethod('post')) {
+            $rules['resource_id'] = 'required|integer|exists:resources,id';
+        }
+
+        if ($this->isMethod('delete')) {
             $rules['resource_id'] = 'required|integer|exists:resources,id';
         }
 

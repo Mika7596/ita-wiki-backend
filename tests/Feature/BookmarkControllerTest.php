@@ -65,12 +65,15 @@ class BookmarkControllerTest extends TestCase
 
     public function testDestroyBookmark(): void
     {
-        $response = $this->post('api/bookmarks', [
+        $response = $this->delete('api/bookmarks', [
             'github_id' => $this->student->github_id,
             'resource_id' => $this->bookmarks[1]->resource_id
         ]);
                 
-        $response->assertStatus(200)->assertJsonCount(1);
+        //$response->assertStatus(200)->assertJsonCount(1);
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Bookmark deleted successfully']);
+
 
         $this->assertDatabaseMissing('bookmarks', [
             'github_id' => $this->student->github_id,
@@ -85,7 +88,11 @@ class BookmarkControllerTest extends TestCase
             'resource_id' => $this->resources[2]->id
         ]);
 
-        $response->assertStatus(200)->assertJsonCount(3);
+        $response->assertStatus(201)
+            ->assertJson([
+                'github_id' => $this->student->github_id,
+                'resource_id' => $this->resources[2]->id,
+            ]);
 
         $this->assertDatabaseHas('bookmarks', [
             'github_id' => $this->student->github_id,

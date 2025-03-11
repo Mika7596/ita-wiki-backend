@@ -17,6 +17,10 @@ Route::get('/users/user-signedin-as', [RoleController::class, 'getRoleByGithubId
 
 Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resource.update');
 
+//Route::post('/bookmarks', [BookmarkController::class,'studentBookmarksSwitcher'])->name('bookmark.switch'); // creates or deletes a single bookmark of a given student and then retrieves all student's bookmarks
+
 Route::get('/bookmarks/{github_id}', [BookmarkController::class,'studentBookmarksGetter'])->name('bookmarks'); // retrieves bookmarks of a given student
 
-Route::post('/bookmarks', [BookmarkController::class,'studentBookmarksSwitcher'])->name('bookmark.switch'); // creates or deletes a single bookmark of a given student and then retrieves all student's bookmarks
+Route::post('/bookmarks', [BookmarkController::class,'studentBookmarkCreate'])->name('bookmark.create');
+
+Route::delete('/bookmarks', [BookmarkController::class,'studentBookmarkDelete'])->name('bookmark.delete');
