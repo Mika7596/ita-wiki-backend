@@ -48,7 +48,7 @@ class BookmarkControllerTest extends TestCase
 
     public function testGetStudentBookmarks(): void
     {
-        $response = $this->get('api/bookmarks/?github_id=' . $this->student->github_id);
+        $response = $this->get('api/bookmarks/' . $this->student->github_id);
         $response->assertStatus(200)
             ->assertJsonCount(2)
             ->assertJson([
@@ -59,7 +59,7 @@ class BookmarkControllerTest extends TestCase
 
     public function testGetBookmarksForUnexistentRoleFails(): void {
         $nonExistentGithubId = 92920;
-        $response = $this->get('api/bookmarks/?github_id=' . $nonExistentGithubId);
+        $response = $this->get('api/bookmarks/' . $nonExistentGithubId);
         $response->assertStatus(422);
     }
 
@@ -118,7 +118,7 @@ class BookmarkControllerTest extends TestCase
 
     public function testGetAnonymousBookmarksFails(): void
     {
-        $response = $this->get('api/bookmarks/?github_id=' . $this->anonymous->github_id);
+        $response = $this->get('api/bookmarks/' . $this->anonymous->github_id);
         $response->assertStatus(422);
     }
 }

@@ -24,6 +24,10 @@ class BookmarkRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->route('github_id')) {
+            $this->merge(['github_id' => $this->route('github_id')]);
+        }
+        
         $rules = [
             'github_id' => [
                 'required',
