@@ -7,22 +7,12 @@ namespace Tests\Feature;
 use App\Models\Resource;
 use App\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class UpdateResourceTest extends TestCase
 {
     use WithFaker;
 
-   
-    protected function setUp(): void
-    {
-        parent::setUp();
-        //creamos 10 roles
-        Role::factory(10)->create();
-    }
-
-  
     //creamos diferentes resources
     private function createResource(array $overrides = []): Resource
     {
@@ -38,7 +28,7 @@ class UpdateResourceTest extends TestCase
    //Puede actualizar un resource
     public function testItCanUpdateAResource()
     {
-  
+
         $role = Role::factory()->create(['github_id' => 12345]);
 
         
@@ -139,15 +129,15 @@ class UpdateResourceTest extends TestCase
         // Combinamos datos válidos y inválidos
         $data = array_merge($data, $invalidData);
 
-     
+    
         $response = $this->updateResourceRequest($resource->id, $data);
 
         // Verificar que se devuelva un error 422
         $response->assertStatus(422)
             
-                 ->assertJsonPath($fieldName, function ($errors) {
-                     return is_array($errors) && count($errors) > 0;
-                 });
+                ->assertJsonPath($fieldName, function ($errors) {
+                    return is_array($errors) && count($errors) > 0;
+                });
 
          // Verificar que el Resource no se haya actualizado
         $this->assertDatabaseHas('resources', [
@@ -158,11 +148,10 @@ class UpdateResourceTest extends TestCase
         ]);
     }
 
-   
     public static function resourceValidationProvider()
     {
         return [
-          
+    
             'missing title' => [['title' => null], 'title'],
             'invalid title (too short)' => [['title' => 'a'], 'title'],
             'invalid title (too long)' => [['title' => self::generateLongText(256)], 'title'],
@@ -180,7 +169,7 @@ class UpdateResourceTest extends TestCase
         ];
     }
 
-   
+
     public static function generateLongText(int $length): string
     {
         return str_repeat('a', $length);
