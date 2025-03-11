@@ -46,5 +46,4 @@ class ResourceController extends Controller
         return response()->json($resources, 200);
     }
 
-
 }
