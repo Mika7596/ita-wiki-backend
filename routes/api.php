@@ -15,7 +15,7 @@ Route::get('/resources', [ResourceController::class, 'index'])->name('resources'
 
 Route::get('/users/user-signedin-as', [RoleController::class, 'getRoleByGithubId']);
 
-Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resource.update');
+Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resources.update');
 
 //Route::post('/bookmarks', [BookmarkController::class,'studentBookmarksSwitcher'])->name('bookmark.switch'); // creates or deletes a single bookmark of a given student and then retrieves all student's bookmarks
 
