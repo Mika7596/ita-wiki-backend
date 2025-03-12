@@ -21,11 +21,25 @@ class BookmarkFactory extends Factory
      */
     public function definition()
     {
-        /*
+        do {
+            $role = Role::where('role', 'student')->inRandomOrder()->first();
+            $resource = Resource::inRandomOrder()->first();
+        
+            if (!$role || !$resource) {
+                throw new \Exception('Roles or Resources table is empty.');
+            }
+
+            $github_id = $role->github_id;
+            $resource_id = $resource->id;
+
+        } while (Bookmark::where('github_id', $github_id)
+            ->where('resource_id', $resource_id)
+            ->exists());
+
         return [
-            'github_id' => Role::where('role', 'student')->inRandomOrder()->first()->github_id,
-            'resource_id' => Resource::inRandomOrder()->first()->id,
-        ];
-        */
+            'github_id' => $github_id,
+            'resource_id' => $resource_id
+        ];   
     }
+
 }
