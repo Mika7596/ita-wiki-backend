@@ -41,7 +41,7 @@ class RoleController extends Controller
     * )
     */
 
-    public function getRoleByGithubId(Request $request)
+    public function githubLogin(Request $request)
     {
         $request->headers->set('Accept', 'application/json');
         $request->validate([
