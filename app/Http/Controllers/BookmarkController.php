@@ -12,7 +12,6 @@ class BookmarkController extends Controller
 {
     public function createStudentBookmark(BookmarkRequest $request)
     {
-        $request->merge(['github_id' => $request->route('github_id')]);
         $validated = $request->validated();
         $existingBookmark = Bookmark::where('github_id', $validated['github_id'])
         ->where('resource_id', $validated['resource_id'])
@@ -30,7 +29,6 @@ class BookmarkController extends Controller
 
     public function deleteStudentBookmark(BookmarkRequest $request)
     {
-        $request->merge(['github_id' => $request->route('github_id')]);
         $validated = $request->validated();
         $bookmark = Bookmark::where('github_id', $validated['github_id'])
             ->where('resource_id', $validated['resource_id'])
@@ -44,9 +42,8 @@ class BookmarkController extends Controller
 
     public function getStudentBookmarks(BookmarkRequest $request, $github_id)
     {
-        $request->merge(['github_id' => $request->route('github_id')]);
         $validated = $request->validated();
-        $bookmarks = Bookmark::where('github_id', $github_id)->get();
+        $bookmarks = Bookmark::where('github_id', $validated['github_id'])->get();
         return response()->json($bookmarks, 200);
     }
 }
