@@ -51,12 +51,17 @@ class RoleController extends Controller
         $githubId = $request->input('github_id', $request->query('github_id'));
         $role = Role::where('github_id', $githubId)->first();
 
-
+        if (!$role) {
+            return response()->json([
+                'message' => 'Role not found.',
+                'role' => null
+            ], 404); 
+        }
         return response()->json([
             'message' => 'Role found.',
             'role' => [
-                'github_id' => $role->github_id,
-                'role' => $role->role
+               'github_id' => $role->github_id,
+               'role' => $role->role
             ]
         ], 200);
     }
