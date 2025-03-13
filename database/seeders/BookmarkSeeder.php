@@ -17,20 +17,18 @@ class BookmarkSeeder extends Seeder
      */
     public function run(): void
     {
-        //$student = Role::where('github_id', 6729608)->where('role', 'student')->firstOrFail();
         $student = Role::where('github_id', 6729608)->firstOrFail();
         $resources = Resource::inRandomOrder()->take(3)->get();
 
         if ($student && $resources) {
             foreach ($resources as $resource) {
-                Bookmark::firstOrCreate([ // this function prevents creation of duplicates
+                Bookmark::create([
                     'github_id' => $student->github_id,
                     'resource_id' => $resource->id,
                 ]);
             }
         }
 
-        Bookmark::factory(5)->create();
-
+        //Bookmark::factory(5)->create();
     }
 }

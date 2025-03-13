@@ -38,8 +38,7 @@ class BookmarkFactory extends Factory
 
         return [
             'github_id' => $github_id,
-            'resource_id' => $resource_id
-        ];   
+            'resource_id' => $resource_id,
+        ];
     }
-
 }
