@@ -15,20 +15,21 @@ class BookmarkSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+
+    public function run()
     {
-        $student = Role::where('github_id', 6729608)->firstOrFail();
+        // First 3 manually created bookmarks using Role created by Seeder
+        $knownStudentId = 6729608;
+        $knownStudent = Role::where('github_id', $knownStudentId)->firstOrFail();
         $resources = Resource::inRandomOrder()->take(3)->get();
-
-        if ($student && $resources) {
-            foreach ($resources as $resource) {
-                Bookmark::create([
-                    'github_id' => $student->github_id,
-                    'resource_id' => $resource->id,
-                ]);
-            }
+        
+        foreach ($resources as $resource) {
+            Bookmark::firstOrCreate([
+                'github_id' => $knownStudent->github_id,
+                'resource_id' => $resource->id,
+            ]);
         }
-
-        //Bookmark::factory(5)->create();
+        // Create 5 additional bookmarks
+        Bookmark::factory(5)->create();
     }
 }
