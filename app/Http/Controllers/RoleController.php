@@ -88,30 +88,18 @@ class RoleController extends Controller
         return response()->json(['message' => 'Rol creado con éxito.'], 201);
     }
 
-
     public function getRoleByGithubId(Request $request)
     {
-        $request->headers->set('Accept', 'application/json');
-        $request->validate([
+        $validated = $request->validate([
             'github_id' => 'required|integer'
         ]);
 
-        $githubId = $request->input('github_id', $request->query('github_id'));
-        $role = Role::where('github_id', $githubId)->first();
+        $role = Role::where('github_id', $validated['github_id'])->first();
 
         if (!$role) {
-            $new = new Role;
-            $new->github_id = $githubId;
-            $new->save();
-            $new = Role::where('github_id', $githubId)->first();
-
             return response()->json([
-                'message' => 'Role not found. Created as new anonymous user.',
-                'role' => [
-                    'github_id' => $new->github_id,
-                    'role' => $new->role
-                ]
-            ], 201);
+                'message' => 'Role not found.'
+            ], 404);
         }
 
         return response()->json([
