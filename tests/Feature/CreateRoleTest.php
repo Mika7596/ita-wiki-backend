@@ -10,10 +10,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class CreateRoleTest extends TestCase
 {
-
-    private function createRole(string $role = ''): Role
+    private function createRole(string $role): Role
     {
-        return Role::create(['role', $role]);
+        return Role::create([
+            'github_id' => random_int(100000, 999999),
+            'role' => $role,
+        ]);
     }
 
     private function requestCreateRole(int $github_id, string $role)
@@ -107,11 +109,10 @@ class CreateRoleTest extends TestCase
     public function testItCanShowStatus_422WithInvalidData(array $invalidData, string $fieldName): void
     {
         $data = $this->GetRoleData();
-        $data = array_merge($data, $invalidData);
+        $data = array_merge($data, $invalidData);  
 
-        $response = $this->postJson(route('resources.store'), $data);
-
-        $response->assertStatus(422)
+        $response = $this->postJson(route('roles.create'), $data)
+            ->assertStatus(422)
         // This verifies that the field $fieldName exists in the response and has at least one error message.
         ->assertJsonPath($fieldName, function ($errors) {
             return is_array($errors) && count($errors) > 0;
@@ -125,13 +126,11 @@ class CreateRoleTest extends TestCase
             'missing authorized_github_id' => [['authorized_github_id' => null], 'authorized_github_id'],
             'authorized_github_id must be an integer' => [['authorized_github_id' => 'string'], 'authorized_github_id'],
             'authorized_github_id must be greater than 1' => [['authorized_github_id' => 0], 'authorized_github_id'],
-            'authorized_github_id must exist in roles table' => [['authorized_github_id' => 123456], 'authorized_github_id'],
-        
+            'authorized_github_id must exist in roles table' => [['authorized_github_id' => 123456], 'authorized_github_id'],        
         // github_id
             'missing github_id' => [['github_id' => null], 'github_id'],
             'github_id must be an integer' => [['github_id' => 'string'], 'github_id'],
-            'github_id must be greater than 1' => [['github_id' => 0], 'github_id'],
-        
+            'github_id must be greater than 1' => [['github_id' => 0], 'github_id'],        
         // role
             'missing role' => [['role' => null], 'role'],
             'role must be a string' => [['role' => 123456], 'role'],
