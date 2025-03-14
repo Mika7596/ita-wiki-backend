@@ -250,11 +250,6 @@
                         "type": "string",
                         "example": "admin"
                     },
-                    "isAdmin": {
-                        "description": "Check if the user is an admin",
-                        "type": "boolean",
-                        "example": true
-                    },
                     "isStudent": {
                         "description": "Check if the user is a student",
                         "type": "boolean",
@@ -265,8 +260,13 @@
                         "type": "boolean",
                         "example": false
                     },
-                    "isAnonymous": {
-                        "description": "Check if the user is anonymous",
+                    "isAdmin": {
+                        "description": "Check if the user is an admin",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "isSuperadmin": {
+                        "description": "Check if the user is a superadmin",
                         "type": "boolean",
                         "example": false
                     }
