@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRoleRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Http\JsonResponse;
 
 class RoleController extends Controller
 {
@@ -40,6 +42,52 @@ class RoleController extends Controller
     *     )
     * )
     */
+
+    const ROLE_SUPERADMIN = 'superadmin';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MENTOR = 'mentor';
+    const ROLE_STUDENT = 'student';
+
+    protected $roleHierarchy = [
+        self::ROLE_SUPERADMIN => 4,
+        self::ROLE_ADMIN => 3,
+        self::ROLE_MENTOR => 2,
+        self::ROLE_STUDENT => 1,
+    ];
+    
+    protected function getRoleLevel(string $role): int
+    {
+        return $this->roleHierarchy[$role] ?? 0; // it returns 0 if the role is not found
+    }    
+
+    public function createRole(CreateRoleRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $authorizedRole = (Role::where('github_id', $validated['authorized_github_id'])->first())->role;
+
+        $githubId = $validated['github_id'];
+        $roleToCreate = $validated['role'];
+
+        return $this->processRoleCreation($authorizedRole, $roleToCreate, $githubId);
+    }
+
+    protected function processRoleCreation(string $authorizedRole, string $roleToCreate, string $githubId): JsonResponse
+    {
+        $authorizedLevel = $this->getRoleLevel($authorizedRole);
+        $createLevel = $this->getRoleLevel($roleToCreate);
+
+        if ($createLevel >= $authorizedLevel) {
+            return response()->json(['message' => 'No puedes crear un rol igual o superior al tuyo.'], 403);
+        }
+
+        Role::create([
+            'github_id' => $githubId,
+            'role' => $roleToCreate,
+        ]);
+
+        return response()->json(['message' => 'Rol creado con éxito.'], 201);
+    }
+
 
     public function getRoleByGithubId(Request $request)
     {
