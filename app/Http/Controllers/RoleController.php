@@ -37,7 +37,7 @@ class RoleController extends Controller
      *             required={"github_id", "role", "authorized_github_id"},
      *             @OA\Property(property="github_id", type="integer", example=12345, description="GitHub ID of the user to assign the role"),
      *             @OA\Property(property="role", type="string", example="mentor", description="Role to be assigned"),
-     *             @OA\Property(property="authorized_github_id", type="integer", example=67890, description="GitHub ID of the user making the request (must have permissions)")
+     *             @OA\Property(property="authorized_github_id", type="integer", example=1, description="GitHub ID of the user making the request (must have permissions)")
      *         )
      *     ),
      *     @OA\Response(

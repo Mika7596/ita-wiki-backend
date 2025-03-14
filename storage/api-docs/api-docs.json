@@ -62,7 +62,7 @@
                                     "authorized_github_id": {
                                         "description": "GitHub ID of the user making the request (must have permissions)",
                                         "type": "integer",
-                                        "example": 67890
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -250,6 +250,11 @@
                         "type": "string",
                         "example": "admin"
                     },
+                    "isAdmin": {
+                        "description": "Check if the user is an admin",
+                        "type": "boolean",
+                        "example": true
+                    },
                     "isStudent": {
                         "description": "Check if the user is a student",
                         "type": "boolean",
@@ -260,13 +265,8 @@
                         "type": "boolean",
                         "example": false
                     },
-                    "isAdmin": {
-                        "description": "Check if the user is an admin",
-                        "type": "boolean",
-                        "example": true
-                    },
-                    "isSuperadmin": {
-                        "description": "Check if the user is a superadmin",
+                    "isAnonymous": {
+                        "description": "Check if the user is anonymous",
                         "type": "boolean",
                         "example": false
                     }
