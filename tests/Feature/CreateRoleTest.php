@@ -100,6 +100,16 @@ class CreateRoleTest extends TestCase
         ]);
     }
 
+    public function testCanshowStatus_422WhenGithubIdIsDuplicated()
+    {
+        $admin = $this->createRole('admin');
+        
+        $this->requestCreateRole($admin->github_id, 'student');
+
+        $this->requestCreateRole($admin->github_id, 'student')
+        	->assertStatus(422);
+    }    
+
     private function GetRoleData(): array
     {
         return Role::factory()->raw(); 
