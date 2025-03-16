@@ -56,9 +56,4 @@ class Role extends Model
     {
         return $this->role === 'mentor';
     }
-
-    public function isAnonymous(): bool
-    {
-        return $this->role === 'anonymous';
-    }
 }
