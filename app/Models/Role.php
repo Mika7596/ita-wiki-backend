@@ -11,10 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 *     type="object",
 *     description="Role object representing a user's role and associated GitHub ID",
 *     @OA\Property(property="github_id", type="integer", description="The GitHub ID of the user", example=6729608),
-*     @OA\Property(property="role", type="string", description="The role of the user", example="admin"),
-*     @OA\Property(property="isAdmin", type="boolean", description="Check if the user is an admin", example=true),
-*     @OA\Property(property="isStudent", type="boolean", description="Check if the user is a student", example=false),
-*     @OA\Property(property="isMentor", type="boolean", description="Check if the user is a mentor", example=false)
+*     @OA\Property(property="role", type="string", description="The role of the user", example="student")
 * )
 */
 class Role extends Model
@@ -49,7 +46,6 @@ class Role extends Model
     {
         return $this->role === 'student';
     }
-
 
     public function isMentor(): bool
     {
