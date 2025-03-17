@@ -48,12 +48,4 @@ class BookmarkRequest extends FormRequest
 
         return $rules;
     }
-
-    public function failedValidation(Validator $validator)
-    {
-        if ($this->expectsJson()) {
-            throw new HttpResponseException(response()->json($validator->errors(), 422));
-        }
-        parent::failedValidation($validator);
-    }
 }
