@@ -10,6 +10,27 @@ use App\Models\Bookmark;
 
 class BookmarkController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/bookmarks",
+     *     summary="Create a bookmark",
+     *     tags={"Bookmarks"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"github_id","resource_id"},
+     *             @OA\Property(property="github_id", type="integer", example=6729608),
+     *             @OA\Property(property="resource_id", type="integer", example=11)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Created",
+     *         @OA\JsonContent(ref="#/components/schemas/Bookmark")
+     *     )
+     * )
+    */
+
     public function createStudentBookmark(BookmarkRequest $request)
     {
         $validated = $request->validated();
@@ -27,6 +48,29 @@ class BookmarkController extends Controller
         return response()->json($bookmark, 201);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/bookmarks",
+     *     summary="Delete a bookmark",
+     *     tags={"Bookmarks"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"github_id","resource_id"},
+     *             @OA\Property(property="github_id", type="integer", example=6729608),
+     *             @OA\Property(property="resource_id", type="integer", example=11)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Bookmark deleted successfully")
+     *         )
+     *     )
+     * )
+    */
+
     public function deleteStudentBookmark(BookmarkRequest $request)
     {
         $validated = $request->validated();
@@ -39,6 +83,28 @@ class BookmarkController extends Controller
         }
         return response()->json(['error' => 'Bookmark not found'], 404);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/bookmarks/{github_id}",
+     *     summary="Get all bookmarks for a student",
+     *     tags={"Bookmarks"},
+     *     @OA\Parameter(
+     *         name="github_id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=6729608)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bookmark")
+     *         )
+     *     )
+     * )
+    */
 
     public function getStudentBookmarks(BookmarkRequest $request, $github_id)
     {
