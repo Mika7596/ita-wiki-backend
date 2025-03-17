@@ -51,25 +51,16 @@ class RoleController extends Controller
         $role = Role::where('github_id', $githubId)->first();
 
         if (!$role) {
-            $new = new Role;
-            $new->github_id = $githubId;
-            $new->save();
-            $new = Role::where('github_id', $githubId)->first();
-
             return response()->json([
-                'message' => 'Role not found. Created as new anonymous user.',
-                'role' => [
-                    'github_id' => $new->github_id,
-                    'role' => $new->role
-                ]
-            ], 201);
+                'message' => 'Role not found.',
+                'role' => null
+            ], 404); 
         }
-
         return response()->json([
             'message' => 'Role found.',
             'role' => [
-                'github_id' => $role->github_id,
-                'role' => $role->role
+               'github_id' => $role->github_id,
+               'role' => $role->role
             ]
         ], 200);
     }
