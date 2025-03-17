@@ -13,7 +13,7 @@ Route::post('/resources', [ResourceController::class, 'store'])->name('resources
 
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
-Route::post('/login', [RoleController::class, 'getRoleWithGithubIdLogin'])->name('login');
+Route::post('/login', [RoleController::class, 'getRoleByGithubId'])->name('login');
 
 Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resources.update');
 
