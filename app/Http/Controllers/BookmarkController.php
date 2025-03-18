@@ -106,10 +106,11 @@ class BookmarkController extends Controller
      * )
     */
 
-    public function getStudentBookmarks(BookmarkRequest $request, $github_id)
+    public function getStudentBookmarks(BookmarkRequest $request)
     {
-        $validated = $request->validated();
-        $bookmarks = Bookmark::where('github_id', $validated['github_id'])->get();
-        return response()->json($bookmarks, 200);
+        return response()->json(
+            Bookmark::where('github_id', $request->validated('github_id'))->get(),
+            200
+        );
     }
 }
