@@ -52,40 +52,46 @@ class RoleController extends Controller
 
 
     /**
-     * @OA\Get(
-     *     path="/api/users/user-signedin-as",
-     *     summary="Retrieve a role by GitHub ID",
-     *     description="Fetches a role using the provided GitHub ID.",
-     *     @OA\Parameter(
-     *         name="github_id",
-     *         in="query",
-     *         required=true,
-     *         description="GitHub ID of the user",
-     *         @OA\Schema(type="integer", example=12345)
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Role found",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="message", type="string", example="Role found."),
-     *             @OA\Property(
-     *                 property="role",
-     *                 type="object",
-     *                 ref="#/components/schemas/Role"
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Role not found",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="message", type="string", example="Role not found.")
-     *         )
-     *     )
-     * )
-     */
+    * @OA\Post(
+    *     path="/api/login",
+    *     summary="Retrieve a role by GitHub ID",
+    *     description="Fetches a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+    *     @OA\Parameter(
+    *         name="github_id",
+    *         in="query",
+    *         description="GitHub ID of the user",
+    *         required=true,
+    *         @OA\Schema(type="integer", example=6729608)
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Role found",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="Role found."),
+    *             @OA\Property(
+    *                 property="role",
+    *                 type="object",
+    *                 ref="#/components/schemas/Role"
+    *             )
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=404,
+    *         description="Role not found",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="Role not found."),
+    *             @OA\Property(
+    *                 property="role",
+    *                 type="object",
+    *                 nullable=true,
+    *                 example=null
+    *             )
+    *         )
+    *     )
+    * )
+    */
 
     public function getRoleByGithubId(Request $request)
     {
@@ -100,12 +106,11 @@ class RoleController extends Controller
                 'message' => 'Role not found.'
             ], 404);
         }
-
         return response()->json([
             'message' => 'Role found.',
             'role' => [
-                'github_id' => $role->github_id,
-                'role' => $role->role
+               'github_id' => $role->github_id,
+               'role' => $role->role
             ]
         ], 200);
     }
