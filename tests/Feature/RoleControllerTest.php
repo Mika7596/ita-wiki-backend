@@ -39,9 +39,9 @@ class RoleControllerTest extends TestCase
     public function testRoleNotFound(): void
     {
         $random_github_id = random_int(1, 10000000);
-        $response = $this->get('/api/users/' . $random_github_id);
-        $response->assertStatus(404);
-    }
+        $response = $this->post(route('login'), [
+            'github_id' => $random_github_id
+        ]);
 
         $response->assertStatus(404)
             ->assertJsonStructure(['message', 'role'])
