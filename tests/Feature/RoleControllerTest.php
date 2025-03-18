@@ -36,6 +36,11 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-
+    public function testUnexistentGithubIdSignsUpFails(): void
+    {
+        $random_github_id = random_int(1, 10000000);
+        $response = $this->get('/api/users/' . $random_github_id);
+        $response->assertStatus(404);
+    }
 
 }

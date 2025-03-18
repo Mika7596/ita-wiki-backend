@@ -12,7 +12,6 @@ use App\Models\Bookmark;
 class BookmarkControllerTest extends TestCase
 {
     protected $student;
-    protected $anonymous;
     protected $resources;
     protected $bookmarks;
 
@@ -25,9 +24,7 @@ class BookmarkControllerTest extends TestCase
             'role' => 'student'
         ]);
 
-        $this->resources = Resource::factory(3)->create([
-            'github_id' => $this->student->github_id
-        ]);
+        $this->resources = Resource::factory(10)->create();
 
         $this->bookmarks = [
             Bookmark::create([
@@ -45,13 +42,13 @@ class BookmarkControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonCount(2)
             ->assertJson([
-                ['github_id' => 9871315, 'resource_id' => $this->resources[0]->id],
-                ['github_id' => 9871315, 'resource_id' => $this->resources[1]->id]
+                ['github_id' => $this->student->github_id, 'resource_id' => $this->resources[0]->id],
+                ['github_id' => $this->student->github_id, 'resource_id' => $this->resources[1]->id]
             ]);
     }
 
     public function testGetBookmarksForUnexistentRoleFails(): void {
-        $nonExistentGithubId = 92920;
+        $nonExistentGithubId = 38928374;
         $response = $this->get('api/bookmarks/' . $nonExistentGithubId);
         $response->assertStatus(422);
     }
