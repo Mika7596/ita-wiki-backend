@@ -8,10 +8,17 @@ use App\Models\Role;
 class RoleController extends Controller
 {
     /**
-    * @OA\Get(
-    *     path="/api/roles",
+    * @OA\Post(
+    *     path="/api/login",
     *     summary="Retrieve a role by GitHub ID",
-    *     description="Fetches a role using the provided GitHub ID. If the role does not exist, it creates a new role for the user as anonymous.",
+    *     description="Fetches a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+    *     @OA\Parameter(
+    *         name="github_id",
+    *         in="query",
+    *         description="GitHub ID of the user",
+    *         required=true,
+    *         @OA\Schema(type="integer", example=6729608)
+    *     ),
     *     @OA\Response(
     *         response=200,
     *         description="Role found",
@@ -26,15 +33,16 @@ class RoleController extends Controller
     *         )
     *     ),
     *     @OA\Response(
-    *         response=201,
-    *         description="Role not found, created as a new anonymous user",
+    *         response=404,
+    *         description="Role not found",
     *         @OA\JsonContent(
     *             type="object",
-    *             @OA\Property(property="message", type="string", example="Role not found. Created as new anonymous user."),
+    *             @OA\Property(property="message", type="string", example="Role not found."),
     *             @OA\Property(
     *                 property="role",
     *                 type="object",
-    *                 ref="#/components/schemas/Role"
+    *                 nullable=true,
+    *                 example=null
     *             )
     *         )
     *     )
@@ -43,7 +51,6 @@ class RoleController extends Controller
 
     public function getRoleByGithubId(Request $request)
     {
-        $request->headers->set('Accept', 'application/json');
         $request->validate([
             'github_id' => 'required|integer'
         ]);
@@ -52,25 +59,16 @@ class RoleController extends Controller
         $role = Role::where('github_id', $githubId)->first();
 
         if (!$role) {
-            $new = new Role;
-            $new->github_id = $githubId;
-            $new->save();
-            $new = Role::where('github_id', $githubId)->first();
-
             return response()->json([
-                'message' => 'Role not found. Created as new anonymous user.',
-                'role' => [
-                    'github_id' => $new->github_id,
-                    'role' => $new->role
-                ]
-            ], 201);
+                'message' => 'Role not found.',
+                'role' => null
+            ], 404); 
         }
-
         return response()->json([
             'message' => 'Role found.',
             'role' => [
-                'github_id' => $role->github_id,
-                'role' => $role->role
+               'github_id' => $role->github_id,
+               'role' => $role->role
             ]
         ], 200);
     }
