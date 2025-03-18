@@ -34,21 +34,4 @@ class Role extends Model
     {
         return $this->hasMany(Bookmark::class);
     }
-
-    // Since we have not implemented middleware, the following may be useful
-
-    public function isAdmin(): bool
-    {
-        return $this->role === 'admin';
-    }
-
-    public function isStudent(): bool
-    {
-        return $this->role === 'student';
-    }
-
-    public function isMentor(): bool
-    {
-        return $this->role === 'mentor';
-    }
 }
