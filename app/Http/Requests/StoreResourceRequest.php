@@ -27,7 +27,7 @@ class StoreResourceRequest extends FormRequest
         return [
             'github_id' => [
                 'required',
-                new RoleAnonymousRule(),
+                'exists:roles,github_id'
             ],
             'description' => ['required', 'string', 'min:10', 'max:1000'],
             'title' => ['required', 'string', 'min:5', 'max:255'],
