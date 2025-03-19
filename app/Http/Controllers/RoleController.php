@@ -1,12 +1,56 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRoleRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Services\CreateRoleService;
+use Illuminate\Http\JsonResponse;
 
 class RoleController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/roles",
+     *     summary="Create a new role",
+     *     description="Allows an authorized user to create a new role for a specific GitHub ID.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"github_id", "role", "authorized_github_id"},
+     *             @OA\Property(property="github_id", type="integer", example=12345, description="GitHub ID of the user to assign the role"),
+     *             @OA\Property(property="role", type="string", example="mentor", description="Role to be assigned"),
+     *             @OA\Property(property="authorized_github_id", type="integer", example=1, description="GitHub ID of the user making the request (must have permissions)")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Role created successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Rol creado con éxito.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized: Cannot create a role equal or higher than your own",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="No puedes crear un rol igual o superior al tuyo.")
+     *         )
+     *     )
+     * )
+     */
+    
+    public function createRole(CreateRoleRequest $request, CreateRoleService $createRoleService): JsonResponse
+    {
+        return $createRoleService($request->validated());
+    }
+
+
     /**
     * @OA\Post(
     *     path="/api/login",
@@ -51,18 +95,16 @@ class RoleController extends Controller
 
     public function getRoleByGithubId(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'github_id' => 'required|integer'
         ]);
 
-        $githubId = $request->input('github_id', $request->query('github_id'));
-        $role = Role::where('github_id', $githubId)->first();
+        $role = Role::where('github_id', $validated['github_id'])->first();
 
         if (!$role) {
             return response()->json([
-                'message' => 'Role not found.',
-                'role' => null
-            ], 404); 
+                'message' => 'Role not found.'
+            ], 404);
         }
         return response()->json([
             'message' => 'Role found.',

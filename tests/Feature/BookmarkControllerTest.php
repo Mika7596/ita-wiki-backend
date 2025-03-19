@@ -4,7 +4,6 @@ declare (strict_types= 1);
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Role;
 use App\Models\Resource;
@@ -61,7 +60,6 @@ class BookmarkControllerTest extends TestCase
             'resource_id' => $this->bookmarks[1]->resource_id
         ]);
                 
-        //$response->assertStatus(200)->assertJsonCount(1);
         $response->assertStatus(200)
             ->assertJson(['message' => 'Bookmark deleted successfully']);
 

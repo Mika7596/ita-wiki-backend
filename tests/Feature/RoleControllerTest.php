@@ -44,10 +44,9 @@ class RoleControllerTest extends TestCase
         ]);
 
         $response->assertStatus(404)
-            ->assertJsonStructure(['message', 'role'])
+            ->assertJsonStructure(['message'])
             ->assertJson([
                 'message' => 'Role not found.',
-                'role' => null
             ]);
     }
 }

@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
-
 class CreateResourceTest extends TestCase
 {
     use WithFaker;
@@ -33,20 +32,6 @@ class CreateResourceTest extends TestCase
         $response = $this->postJson('/non-existent-route', []);
 
         $response->assertStatus(404);
-    } 
-    
-    public function testItCanShowStatus_422WhenGithubIdIsAnonymous(): void
-    {
-        $anonymousGithubId = Role::factory()->create(['role' => 'anonymous'])->github_id;
-        $data = $this->GetResourceData();
-        $data['github_id'] = $anonymousGithubId;
-    
-        $response = $this->postJson(route('resources.store'), $data);
-
-        $response->assertStatus(422)
-            ->assertJsonPath('github_id', function ($errors) {
-                return is_array($errors) && count($errors) > 0;
-            });
     }    
 
     #[DataProvider('resourceValidationProvider')]
@@ -70,6 +55,7 @@ class CreateResourceTest extends TestCase
         return[
         // github_id
             'missing github_id' => [['github_id' => null], 'github_id'],
+            'github_id does not have a role' => [['github_id'=> 99999999999],'github_id'],
         // title
             'missing title' => [['title' => null], 'title'],
             'invalid title (too short)' => [['title' => 'a'], 'title'],

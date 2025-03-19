@@ -5,9 +5,7 @@ declare (strict_types= 1);
 namespace App\Http\Requests;
 
 use App\Rules\RoleAnonymousRule;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreResourceRequest extends FormRequest
 {
@@ -29,7 +27,7 @@ class StoreResourceRequest extends FormRequest
         return [
             'github_id' => [
                 'required',
-                new RoleAnonymousRule(),
+                'exists:roles,github_id'
             ],
             'description' => ['required', 'string', 'min:10', 'max:1000'],
             'title' => ['required', 'string', 'min:5', 'max:255'],
@@ -39,14 +37,5 @@ class StoreResourceRequest extends FormRequest
             'type' =>['required', 'string', 'in:Video,Cursos,Blog']
         ];
        
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        if ($this->expectsJson()) {
-            throw new HttpResponseException(response()->json($validator->errors(), 422));
-        }
-
-        parent::failedValidation($validator);
-    }    
+    }  
 }
