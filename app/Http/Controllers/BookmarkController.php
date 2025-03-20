@@ -113,4 +113,71 @@ class BookmarkController extends Controller
             200
         );
     }
+
+    /**
+     * @OA\Post(
+     *     path="/bookmarks/toggle",
+     *     summary="Toggle a bookmark",
+     *     tags={"Bookmarks"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"github_id","resource_id"},
+     *             @OA\Property(property="github_id", type="integer", example=6729608),
+     *             @OA\Property(property="resource_id", type="integer", example=11)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Bookmark toggled successfully"),
+     *             @OA\Property(property="bookmarked", type="boolean", example=true)
+     *         )
+     *     )
+     * )
+    */
+
+    public function toggleBookmark(BookmarkRequest $request)
+    {
+        $validated = $request->validated();
+        $bookmark = Bookmark::where('github_id', $validated['github_id'])
+            ->where('resource_id', $validated['resource_id'])
+            ->first();
+
+        if ($bookmark) {
+            $bookmark->delete();
+            return response()->json([
+                'message' => 'Bookmark removed successfully',
+                'bookmarked' => false
+            ], 200);
+        } else {
+            Bookmark::create($validated);
+            return response()->json([
+                'message' => 'Bookmark created successfully',
+                'bookmarked' => true
+            ], 200);
+        }
+    }
+
+    // TOGGLE OPTION 2
+
+    /*
+    public function toggleBookmark(BookmarkRequest $request)
+    {
+        $validated = $request->validated();
+
+        $bookmark = Bookmark::where('github_id', $validated['github_id'])
+            ->where('resource_id', $validated['resource_id'])
+            ->first();
+
+        if ($bookmark) {
+            // Call deleteStudentBookmark and return its response
+            return $this->deleteStudentBookmark($request);
+        } else {
+            // Call createStudentBookmark and return its response
+            return $this->createStudentBookmark($request);
+        }
+    }
+    */
 }
