@@ -19,6 +19,11 @@ class RoleSeeder extends Seeder
             'role' => 'student',
         ]);
 
+        Role::create([
+            'github_id' => 47982114,
+            'role' => 'student',
+        ]);
+
         Role::factory(20)->create();
     }
 }
