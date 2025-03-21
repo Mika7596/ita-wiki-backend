@@ -139,23 +139,38 @@ class BookmarkController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/bookmarks/toggle",
+     *     path="/api/bookmarks/toggle",
      *     summary="Toggle a bookmark",
      *     tags={"Bookmarks"},
+     *     description="Creates or deletes a bookmark based on current state",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"github_id","resource_id"},
      *             @OA\Property(property="github_id", type="integer", example=6729608),
-     *             @OA\Property(property="resource_id", type="integer", example=11)
+     *             @OA\Property(property="resource_id", type="integer", example=10)
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Success",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Bookmark toggled successfully"),
+     *             @OA\Property(property="message", type="string", example="Bookmark created successfully"),
      *             @OA\Property(property="bookmarked", type="boolean", example=true)
+     *                  examples={
+     *                      "created": {
+     *                          "value": {
+     *                              "message": "Bookmark created successfully", 
+     *                               "bookmarked": true
+     *                          }
+     *                      },
+     *                      "deleted": {
+     *                          "value": {
+     *                              "message": "Bookmark removed successfully",
+     *                              "bookmarked": false
+     *                          }
+     *                      }
+     *                  }
      *         )
      *     )
      * )
