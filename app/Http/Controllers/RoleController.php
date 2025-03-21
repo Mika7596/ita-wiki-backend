@@ -16,6 +16,7 @@ class RoleController extends Controller
      * @OA\Post(
      *     path="/api/roles",
      *     summary="Create a new role",
+     *     tags={"Roles"},
      *     description="Allows an authorized user to create a new role for a specific GitHub ID.",
      *     @OA\RequestBody(
      *         required=true,
@@ -55,6 +56,7 @@ class RoleController extends Controller
     * @OA\Post(
     *     path="/api/login",
     *     summary="Retrieve a role by GitHub ID",
+    *     tags={"Roles"},
     *     description="Fetches a role using the provided GitHub ID. If the role does not exist, it returns an error.",
     *     @OA\Parameter(
     *         name="github_id",
