@@ -14,6 +14,7 @@ class BookmarkController extends Controller
      * @OA\Post(
      *     path="/api/bookmarks",
      *     summary="Create a bookmark",
+     *     tags={"Bookmarks"},
      *     description="Creates a new bookmark and returns a confirmation message",
      *     @OA\RequestBody(
      *         required=true,
@@ -67,6 +68,7 @@ class BookmarkController extends Controller
      * @OA\Delete(
      *     path="/api/bookmarks",
      *     summary="Delete a bookmark",
+     *     tags={"Bookmarks"},
      *     description="Deletes a bookmark and returns a confirmation message",
      *     @OA\RequestBody(
      *         required=true,
@@ -110,6 +112,7 @@ class BookmarkController extends Controller
      * @OA\Get(
      *     path="/api/bookmarks/{github_id}",
      *     summary="Get all bookmarks for a student",
+     *     tags={"Bookmarks"},
      *     description="If the student's github_id exists it returns all bookmarks for that student or an empty array in case there is not any",
      *     @OA\Parameter(
      *         name="github_id",

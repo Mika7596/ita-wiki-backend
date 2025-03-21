@@ -28,6 +28,7 @@ class ResourceController extends Controller
      * @OA\Get(
      *  path="/api/resources",
      *  summary="Get all resources",
+     *  tags={"Resources"},
      *  description="return a list of all resources",
      *  @OA\Response(
      *     response=200,

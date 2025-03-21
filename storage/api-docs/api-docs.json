@@ -8,6 +8,9 @@
     "paths": {
         "/api/bookmarks": {
             "post": {
+                "tags": [
+                    "Bookmarks"
+                ],
                 "summary": "Create a bookmark",
                 "description": "Creates a new bookmark and returns a confirmation message",
                 "operationId": "3ef5b66b351fa996ad037e264208b30a",
@@ -87,6 +90,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Bookmarks"
+                ],
                 "summary": "Delete a bookmark",
                 "description": "Deletes a bookmark and returns a confirmation message",
                 "operationId": "41bfde9ffcfb74e92d350e61b45c157b",
@@ -152,6 +158,9 @@
         },
         "/api/bookmarks/{github_id}": {
             "get": {
+                "tags": [
+                    "Bookmarks"
+                ],
                 "summary": "Get all bookmarks for a student",
                 "description": "If the student's github_id exists it returns all bookmarks for that student or an empty array in case there is not any",
                 "operationId": "615226efbbbcd8b51e9f0a3cc43f526f",
@@ -190,6 +199,9 @@
         },
         "/api/resources": {
             "get": {
+                "tags": [
+                    "Resources"
+                ],
                 "summary": "Get all resources",
                 "description": "return a list of all resources",
                 "operationId": "ee96de2f37d473ea4740b7700ddd1daf",
@@ -217,6 +229,9 @@
         },
         "/api/roles": {
             "post": {
+                "tags": [
+                    "Roles"
+                ],
                 "summary": "Create a new role",
                 "description": "Allows an authorized user to create a new role for a specific GitHub ID.",
                 "operationId": "4131bb39b430bdf2d95b73111d2e126a",
@@ -290,6 +305,9 @@
         },
         "/api/login": {
             "post": {
+                "tags": [
+                    "Roles"
+                ],
                 "summary": "Retrieve a role by GitHub ID",
                 "description": "Fetches a role using the provided GitHub ID. If the role does not exist, it returns an error.",
                 "operationId": "b381f169e17b927e71d392ff0f3d4ce5",
@@ -471,5 +489,19 @@
                 "type": "object"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Bookmarks",
+            "description": "Bookmarks"
+        },
+        {
+            "name": "Resources",
+            "description": "Resources"
+        },
+        {
+            "name": "Roles",
+            "description": "Roles"
+        }
+    ]
 }
