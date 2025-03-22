@@ -25,4 +25,6 @@ Route::delete('/bookmarks', [BookmarkController::class,'deleteStudentBookmark'])
 
 Route::post('/bookmarks/toggle', [BookmarkController::class, 'toggleBookmark'])->name('bookmark.toggle');
 
+Route::post('/bookmarks/toggle-refresh', [BookmarkController::class, 'toggleBookmarkAndRefresh'])->name('bookmark.toggle-refresh');
+
 Route::post('/roles', [RoleController::class, 'createRole'])->name('roles.create');
