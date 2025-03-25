@@ -1,17 +1,70 @@
 <?php
 
+declare (strict_types= 1);
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRoleRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Services\CreateRoleService;
+use Illuminate\Http\JsonResponse;
 
 class RoleController extends Controller
 {
     /**
-    * @OA\Get(
-    *     path="/api/roles",
+     * @OA\Post(
+     *     path="/api/roles",
+     *     summary="Create a new role",
+     *     tags={"Roles"},
+     *     description="Allows an authorized user to create a new role for a specific GitHub ID.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"github_id", "role", "authorized_github_id"},
+     *             @OA\Property(property="github_id", type="integer", example=12345, description="GitHub ID of the user to assign the role"),
+     *             @OA\Property(property="role", type="string", example="mentor", description="Role to be assigned"),
+     *             @OA\Property(property="authorized_github_id", type="integer", example=1, description="GitHub ID of the user making the request (must have permissions)")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Role created successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Rol creado con éxito.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized: Cannot create a role equal or higher than your own",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="No puedes crear un rol igual o superior al tuyo.")
+     *         )
+     *     )
+     * )
+     */
+    
+    public function createRole(CreateRoleRequest $request, CreateRoleService $createRoleService): JsonResponse
+    {
+        return $createRoleService($request->validated());
+    }
+
+
+    /**
+    * @OA\Post(
+    *     path="/api/login",
     *     summary="Retrieve a role by GitHub ID",
-    *     description="Fetches a role using the provided GitHub ID. If the role does not exist, it creates a new role for the user as anonymous.",
+    *     tags={"Roles"},
+    *     description="Fetches a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+    *     @OA\Parameter(
+    *         name="github_id",
+    *         in="query",
+    *         description="GitHub ID of the user",
+    *         required=true,
+    *         @OA\Schema(type="integer", example=6729608)
+    *     ),
     *     @OA\Response(
     *         response=200,
     *         description="Role found",
@@ -26,15 +79,16 @@ class RoleController extends Controller
     *         )
     *     ),
     *     @OA\Response(
-    *         response=201,
-    *         description="Role not found, created as a new anonymous user",
+    *         response=404,
+    *         description="Role not found",
     *         @OA\JsonContent(
     *             type="object",
-    *             @OA\Property(property="message", type="string", example="Role not found. Created as new anonymous user."),
+    *             @OA\Property(property="message", type="string", example="Role not found."),
     *             @OA\Property(
     *                 property="role",
     *                 type="object",
-    *                 ref="#/components/schemas/Role"
+    *                 nullable=true,
+    *                 example=null
     *             )
     *         )
     *     )
@@ -43,34 +97,22 @@ class RoleController extends Controller
 
     public function getRoleByGithubId(Request $request)
     {
-        $request->headers->set('Accept', 'application/json');
-        $request->validate([
+        $validated = $request->validate([
             'github_id' => 'required|integer'
         ]);
 
-        $githubId = $request->input('github_id', $request->query('github_id'));
-        $role = Role::where('github_id', $githubId)->first();
+        $role = Role::where('github_id', $validated['github_id'])->first();
 
         if (!$role) {
-            $new = new Role;
-            $new->github_id = $githubId;
-            $new->save();
-            $new = Role::where('github_id', $githubId)->first();
-
             return response()->json([
-                'message' => 'Role not found. Created as new anonymous user.',
-                'role' => [
-                    'github_id' => $new->github_id,
-                    'role' => $new->role
-                ]
-            ], 201);
+                'message' => 'Role not found.'
+            ], 404);
         }
-
         return response()->json([
             'message' => 'Role found.',
             'role' => [
-                'github_id' => $role->github_id,
-                'role' => $role->role
+               'github_id' => $role->github_id,
+               'role' => $role->role
             ]
         ], 200);
     }

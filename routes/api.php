@@ -13,7 +13,7 @@ Route::post('/resources', [ResourceController::class, 'store'])->name('resources
 
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
-Route::get('/users/user-signedin-as', [RoleController::class, 'getRoleByGithubId']);
+Route::post('/login', [RoleController::class, 'getRoleByGithubId'])->name('login');
 
 Route::put('/resources/{resource}', [ResourceEditController::class, 'update'])->name('resources.update');
 
@@ -22,3 +22,5 @@ Route::get('/bookmarks/{github_id}', [BookmarkController::class,'getStudentBookm
 Route::post('/bookmarks', [BookmarkController::class,'createStudentBookmark'])->name('bookmark.create');
 
 Route::delete('/bookmarks', [BookmarkController::class,'deleteStudentBookmark'])->name('bookmark.delete');
+
+Route::post('/roles', [RoleController::class, 'createRole'])->name('roles.create');
