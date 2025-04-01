@@ -39,23 +39,29 @@ return new class extends Migration
             CREATE TRIGGER update_like_count_insert 
             AFTER INSERT ON likes 
             FOR EACH ROW 
-            UPDATE resources 
-            SET like_count = like_count + NEW.like_dislike 
-            WHERE id = NEW.resource_id;
+            BEGIN
+                UPDATE resources
+                SET like_count = COALESCE(like_count, 0) + NEW.like_dislike
+                WHERE id = NEW.resource_id;
+            END;
 
             CREATE TRIGGER update_like_count_delete 
             AFTER DELETE ON likes 
             FOR EACH ROW 
-            UPDATE resources 
-            SET like_count = like_count - OLD.like_dislike 
-            WHERE id = OLD.resource_id;
+            BEGIN
+                UPDATE resources
+                SET like_count = COALESCE(like_count, 0) - OLD.like_dislike
+                WHERE id = OLD.resource_id;
+            END;
 
             CREATE TRIGGER update_like_count_update 
             AFTER UPDATE ON likes 
             FOR EACH ROW 
-            UPDATE resources 
-            SET like_count = like_count + (NEW.like_dislike - OLD.like_dislike) 
-            WHERE id = NEW.resource_id;
+            BEGIN
+                UPDATE resources
+                SET like_count = COALESCE(like_count, 0) + (NEW.like_dislike - OLD.like_dislike)
+                WHERE id = NEW.resource_id;
+            END;
         ');
     }
 
