@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
      *      @OA\Property(property="category", type="string", enum={"Node","React","Angular","JavaScript","Java","Fullstack PHP", "Data Science","BBDD"}, example="Node"),
      *      @OA\Property(property="theme", type="string", enum={"All","Components","UseState & UseEffect","Eventos","Renderizado condicional","Listas", "Estilos","Debugging", "React Router"}, example="All"),
      *      @OA\Property(property="type", type="string", enum={"Video","Cursos","Blog"}, example="Video"),
-     *      @OA\Property(property="votes", type="integer", example = 1)
+     *      @OA\Property(property="like_count", type="integer", example = 1)
      * )
      */
 class Resource extends Model
@@ -36,7 +36,7 @@ class Resource extends Model
         'category',
         'theme',
         'type',
-        'votes'
+        'like_count'
     ];
 
     public function role()
@@ -47,6 +47,11 @@ class Resource extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }
 
 }

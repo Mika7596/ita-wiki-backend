@@ -31,7 +31,7 @@ class ResourceFactory extends Factory
             'category' => $this->faker->randomElement(['Node', 'React', 'Angular', 'JavaScript', 'Java', 'Fullstack PHP', 'Data Science', 'BBDD']),
             'theme' => $this->faker->randomElement(['All', 'Components', 'UseState & UseEffect', 'Eventos' , 'Renderizado condicional', 'Listas', 'Estilos', 'Debugging', 'React Router']),
             'type' => $this->faker->randomElement(['Video', 'Cursos', 'Blog']),
-            'votes' => $this->faker->numberBetween(0,50)
+            //'like_count' => $this->faker->numberBetween(0,50)
         ];
     }
 }

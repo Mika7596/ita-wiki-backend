@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,14 +19,18 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             ResourceSeeder::class,
-            BookmarkSeeder::class
+            BookmarkSeeder::class,
+            LikeSeeder::class
         ]);
-    
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Run adjustment query to update like_count in resources
+        DB::statement("
+            UPDATE resources r
+            SET like_count = (
+                SELECT COALESCE(SUM(like_dislike), 0)
+                FROM likes l
+                WHERE l.resource_id = r.id
+            )
+        ");
     }
 }
