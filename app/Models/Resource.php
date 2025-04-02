@@ -36,7 +36,8 @@ class Resource extends Model
         'category',
         'theme',
         'type',
-        'votes'
+        'bookmark_count',
+        'like_count'
     ];
 
     public function role()
