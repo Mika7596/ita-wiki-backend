@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
 
         // Run adjustment query to update like_count in resources
         DB::statement("
-            UPDATE resources r
+            UPDATE resources
             SET like_count = (
                 SELECT COALESCE(SUM(like_dislike), 0)
-                FROM likes l
-                WHERE l.resource_id = r.id
+                FROM likes
+                WHERE likes.resource_id = resources.id
             )
         ");
     }
