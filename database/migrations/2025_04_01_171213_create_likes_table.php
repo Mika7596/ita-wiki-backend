@@ -1,5 +1,4 @@
 <?php
-
 declare (strict_types= 1);
 
 use Illuminate\Database\Migrations\Migration;
@@ -28,7 +27,6 @@ return new class extends Migration
                 ->on('resources')
                 ->onUpdate('cascade') // Updates if resource_id is modified in resources
                 ->onDelete('restrict'); // Stays if resource_id is destroyed in resources
-            $table->tinyInteger('like_dislike')->comment('1=like, -1=dislike'); // Stores like or dislike
             $table->timestamps();
 
             $table->unique(['github_id', 'resource_id']); // Prevent duplicate likes/dislikes per user-resource pair
@@ -41,22 +39,15 @@ return new class extends Migration
             AFTER INSERT ON likes 
             FOR EACH ROW 
             UPDATE resources 
-            SET like_count = like_count + NEW.like_dislike 
+            SET like_count = like_count + 1 
             WHERE id = NEW.resource_id;
 
             CREATE TRIGGER update_like_count_delete 
             AFTER DELETE ON likes 
             FOR EACH ROW 
             UPDATE resources 
-            SET like_count = like_count - OLD.like_dislike 
+            SET like_count = like_count - 1 
             WHERE id = OLD.resource_id;
-
-            CREATE TRIGGER update_like_count_update 
-            AFTER UPDATE ON likes 
-            FOR EACH ROW 
-            UPDATE resources 
-            SET like_count = like_count + (NEW.like_dislike - OLD.like_dislike) 
-            WHERE id = NEW.resource_id;
         ');
         */
     }

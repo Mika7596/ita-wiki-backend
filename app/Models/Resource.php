@@ -36,6 +36,7 @@ class Resource extends Model
         'category',
         'theme',
         'type',
+        'bookmark_count',
         'like_count'
     ];
 
