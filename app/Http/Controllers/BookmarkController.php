@@ -136,5 +136,4 @@ class BookmarkController extends Controller
         $bookmarks = Bookmark::where('github_id', $request->validated('github_id'))->get();
         return response()->json($bookmarks, 200);
     }
-
 }
