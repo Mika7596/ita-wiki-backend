@@ -6,33 +6,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
+use App\Observers\LikeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([LikeObserver::class])]
 class Like extends Model
 {
     use HasFactory;
     
     protected $table = 'likes';
     protected $fillable = ['github_id', 'resource_id'];
-
-    /* AN ALTERNATIVE TO TRIGGERS AND CONTROLLER LOGIC
-    protected static function booted()
-    {
-        // Increment like_count when a like is created
-        static::creating(function ($like) {
-            DB::table('resources')
-                ->where('id', $like->resource_id)
-                ->increment('like_count', 1);
-        });
-
-        // Decrement like_count when a like is deleted
-        static::deleting(function ($like) {
-            DB::table('resources')
-                ->where('id', $like->resource_id)
-                ->decrement('like_count', 1);
-        });
-    }
-    */
 
     public function resource()
     {

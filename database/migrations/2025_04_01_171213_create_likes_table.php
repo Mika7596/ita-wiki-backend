@@ -4,7 +4,6 @@ declare (strict_types= 1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -31,25 +30,6 @@ return new class extends Migration
 
             $table->unique(['github_id', 'resource_id']); // Prevent duplicate likes/dislikes per user-resource pair
         });
-
-        // Add triggers to maintain like_count in resources table
-        /*
-        DB::unprepared('
-            CREATE TRIGGER update_like_count_insert 
-            AFTER INSERT ON likes 
-            FOR EACH ROW 
-            UPDATE resources 
-            SET like_count = like_count + 1 
-            WHERE id = NEW.resource_id;
-
-            CREATE TRIGGER update_like_count_delete 
-            AFTER DELETE ON likes 
-            FOR EACH ROW 
-            UPDATE resources 
-            SET like_count = like_count - 1 
-            WHERE id = OLD.resource_id;
-        ');
-        */
     }
 
     /**
@@ -58,10 +38,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('likes');
-        /*
-        DB::unprepared('DROP TRIGGER IF EXISTS update_like_count_insert');
-        DB::unprepared('DROP TRIGGER IF EXISTS update_like_count_delete');
-        DB::unprepared('DROP TRIGGER IF EXISTS update_like_count_update');
-        */
     }
 };
