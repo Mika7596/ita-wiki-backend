@@ -32,30 +32,6 @@ return new class extends Migration
 
             $table->unique(['github_id', 'resource_id']);
         });
-
-        // Increment trigger (AFTER INSERT on bookmarks)
-        DB::unprepared('
-            CREATE TRIGGER increment_bookmark_count
-            AFTER INSERT ON bookmarks
-            FOR EACH ROW
-            BEGIN
-                UPDATE resources
-                SET bookmark_count = bookmark_count + 1
-                WHERE id = NEW.resource_id;
-            END
-        ');
-
-        // Decrement trigger (AFTER DELETE on bookmarks)
-        DB::unprepared('
-            CREATE TRIGGER decrement_bookmark_count
-            AFTER DELETE ON bookmarks
-            FOR EACH ROW
-            BEGIN
-                UPDATE resources
-                SET bookmark_count = bookmark_count - 1
-                WHERE id = OLD.resource_id;
-            END
-        ');
     }
 
     /**
@@ -64,8 +40,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('bookmarks');
-
-        DB::unprepared('DROP TRIGGER IF EXISTS increment_bookmark_count');
-        DB::unprepared('DROP TRIGGER IF EXISTS decrement_bookmark_count');
     }
 };

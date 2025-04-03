@@ -20,16 +20,6 @@ class DatabaseSeeder extends Seeder
             ResourceSeeder::class,
             BookmarkSeeder::class
         ]);
-
-        // Run adjustment query to update bookmark_count in resources
-        DB::statement("
-            UPDATE resources
-            SET bookmark_count = (
-                SELECT COUNT(*)
-                FROM bookmarks
-                WHERE bookmarks.resource_id = resources.id
-            )
-        ");
     
         User::factory()->create([
             'name' => 'Test User',
