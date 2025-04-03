@@ -7,14 +7,14 @@ namespace App\Observers;
 use App\Models\Like;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 
-class LikeObserver
+class LikeObserver implements ShouldHandleEventsAfterCommit
 {
     /**
      * Handle the Like "created" event.
      */
     public function created(Like $like): void
     {
-        //
+        $like->resource()->increment('like_count');
     }
 
     /**
@@ -22,6 +22,6 @@ class LikeObserver
      */
     public function deleted(Like $like): void
     {
-        //
+        $like->resource()->decrement('like_count');
     }
 }
