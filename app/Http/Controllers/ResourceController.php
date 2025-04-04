@@ -17,6 +17,7 @@ use App\Models\Resource;
 
 class ResourceController extends Controller
 {
+
     /**
      * @OA\Post(
      *     path="/api/resources",
@@ -59,7 +60,7 @@ class ResourceController extends Controller
      *     )
      * )
      */
-
+    
     public function store(StoreResourceRequest $request)
     {
         $validated = $request->validated();
@@ -72,13 +73,13 @@ class ResourceController extends Controller
      *  path="/api/resources",
      *  summary="Get all resources",
      *  tags={"Resources"},
-     *  description="return a list of all resources",
+     *  description="Returns a list of all resources",
      *  @OA\Response(
      *     response=200,
      *     description="Resource list",
      *     @OA\JsonContent(
-     *      type="object",
-     *      @OA\Property(property="resources", type="array", @OA\Items(ref="#/components/schemas/Resource"))
+     *      type="array",
+     *      @OA\Items(ref="#/components/schemas/Resource")
      *      )
      *     )
      * )
