@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
      *      @OA\Property(property="type", type="string", enum={"Video","Cursos","Blog"}, example="Video"),
      *      @OA\Property(property="bookmark_count", type="integer", example = 1),
      *      @OA\Property(property="like_count", type="integer", example = 1)
+     *      @OA\Property(property="created_at", type="string", format="date-time", example="2025-03-17T19:23:41.000000Z"),
+     *      @OA\Property(property="updated_at", type="string", format="date-time", example="2025-03-17T19:23:41.000000Z")
      * )
      */
 class Resource extends Model
