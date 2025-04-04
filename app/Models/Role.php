@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 * @OA\Schema(
 *     schema="Role",
 *     type="object",
+*     title="Role",
 *     description="Role object representing a user's role and associated GitHub ID",
 *     @OA\Property(property="github_id", type="integer", description="The GitHub ID of the user", example=6729608),
 *     @OA\Property(property="role", type="string", description="The role of the user", example="student")
