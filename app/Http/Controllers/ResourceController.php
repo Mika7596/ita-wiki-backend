@@ -17,7 +17,7 @@ use App\Models\Resource;
 
 class ResourceController extends Controller
 {
-   public function store(StoreResourceRequest $request)
+    public function store(StoreResourceRequest $request)
     {
         $validated = $request->validated();
         $resource = Resource::create($validated);
@@ -34,8 +34,8 @@ class ResourceController extends Controller
      *     response=200,
      *     description="Resource list",
      *     @OA\JsonContent(
-     *      type="object",
-     *      @OA\Property(property="resources", type="array", @OA\Items(ref="#/components/schemas/Resource"))
+     *      type="array",
+     *      @OA\Items(ref="#/components/schemas/Resource")
      *      )
      *     )
      * )

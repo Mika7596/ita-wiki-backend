@@ -32,9 +32,9 @@ class LikeController extends Controller
      *             type="object",
      *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="github_id", type="integer", example=6729608),
-     *             @OA\Property(property="resource_id", type="integer", example=11),
-     *             @OA\Property(property="created_at", type="string", format="date-time"),
-     *             @OA\Property(property="updated_at", type="string", format="date-time")
+     *             @OA\Property(property="resource_id", type="integer", example=10),
+     *             @OA\Property(property="created_at", type="string", format="date-time", example="2025-04-03T15:27:09.000000Z"),
+     *             @OA\Property(property="updated_at", type="string", format="date-time", example="2025-04-03T15:27:09.000000Z")
      *         )
      *     ),
      *     @OA\Response(
@@ -90,7 +90,7 @@ class LikeController extends Controller
      *         response=404,
      *         description="Not Found",
      *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Like not found")
+     *             @OA\Property(property="message", type="string", example="Like not found")
      *         )
      *     )
      * )
@@ -106,7 +106,7 @@ class LikeController extends Controller
             $like->delete();
             return response()->json(['message' => 'Like deleted successfully'], 200);
         }
-        return response()->json(['error' => 'Like not found'], 404);
+        return response()->json(['message' => 'Like not found'], 404);
     }
 
     /**
@@ -125,8 +125,8 @@ class LikeController extends Controller
      *         response=200,
      *         description="Success",
      *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="likes", type="array", @OA\Items(ref="#/components/schemas/Like"))
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Like")
      *         )
      *     )
      * )
