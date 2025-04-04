@@ -124,8 +124,8 @@ class BookmarkController extends Controller
      *         response=200,
      *         description="Success",
      *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="bookmarks", type="array", @OA\Items(ref="#/components/schemas/Bookmark"))
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bookmark")
      *         )
      *     )
      * )
