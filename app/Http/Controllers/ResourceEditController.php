@@ -41,8 +41,9 @@ class ResourceEditController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="The given data was invalid."),
      *             @OA\Property(property="errors", type="object", example={
-     *                 "title": {"The title field is required"},
-     *                 "url": {"The url format is invalid"}
+     *                 "title": {"The title field is required.", "Title must be at least 5 characters.", "Title must not exceed 255 characters."},
+     *                 "description": {"The description field is required.", "Description must be at least 10 characters.", "Description must not exceed 1000 characters."},
+     *                 "url": {"The url field is required.", "The url format is invalid."},
      *             })
      *         )
      *     )
