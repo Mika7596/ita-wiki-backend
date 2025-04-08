@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             ResourceSeeder::class,
-            BookmarkSeeder::class
+            BookmarkSeeder::class,
+            LikeSeeder::class
         ]);
     
         User::factory()->create([

@@ -53,4 +53,9 @@ class Resource extends Model
         return $this->hasMany(Bookmark::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
 }
