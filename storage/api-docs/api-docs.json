@@ -388,7 +388,7 @@
                     "Resources"
                 ],
                 "summary": "Get all resources",
-                "description": "return a list of all resources",
+                "description": "Returns a list of all resources",
                 "operationId": "ee96de2f37d473ea4740b7700ddd1daf",
                 "responses": {
                     "200": {

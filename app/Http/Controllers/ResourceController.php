@@ -73,7 +73,7 @@ class ResourceController extends Controller
      *  path="/api/resources",
      *  summary="Get all resources",
      *  tags={"Resources"},
-     *  description="return a list of all resources",
+     *  description="Returns a list of all resources",
      *  @OA\Response(
      *     response=200,
      *     description="Resource list",
