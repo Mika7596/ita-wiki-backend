@@ -7,13 +7,13 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Role;
 use App\Models\Resource;
-use App\Models\Bookmark;
+use App\Models\Like;
 
-class BookmarkControllerTest extends TestCase
+class LikeControllerTest extends TestCase
 {
     protected $student;
     protected $resources;
-    protected $bookmarks;
+    protected $likes;
 
     public function setUp(): void
     {
@@ -26,19 +26,19 @@ class BookmarkControllerTest extends TestCase
 
         $this->resources = Resource::factory(10)->create();
 
-        $this->bookmarks = [
-            Bookmark::create([
+        $this->likes = [
+            Like::create([
             'github_id' => $this->student->github_id,
             'resource_id' => $this->resources[0]->id]),
-            Bookmark::create([
+            Like::create([
             'github_id' => $this->student->github_id,
             'resource_id' => $this->resources[1]->id])
         ];
     }
 
-    public function testGetStudentBookmarks(): void
+    public function testGetStudentLikes(): void
     {
-        $response = $this->get('api/bookmarks/' . $this->student->github_id);
+        $response = $this->get('api/likes/' . $this->student->github_id);
         $response->assertStatus(200)
             ->assertJsonCount(2)
             ->assertJson([
@@ -47,40 +47,32 @@ class BookmarkControllerTest extends TestCase
             ]);
     }
 
-    public function testGetBookmarksForUnexistentRoleFails(): void {
+    public function testGetLikesForUnexistentRoleFails(): void {
         $nonExistentGithubId = 38928374;
         $response = $this->get('api/bookmarks/' . $nonExistentGithubId);
         $response->assertStatus(422);
     }
 
-    public function testDestroyBookmark(): void
+    public function testDestroyLike(): void
     {
-        $initial_count = $this->bookmarks[1]->resource->bookmark_count;
-
-        $response = $this->delete('api/bookmarks', [
+        $response = $this->delete('api/likes', [
             'github_id' => $this->student->github_id,
-            'resource_id' => $this->bookmarks[1]->resource_id
+            'resource_id' => $this->likes[1]->resource_id
         ]);
                 
         $response->assertStatus(200)
-            ->assertJson(['message' => 'Bookmark deleted successfully']);
+            ->assertJson(['message' => 'Like deleted successfully']);
 
 
-        $this->assertDatabaseMissing('bookmarks', [
+        $this->assertDatabaseMissing('likes', [
             'github_id' => $this->student->github_id,
-            'resource_id' => $this->bookmarks[1]->resource_id
+            'resource_id' => $this->likes[1]->resource_id
         ]);
-
-        // Assert counter decremented by BookmarkObserver
-        $this->assertEquals($initial_count - 1, $this->bookmarks[1]->resource->fresh()->bookmark_count);
     }
 
-    public function testCreateBookmark(): void
+    public function testCreateLike(): void
     {
-        $test_increment_resource = $this->resources[2];
-        $initial_count = $test_increment_resource->bookmark_count;
-
-        $response = $this->post('api/bookmarks', [
+        $response = $this->post('api/likes', [
             'github_id' => $this->student->github_id,
             'resource_id' => $this->resources[2]->id
         ]);
@@ -91,25 +83,22 @@ class BookmarkControllerTest extends TestCase
                 'resource_id' => $this->resources[2]->id,
             ]);
 
-        $this->assertDatabaseHas('bookmarks', [
+        $this->assertDatabaseHas('likes', [
             'github_id' => $this->student->github_id,
             'resource_id' => $this->resources[2]->id
         ]);
-
-        // Assert counter incremented by BookmarkObserver
-        $this->assertEquals($initial_count + 1, $test_increment_resource->fresh()->bookmark_count);
     }
 
-    public function testCreateBookmarkForNonexistentRoleFails(): void {
-        $response = $this->post('api/bookmarks', [
+    public function testCreateLikeForNonexistentRoleFails(): void {
+        $response = $this->post('api/likes', [
             'github_id' => 9384758,
             'resource_id' => $this->resources[2]->id
         ]);
         $response->assertStatus(422);
     }
 
-    public function testCreateBookmarkForNonexistentResourceFails(): void {
-        $response = $this->post('api/bookmarks', [
+    public function testCreateLikeForNonexistentResourceFails(): void {
+        $response = $this->post('api/likes', [
             'github_id' => $this->student->github_id,
             'resource_id' => 447012
         ]);
