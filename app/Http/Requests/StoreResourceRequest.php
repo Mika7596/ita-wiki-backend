@@ -4,8 +4,10 @@ declare (strict_types= 1);
 
 namespace App\Http\Requests;
 
-use App\Rules\RoleAnonymousRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Rules\GithubIdRule;
+use App\Rules\RoleStudentRule;
 
 class StoreResourceRequest extends FormRequest
 {
@@ -24,18 +26,32 @@ class StoreResourceRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Static validation (temporary until tags table exists)
+        // Once model Tag is done, eliminate variable below and also line 52. Uncomment 53
+        $validTags = [
+            'Components', 
+            'UseState & UseEffect', 
+            'Eventos',
+            'Renderizado condicional', 
+            'Listas', 
+            'Estilos', 
+            'Debugging', 
+            'React Router'
+        ];
+
         return [
             'github_id' => [
-                'required',
-                'exists:roles,github_id'
+                new GithubIdRule(),
+                new RoleStudentRule(), // Comment if you don't want to restrict to students only
             ],
             'description' => ['required', 'string', 'min:10', 'max:1000'],
             'title' => ['required', 'string', 'min:5', 'max:255'],
             'url' => ['required', 'url'],
             'category' => ['required', 'string', 'in:Node,React,Angular,JavaScript,Java,Fullstack PHP,Data Science,BBDD'],
-            'theme' => ['required', 'string', 'in:All,Components,UseState & UseEffect,Eventos,Renderizado condicional,Listas,Estilos,Debugging,React Router'],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['string', Rule::in($validTags)],
+            // 'tags.*' => ['string', Rule::exists('tags', 'name')],
             'type' =>['required', 'string', 'in:Video,Cursos,Blog']
         ];
-       
     }  
 }

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Resource;
 
 class ResourceSeeder extends Seeder
 {
@@ -14,6 +15,6 @@ class ResourceSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Resource::factory(10)->create();
+        Resource::factory(10)->create();
     }
 }

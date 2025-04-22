@@ -23,13 +23,28 @@ class ResourceFactory extends Factory
         ->inRandomOrder()
         ->first();
 
+        // Eliminate lines 26 to 36 when model Tag is done
+        $validTags = [
+            'Components', 
+            'UseState & UseEffect', 
+            'Eventos',
+            'Renderizado condicional', 
+            'Listas', 
+            'Estilos', 
+            'Debugging', 
+            'React Router'
+        ];
+
+        // Uncomment line below when model Tag is done
+        // $validTags = Tag::all()->pluck('name')->toArray();
+
         return [
             'github_id' => $role->github_id,
             'title' => $this->faker->sentence(4),
             'description' => $this->faker->sentence(6),
             'url' => $this->faker->url(),
             'category' => $this->faker->randomElement(['Node', 'React', 'Angular', 'JavaScript', 'Java', 'Fullstack PHP', 'Data Science', 'BBDD']),
-            'theme' => $this->faker->randomElement(['All', 'Components', 'UseState & UseEffect', 'Eventos' , 'Renderizado condicional', 'Listas', 'Estilos', 'Debugging', 'React Router']),
+            'tags' => $this->faker->randomElements($validTags, $this->faker->numberBetween(1, 5)),
             'type' => $this->faker->randomElement(['Video', 'Cursos', 'Blog']),
         ];
     }

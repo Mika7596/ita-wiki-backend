@@ -16,8 +16,12 @@ class CreateResourceTest extends TestCase
 
     private function GetResourceData(): array
     {
-        Role::factory(10)->create();
-        return Resource::factory()->raw(); 
+        $role = Role::factory()->create(['role' => 'student']);
+
+        return Resource::factory()->raw([
+            'github_id' => $role->github_id,
+            //'tags' => null
+        ]);
     }
 
     public function testItCanCreateAResource(): void
