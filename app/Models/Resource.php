@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
      *      @OA\Property(property="description", type="string", nullable=true, example="Lorem Ipsum ..."),
      *      @OA\Property(property="url", type="string", nullable=true, example="https://www.hola.com", format="url"),
      *      @OA\Property(property="category", type="string", enum={"Node","React","Angular","JavaScript","Java","Fullstack PHP", "Data Science","BBDD"}, example="Node"),
-     *      @OA\Property(property="tags", type="array", @OA\items(type="string"), example={"Components","UseState & UseEffect","Eventos" ,"Renderizado condicional","Listas","Estilos","Debugging","React Router"}), description="Array of tags",
+     *      @OA\Property(property="tags", type="array", @OA\items(type="string"), example={"kubernetes", "sql", "azure"}, description="Array of tags"),
      *      @OA\Property(property="type", type="string", enum={"Video","Cursos","Blog"}, example="Video"),
      *      @OA\Property(property="bookmark_count", type="integer", example = 1),
      *      @OA\Property(property="like_count", type="integer", example = 1),

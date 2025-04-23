@@ -24,20 +24,6 @@ class ResourceFactory extends Factory
         ->inRandomOrder()
         ->first();
 
-        /* Eliminate lines 26 to 36 when model Tag is done
-        $validTags = [
-            'Components', 
-            'UseState & UseEffect', 
-            'Eventos',
-            'Renderizado condicional', 
-            'Listas', 
-            'Estilos', 
-            'Debugging', 
-            'React Router'
-        ];
-        */
-
-        // Uncomment line below when model Tag is done
         $validTags = Tag::all()->pluck('name')->toArray();
 
         return [

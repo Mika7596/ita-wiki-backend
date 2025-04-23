@@ -424,7 +424,6 @@
                                     "description",
                                     "url",
                                     "category",
-                                    "theme",
                                     "type"
                                 ],
                                 "properties": {
@@ -468,21 +467,13 @@
                                         ],
                                         "example": "React"
                                     },
-                                    "theme": {
-                                        "description": "Theme of the resource",
-                                        "type": "string",
-                                        "enum": [
-                                            "All",
-                                            "Components",
-                                            "UseState & UseEffect",
-                                            "Eventos",
-                                            "Renderizado condicional",
-                                            "Listas",
-                                            "Estilos",
-                                            "Debugging",
-                                            "React Router"
-                                        ],
-                                        "example": "Components"
+                                    "tags": {
+                                        "description": "Array of tags validated against available options (nullable)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "oop"
+                                        }
                                     },
                                     "type": {
                                         "description": "Type of the resource",
@@ -546,9 +537,9 @@
                                                     "The category field is required.",
                                                     "The selected category is invalid."
                                                 ],
-                                                "theme": [
-                                                    "The theme field is required.",
-                                                    "The selected theme is invalid."
+                                                "tags": [
+                                                    "The tags field must be an array of strings.",
+                                                    "The selected tags are invalid."
                                                 ],
                                                 "type": [
                                                     "The type field is required.",
@@ -704,6 +695,31 @@
                     }
                 }
             }
+        },
+        "/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get all tags",
+                "description": "Tags used in resources",
+                "operationId": "d39568b98d6f2fa018ae4ac70504ae70",
+                "responses": {
+                    "200": {
+                        "description": "A list of tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tag"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -779,12 +795,12 @@
                         "type": "integer",
                         "example": 12345
                     },
-                    "description": {
+                    "title": {
                         "type": "string",
                         "example": "Lorem Ipsum ...",
                         "nullable": true
                     },
-                    "title": {
+                    "description": {
                         "type": "string",
                         "example": "Lorem Ipsum ...",
                         "nullable": true
@@ -809,20 +825,17 @@
                         ],
                         "example": "Node"
                     },
-                    "theme": {
-                        "type": "string",
-                        "enum": [
-                            "All",
-                            "Components",
-                            "UseState & UseEffect",
-                            "Eventos",
-                            "Renderizado condicional",
-                            "Listas",
-                            "Estilos",
-                            "Debugging",
-                            "React Router"
-                        ],
-                        "example": "All"
+                    "tags": {
+                        "description": "Array of tags",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "kubernetes",
+                            "sql",
+                            "azure"
+                        ]
                     },
                     "type": {
                         "type": "string",
@@ -869,6 +882,31 @@
                     }
                 },
                 "type": "object"
+            },
+            "Tag": {
+                "title": "Tag",
+                "description": "Tags used in resources",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "debugging"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -888,6 +926,10 @@
         {
             "name": "Roles",
             "description": "Roles"
+        },
+        {
+            "name": "Tags",
+            "description": "Tags"
         }
     ]
 }

@@ -26,19 +26,6 @@ class StoreResourceRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Static validation (temporary until tags table exists)
-        // Once model Tag is done, eliminate variable below and also line 52. Uncomment 53
-        $validTags = [
-            'Components', 
-            'UseState & UseEffect', 
-            'Eventos',
-            'Renderizado condicional', 
-            'Listas', 
-            'Estilos', 
-            'Debugging', 
-            'React Router'
-        ];
-
         return [
             'github_id' => [
                 new GithubIdRule(),
@@ -49,8 +36,7 @@ class StoreResourceRequest extends FormRequest
             'url' => ['required', 'url'],
             'category' => ['required', 'string', 'in:Node,React,Angular,JavaScript,Java,Fullstack PHP,Data Science,BBDD'],
             'tags' => ['nullable', 'array'],
-            'tags.*' => ['string', Rule::in($validTags)],
-            // 'tags.*' => ['string', Rule::exists('tags', 'name')],
+            'tags.*' => ['string', Rule::exists('tags', 'name')],
             'type' =>['required', 'string', 'in:Video,Cursos,Blog']
         ];
     }  

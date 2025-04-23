@@ -33,7 +33,7 @@ class ResourceController extends Controller
      *             @OA\Property(property="description", type="string", minLength=10, maxLength=1000, example="A collection of best practices for Laravel development", description="Description of the resource (10-1000 characters)"),
      *             @OA\Property(property="url", type="string", format="url", example="https://laravelbestpractices.com", description="URL of the resource"),
      *             @OA\Property(property="category", type="string", enum={"Node","React","Angular","JavaScript","Java","Fullstack PHP","Data Science","BBDD"}, example="React", description="Category of the resource"),
-     *             @OA\Property(property="tags", type="array", @OA\Items(type="string", example="oop"), description=""Array of tags validated against available options (nullable)"),
+     *             @OA\Property(property="tags", type="array", @OA\Items(type="string", example="oop"), description="Array of tags validated against available options (nullable)"),
      *             @OA\Property(property="type", type="string", enum={"Video","Cursos","Blog"}, example="Video", description="Type of the resource")
      *         )
      *     ),
