@@ -5,6 +5,7 @@ declare (strict_types= 1);
 namespace Database\Factories;
 
 use App\Models\Role;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +24,7 @@ class ResourceFactory extends Factory
         ->inRandomOrder()
         ->first();
 
-        // Eliminate lines 26 to 36 when model Tag is done
+        /* Eliminate lines 26 to 36 when model Tag is done
         $validTags = [
             'Components', 
             'UseState & UseEffect', 
@@ -34,9 +35,10 @@ class ResourceFactory extends Factory
             'Debugging', 
             'React Router'
         ];
+        */
 
         // Uncomment line below when model Tag is done
-        // $validTags = Tag::all()->pluck('name')->toArray();
+        $validTags = Tag::all()->pluck('name')->toArray();
 
         return [
             'github_id' => $role->github_id,
