@@ -33,4 +33,4 @@ Route::post('/likes', [LikeController::class,'createStudentLike'])->name('like.c
 
 Route::delete('/likes', [LikeController::class,'deleteStudentLike'])->name('like.delete');
 
-Route::get('/tags', [TagController::class, 'index'])->name('tags.index'); // retrieves all tags
+Route::get('/tags', [TagController::class, 'index'])->name('tags'); // retrieves all tags
