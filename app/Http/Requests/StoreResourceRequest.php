@@ -31,8 +31,8 @@ class StoreResourceRequest extends FormRequest
                 new GithubIdRule(),
                 new RoleStudentRule(), // Comment if you don't want to restrict to students only
             ],
-            'description' => ['required', 'string', 'min:10', 'max:1000'],
             'title' => ['required', 'string', 'min:5', 'max:255'],
+            'description' => ['required', 'string', 'min:10', 'max:1000'],
             'url' => ['required', 'url'],
             'category' => ['required', 'string', 'in:Node,React,Angular,JavaScript,Java,Fullstack PHP,Data Science,BBDD'],
             'tags' => ['nullable', 'array'],
