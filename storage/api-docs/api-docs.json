@@ -801,14 +801,14 @@
                 }
             }
         },
-        "/tags": {
+        "/api/tags": {
             "get": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Get all tags",
                 "description": "Tags used in resources",
-                "operationId": "d39568b98d6f2fa018ae4ac70504ae70",
+                "operationId": "4d0f4baf9e6fa992c0d85fbf140ebf17",
                 "responses": {
                     "200": {
                         "description": "A list of tags",
@@ -819,6 +819,28 @@
                                     "items": {
                                         "$ref": "#/components/schemas/Tag"
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags/frequency": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag frequencies",
+                "description": "Frequencies of tags used in resources",
+                "operationId": "7ba6cfbebeddc69fac4a37ad216924ab",
+                "responses": {
+                    "200": {
+                        "description": "An object with tag names as keys and frequencies as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
                                 }
                             }
                         }

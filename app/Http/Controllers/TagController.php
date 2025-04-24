@@ -12,7 +12,7 @@ class TagController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/tags",
+     *     path="/api/tags",
      *     summary="Get all tags",
      *     tags={"Tags"},
      *     description="Tags used in resources",
@@ -35,18 +35,14 @@ class TagController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/tags/frequency",
+     *     path="/api/tags/frequency",
      *     summary="Get tag frequencies",
      *     tags={"Tags"},
      *     description="Frequencies of tags used in resources",
      *     @OA\Response(
      *         response=200,
      *         description="An object with tag names as keys and frequencies as values",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             additionalProperties=@OA\Schema(type="integer"),
-     *             example={"mongodb": 3, "rest": 5, "oop": 2}
-     *         )
+     *         @OA\JsonContent(type="object")
      *     )
      * )
     */
