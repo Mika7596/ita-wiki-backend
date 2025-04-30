@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('url');
             $table->enum('category', ['Node', 'React', 'Angular', 'JavaScript', 'Java', 'Fullstack PHP', 'Data Science', 'BBDD']);
-            $table->enum('theme', ['All', 'Components', 'UseState & UseEffect', 'Eventos' , 'Renderizado condicional', 'Listas', 'Estilos', 'Debugging', 'React Router']);
+            $table->json('tags')->nullable(); // Options must be restricted in Form Request (as defined in table tags)
             $table->enum('type', ['Video', 'Cursos', 'Blog']);
             $table->integer('bookmark_count')->default(0);
             $table->integer('like_count')->default(0);

@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ResourceEditController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,3 +32,8 @@ Route::get('/likes/{github_id}', [LikeController::class,'getStudentLikes'])->nam
 Route::post('/likes', [LikeController::class,'createStudentLike'])->name('like.create');
 
 Route::delete('/likes', [LikeController::class,'deleteStudentLike'])->name('like.delete');
+
+Route::get('/tags', [TagController::class, 'index'])->name('tags'); // retrieves all tags
+
+Route::get('/tags/frequency', [TagController::class, 'getTagsFrequency'])->name('tags.frequency'); // retrieves frequencies of tags used in resources
+// This last endpoint will be necessary for filtering since allowed tags will change over time...
