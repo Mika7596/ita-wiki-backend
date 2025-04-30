@@ -61,10 +61,10 @@ class TagController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/tags/frequency",
-     *     summary="Get tag frequencies",
+     *     path="/api/tags/category-frequency",
+     *     summary="Get tag frequencies grouped by category",
      *     tags={"Tags"},
-     *     description="Frequencies of tags used in resources",
+     *     description="Frequencies of tags used in resources grouoped by category",
      *     @OA\Response(
      *         response=200,
      *         description="An object with tag names as keys and frequencies as values",

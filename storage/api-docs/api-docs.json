@@ -847,6 +847,28 @@
                     }
                 }
             }
+        },
+        "/api/tags/category-frequency": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag frequencies grouped by category",
+                "description": "Frequencies of tags used in resources grouoped by category",
+                "operationId": "ab99904db8b3f73579135af62493ea10",
+                "responses": {
+                    "200": {
+                        "description": "An object with tag names as keys and frequencies as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
