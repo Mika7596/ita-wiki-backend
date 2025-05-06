@@ -36,7 +36,5 @@ Route::delete('/likes', [LikeController::class,'deleteStudentLike'])->name('like
 Route::get('/tags', [TagController::class, 'index'])->name('tags');
 
 Route::get('/tags/frequency', [TagController::class, 'getTagsFrequency'])->name('tags.frequency');
-// for stats and filtering...
 
 Route::get('/tags/category-frequency', [TagController::class, 'getCategoryTagsFrequency'])->name('category.tags.frequency');
-// for stats and filtering...

@@ -61,13 +61,6 @@ class TagControllerTest extends TestCase
     {
         $response = $this->get(route('tags.frequency'));
         $response->assertStatus(200);
-        /*
-            ->assertJson([ 
-                'tag-one' => 3,
-                'tag-two' => 2,
-                'tag-three' => 1
-            ]);
-        */
     }
 
     public function testCanGetCategoryTagsFrequency(): void
