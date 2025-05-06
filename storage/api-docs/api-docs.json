@@ -841,6 +841,10 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object"
+                                },
+                                "example": {
+                                    "mongodb": 3,
+                                    "tdd": 10
                                 }
                             }
                         }
@@ -863,6 +867,16 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": {
+                                        "mongodb": 3,
+                                        "tdd": 10
+                                    },
+                                    "React": {
+                                        "hooks": 2,
+                                        "dependencies": 3
+                                    }
                                 }
                             }
                         }

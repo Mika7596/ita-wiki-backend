@@ -42,7 +42,13 @@ class TagController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="An object with tag names as keys and frequencies as values",
-     *         @OA\JsonContent(type="object")
+     *         @OA\JsonContent(
+     *              type="object",
+     *              example={
+     *              "mongodb": 3,
+     *              "tdd": 10
+     *              }
+     *         )
      *     )
      * )
     */
@@ -68,7 +74,19 @@ class TagController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="An object with tag names as keys and frequencies as values",
-     *         @OA\JsonContent(type="object")
+     *         @OA\JsonContent(
+     *              type="object",
+     *              example={
+     *              "Fullstack PHP": {
+     *                  "mongodb": 3,
+     *                  "tdd": 10
+     *              },
+     *              "React": {
+     *                  "hooks": 2,
+     *                  "dependencies": 3
+     *              }
+     *              }
+     *         )
      *     )
      * )
     */
