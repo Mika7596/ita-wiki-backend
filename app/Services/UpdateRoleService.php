@@ -28,7 +28,12 @@ class UpdateRoleService
     protected function processRoleUpdate(string $authorizedRole, string $roleToUpdate, int $githubId): JsonResponse
     {
         $authorizedLevel = $this->getRoleLevel($authorizedRole);
+        $currentLevel = $this->getRoleLevel(Role::where('github_id', $githubId)->first()->role);
         $updateLevel = $this->getRoleLevel($roleToUpdate);
+
+        if ($authorizedLevel < $currentLevel) {
+            return response()->json(['message' => 'No puedes actualizar un rol de orden superior al tuyo.'], 403);
+        }
 
         if ($authorizedLevel ==  0 || $updateLevel == 0) {
             return response()->json(['message' => 'La petición contiene un rol inexistente.'], 422);

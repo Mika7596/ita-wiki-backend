@@ -49,6 +49,20 @@ class UpdateRoleTest extends TestCase
         ]);
     }
 
+    public function testCannotUpdateHigherRankedRole(): void
+    {
+        $this->putJson(route('roles.update'), [
+            'authorized_github_id' => $this->mentor->github_id,
+            'github_id' => $this->admin->github_id,
+            'role' => 'student'
+        ])->assertStatus(403);
+
+        $this->assertDatabaseMissing('roles', [
+            'github_id' => $this->student->github_id,
+            'role' => 'mentor'
+        ]);
+    }
+
     public function testCannotUpdateRoleToEqual(): void
     {
         $this->putJson(route('roles.update'), [
