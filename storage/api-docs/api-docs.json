@@ -605,6 +605,21 @@
                                         "type": "string",
                                         "format": "url",
                                         "example": "https://laravelbestpractices.com"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "testing"
+                                        },
+                                        "maxItems": 5,
+                                        "uniqueItems": true,
+                                        "example": [
+                                            "testing",
+                                            "tdd",
+                                            "hooks"
+                                        ],
+                                        "nullable": true
                                     }
                                 },
                                 "type": "object"
@@ -619,6 +634,22 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Resource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You don't have permission to update this resource."
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -649,6 +680,10 @@
                                                 "url": [
                                                     "The url field is required.",
                                                     "The url format is invalid."
+                                                ],
+                                                "tags": [
+                                                    "The tags field must be an array of strings.",
+                                                    "The selected tags are invalid."
                                                 ]
                                             }
                                         }

@@ -32,11 +32,11 @@ class StoreResourceRequest extends FormRequest
                 new RoleStudentRule(), // Comment if you don't want to restrict to students only
             ],
             'title' => ['required', 'string', 'min:5', 'max:255'],
-            'description' => ['required', 'string', 'min:10', 'max:1000'],
+            'description' => ['nullable', 'string', 'min:10', 'max:1000'],
             'url' => ['required', 'url'],
             'category' => ['required', 'string', 'in:Node,React,Angular,JavaScript,Java,Fullstack PHP,Data Science,BBDD'],
-            'tags' => ['nullable', 'array'],
-            'tags.*' => ['string', Rule::exists('tags', 'name')],
+            'tags' => ['nullable', 'array', 'max:5'],
+            'tags.*' => ['string', 'distinct', Rule::exists('tags', 'name')],
             'type' =>['required', 'string', 'in:Video,Cursos,Blog']
         ];
     }  
