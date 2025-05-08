@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Services\CreateRoleService;
 use Illuminate\Http\JsonResponse;
+use App\Rules\GithubIdRule;
+use Illuminate\Support\Facades\Config;
 
 class RoleController extends Controller
 {
@@ -110,6 +112,42 @@ class RoleController extends Controller
         }
         return response()->json([
             'message' => 'Role found.',
+            'role' => [
+               'github_id' => $role->github_id,
+               'role' => $role->role
+            ]
+        ], 200);
+    }
+
+
+
+
+    // Feature Flag : Role Self Assignment
+    public function roleSelfAssignment(Request $request)
+    {
+        $validated = $request->validate([
+            'github_id' => new GithubIdRule(),
+            'role' => ['required', 'string', 'in:superadmin,mentor,admin,student']
+        ]);
+
+        $role = Role::where('github_id', $validated['github_id'])->first();
+
+        if (!$role) {
+            return response()->json([
+                'message' => 'Role not found.'
+            ], 404);
+        }
+
+        // Check global feature flag
+        if (!Config::get('feature_flags.allow_role_self_assignment')) {
+            return response()->json(['message' => 'Role self assignment is disabled.'], 403);
+        }
+
+        $role->role = $validated['role'];
+        $role->save();
+
+        return response()->json([
+            'message' => 'Role updated successfully.',
             'role' => [
                'github_id' => $role->github_id,
                'role' => $role->role
