@@ -6,7 +6,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\GithubIdRule;
-use App\Models\Role;
 
 class UpdateRoleRequest extends FormRequest
 {
