@@ -11,7 +11,7 @@ class UpdateRoleService
 {
     public function __invoke(array $validated)
     {
-        $authorizedRole = (Role::where('github_id', $validated['authorized_github_id'])->first())->role;
+        $authorizedRole = (Role::where('github_id', $validated['authorized_github_id'])->firstOrFail())->role;
 
         $githubId = $validated['github_id'];
         $roleToUpdate = $validated['role'];
@@ -28,11 +28,11 @@ class UpdateRoleService
     protected function processRoleUpdate(string $authorizedRole, string $roleToUpdate, int $githubId): JsonResponse
     {
         $authorizedLevel = $this->getRoleLevel($authorizedRole);
-        $currentLevel = $this->getRoleLevel(Role::where('github_id', $githubId)->first()->role);
+        $currentLevel = $this->getRoleLevel(Role::where('github_id', $githubId)->firstOrFail()->role);
         $updateLevel = $this->getRoleLevel($roleToUpdate);
 
-        if ($authorizedLevel < $currentLevel) {
-            return response()->json(['message' => 'No puedes actualizar un rol de orden superior al tuyo.'], 403);
+        if ($authorizedLevel <= $currentLevel) {
+            return response()->json(['message' => 'No puedes actualizar un rol que ya es de orden igual o superior al tuyo.'], 403);
         }
 
         if ($authorizedLevel ==  0 || $updateLevel == 0) {
@@ -40,7 +40,7 @@ class UpdateRoleService
         }
 
         if ($updateLevel >= $authorizedLevel) {
-            return response()->json(['message' => 'No puedes crear un rol igual o superior al tuyo.'], 403);
+            return response()->json(['message' => 'No puedes actualizar un rol a un orden igual o superior al tuyo.'], 403);
         }
 
         $role = Role::where('github_id', $githubId)->update([

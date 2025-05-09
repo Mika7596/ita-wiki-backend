@@ -57,9 +57,9 @@ class UpdateRoleTest extends TestCase
             'role' => 'student'
         ])->assertStatus(403);
 
-        $this->assertDatabaseMissing('roles', [
-            'github_id' => $this->student->github_id,
-            'role' => 'mentor'
+        $this->assertDatabaseHas('roles', [
+            'github_id' => $this->admin->github_id,
+            'role' => 'admin'
         ]);
     }
 

@@ -85,10 +85,10 @@ class RoleController extends Controller
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Unauthorized: Cannot update a role of user of higher role rank or make an update to an equal or higher rank than your own",
+     *         description="Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="message", type="string", example="El rol del usuario es de un nivel mayor o igual al tuyo.")
+     *             @OA\Property(property="message", type="string", example="No puedes actualizar un rol que ya es de orden igual o superior al tuyo.")
      *         )
      *     ),
      *     @OA\Response(
