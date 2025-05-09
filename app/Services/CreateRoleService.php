@@ -31,6 +31,10 @@ class CreateRoleService
         $authorizedLevel = $this->getRoleLevel($authorizedRole);
         $createLevel = $this->getRoleLevel($roleToCreate);
 
+        if ($authorizedLevel ==  0 || $createLevel == 0) {
+            return response()->json(['message' => 'La petición contiene un rol inexistente.'], 422);
+        }
+
         if ($createLevel >= $authorizedLevel) {
             return response()->json(['message' => 'No puedes crear un rol igual o superior al tuyo.'], 403);
         }
