@@ -177,7 +177,7 @@ class RoleController extends Controller
 
     /**
     * @OA\Put(
-    *     path="/api/roles/role-self-assignment",
+    *     path="/api/feature-flags/role-self-assignment",
     *     summary="Role Self Assignment",
     *     tags={"Roles"},
     *     description="Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",

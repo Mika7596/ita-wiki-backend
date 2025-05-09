@@ -907,14 +907,14 @@
                 }
             }
         },
-        "/api/roles/role-self-assignment": {
+        "/api/feature-flags/role-self-assignment": {
             "put": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Role Self Assignment",
                 "description": "Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
-                "operationId": "999ab3b55291ec83061b6e8050c9687e",
+                "operationId": "6b823bc6608dd65054c546a68628b23a",
                 "requestBody": {
                     "required": true,
                     "content": {
