@@ -10,6 +10,8 @@ use App\Services\UpdateRoleService;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
+use App\Rules\GithubIdRule;
+use Illuminate\Support\Facades\Config;
 
 class RoleController extends Controller
 {
@@ -166,6 +168,88 @@ class RoleController extends Controller
         }
         return response()->json([
             'message' => 'Role found.',
+            'role' => [
+               'github_id' => $role->github_id,
+               'role' => $role->role
+            ]
+        ], 200);
+    }
+
+    /**
+    * @OA\Put(
+    *     path="/api/feature-flags/role-self-assignment",
+    *     summary="Role Self Assignment",
+    *     tags={"Roles"},
+    *     description="Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+    *     @OA\RequestBody(
+    *         required=true,
+    *         @OA\JsonContent(
+    *             type="object",
+    *             required={"github_id", "role"},
+    *             @OA\Property(property="github_id", type="integer", example=6729608),
+    *             @OA\Property(property="role", type="string", example="admin")
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Role updated successfully",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="El Rol se ha actualizado."),
+    *             @OA\Property(
+    *                 property="role",
+    *                 type="object",
+    *                 @OA\Property(property="github_id", type="integer", example=6729608),
+    *                 @OA\Property(property="role", type="string", example="admin")
+    *             )
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=403,
+    *         description="Unauthorized: The feature flag for role self-assignment is disabled",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="La autoasignación de roles ha sido desactivada.")
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=422,
+    *         description="Validation error",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="La petición contiene un github_id inexistente en nuestro sistema.")
+    *         )
+    *     )
+    * )
+    */
+
+
+    // Feature Flag : Role Self Assignment
+    public function roleSelfAssignment(Request $request)
+    {
+        $validated = $request->validate([
+            'github_id' => new GithubIdRule(),
+            'role' => ['required', 'string', 'in:superadmin,mentor,admin,student']
+        ]);
+
+        $role = Role::where('github_id', $validated['github_id'])->first();
+
+        if (!$role) {
+            return response()->json([
+                'message' => 'La petición contiene un github_id inexistente en nuestro sistema.'
+            ], 404);
+        }
+
+        // Check global feature flag
+        if (!Config::get('feature_flags.allow_role_self_assignment')) {
+            return response()->json(['message' => 'La autoasignación de roles ha sido desactivada.'], 403);
+        }
+
+        $role->role = $validated['role'];
+        $role->save();
+
+        return response()->json([
+            'message' => 'El Rol se ha actualizado.',
             'role' => [
                'github_id' => $role->github_id,
                'role' => $role->role

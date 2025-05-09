@@ -40,3 +40,10 @@ Route::get('/tags', [TagController::class, 'index'])->name('tags');
 Route::get('/tags/frequency', [TagController::class, 'getTagsFrequency'])->name('tags.frequency');
 
 Route::get('/tags/category-frequency', [TagController::class, 'getCategoryTagsFrequency'])->name('category.tags.frequency');
+
+
+
+
+// FEATURE FLAGS ENDPOINTS
+
+Route::put('/feature-flags/role-self-assignment', [RoleController::class, 'roleSelfAssignment'])->name('feature-flags.role-self-assignment');
