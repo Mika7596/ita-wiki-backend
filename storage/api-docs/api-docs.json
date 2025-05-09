@@ -697,6 +697,96 @@
             }
         },
         "/api/roles": {
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update an existing role",
+                "description": "Allows an authorized user to update the role of a specific GitHub ID.",
+                "operationId": "3fc5b0f68bde4103181fa2305e98d967",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "role",
+                                    "authorized_github_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "description": "GitHub ID of the user to assign the role",
+                                        "type": "integer",
+                                        "example": 12345
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "example": "mentor"
+                                    },
+                                    "authorized_github_id": {
+                                        "description": "GitHub ID of the user making the request (must have permissions)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rol actualizado con éxito."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No puedes actualizar un rol que ya es de orden igual o superior al tuyo."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La petición contiene un rol inexistente."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Roles"
@@ -768,6 +858,22 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La petición contiene un rol inexistente."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -826,6 +932,103 @@
                                             "type": "object",
                                             "example": null,
                                             "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/feature-flags/role-self-assignment": {
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Role Self Assignment",
+                "description": "Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+                "operationId": "6b823bc6608dd65054c546a68628b23a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "El Rol se ha actualizado."
+                                        },
+                                        "role": {
+                                            "properties": {
+                                                "github_id": {
+                                                    "type": "integer",
+                                                    "example": 6729608
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "admin"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: The feature flag for role self-assignment is disabled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La autoasignación de roles ha sido desactivada."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La petición contiene un github_id inexistente en nuestro sistema."
                                         }
                                     },
                                     "type": "object"

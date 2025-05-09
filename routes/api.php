@@ -27,6 +27,8 @@ Route::delete('/bookmarks', [BookmarkController::class,'deleteStudentBookmark'])
 
 Route::post('/roles', [RoleController::class, 'createRole'])->name('roles.create');
 
+Route::put('/roles', [RoleController::class, 'updateRole'])->name('roles.update');
+
 Route::get('/likes/{github_id}', [LikeController::class,'getStudentLikes'])->name('likes');
 
 Route::post('/likes', [LikeController::class,'createStudentLike'])->name('like.create');
@@ -38,3 +40,10 @@ Route::get('/tags', [TagController::class, 'index'])->name('tags');
 Route::get('/tags/frequency', [TagController::class, 'getTagsFrequency'])->name('tags.frequency');
 
 Route::get('/tags/category-frequency', [TagController::class, 'getCategoryTagsFrequency'])->name('category.tags.frequency');
+
+
+
+
+// FEATURE FLAGS ENDPOINTS
+
+Route::put('/feature-flags/role-self-assignment', [RoleController::class, 'roleSelfAssignment'])->name('feature-flags.role-self-assignment');

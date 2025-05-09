@@ -67,4 +67,5 @@ jobs:
           DB_DATABASE: laravel
           DB_USERNAME: user
           DB_PASSWORD: password
+          ALLOW_ROLE_SELF_ASSIGNMENT: true
         run: php artisan test
