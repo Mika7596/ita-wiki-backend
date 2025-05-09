@@ -14,6 +14,8 @@ class RoleSelfAssignmentTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        config(['feature_flags.allow_role_self_assignment' => true]);
+
         $this->student = Role::factory()->create([
             'github_id' => random_int(1001, 9999999),
             'role' => 'student'
@@ -41,7 +43,7 @@ class RoleSelfAssignmentTest extends TestCase
             'github_id' => $this->student->github_id,
             'role' => 'nonexistent'
         ]);
-        
+
         $response->assertStatus(422);
 
         $this->assertDatabaseMissing('roles', [
