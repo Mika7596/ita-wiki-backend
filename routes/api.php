@@ -27,6 +27,8 @@ Route::delete('/bookmarks', [BookmarkController::class,'deleteStudentBookmark'])
 
 Route::post('/roles', [RoleController::class, 'createRole'])->name('roles.create');
 
+Route::put('/roles', [RoleController::class, 'updateRole'])->name('roles.update');
+
 Route::get('/likes/{github_id}', [LikeController::class,'getStudentLikes'])->name('likes');
 
 Route::post('/likes', [LikeController::class,'createStudentLike'])->name('like.create');
