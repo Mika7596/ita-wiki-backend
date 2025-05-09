@@ -22,10 +22,12 @@ class RoleSelfAssignmentTest extends TestCase
 
     public function testCanSelfAssignRole(): void
     {
-        $this->putJson(route('feature-flags.role-self-assignment'), [
+        $response = $this->putJson(route('feature-flags.role-self-assignment'), [
             'github_id' => $this->student->github_id,
             'role' => 'mentor'
-        ])->assertStatus(200);
+        ]);
+
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('roles', [
             'github_id' => $this->student->github_id,
@@ -35,10 +37,12 @@ class RoleSelfAssignmentTest extends TestCase
 
     public function testCannotSelfAssignANonExistentRole(): void
     {
-        $this->putJson(route('feature-flags.role-self-assignment'), [
+        $response = $this->putJson(route('feature-flags.role-self-assignment'), [
             'github_id' => $this->student->github_id,
             'role' => 'nonexistent'
-        ])->assertStatus(422);
+        ]);
+        
+        $response->assertStatus(422);
 
         $this->assertDatabaseMissing('roles', [
             'github_id' => $this->student->github_id,
