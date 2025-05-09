@@ -176,24 +176,19 @@ class RoleController extends Controller
     }
 
     /**
-    * @OA\Post(
+    * @OA\Put(
     *     path="/api/roles/role-self-assignment",
     *     summary="Role Self Assignment",
     *     tags={"Roles"},
     *     description="Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
-    *     @OA\Parameter(
-    *         name="github_id",
-    *         in="query",
-    *         description="GitHub ID of the user",
+    *     @OA\RequestBody(
     *         required=true,
-    *         @OA\Schema(type="integer", example=6729608)
-    *     ),
-    *     @OA\Parameter(
-    *         name="role",
-    *         in="query",
-    *         description="Role to be assigned",
-    *         required=true,
-    *         @OA\Schema(type="string", example="admin")
+    *         @OA\JsonContent(
+    *             type="object",
+    *             required={"github_id", "role"},
+    *             @OA\Property(property="github_id", type="integer", example=6729608),
+    *             @OA\Property(property="role", type="string", example="admin")
+    *         )
     *     ),
     *     @OA\Response(
     *         response=200,

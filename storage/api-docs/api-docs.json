@@ -908,35 +908,37 @@
             }
         },
         "/api/roles/role-self-assignment": {
-            "post": {
+            "put": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Role Self Assignment",
                 "description": "Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
-                "operationId": "9db3544a4725629362aa107a0439f1af",
-                "parameters": [
-                    {
-                        "name": "github_id",
-                        "in": "query",
-                        "description": "GitHub ID of the user",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 6729608
-                        }
-                    },
-                    {
-                        "name": "role",
-                        "in": "query",
-                        "description": "Role to be assigned",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "admin"
+                "operationId": "999ab3b55291ec83061b6e8050c9687e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Role updated successfully",

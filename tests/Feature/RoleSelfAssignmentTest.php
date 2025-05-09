@@ -15,7 +15,7 @@ class RoleSelfAssignmentTest extends TestCase
     {
         parent::setUp();
         $this->student = Role::factory()->create([
-            'github_id' => 123456,
+            'github_id' => random_int(1001, 9999999),
             'role' => 'student'
         ]);
     }
