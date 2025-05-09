@@ -175,7 +175,58 @@ class RoleController extends Controller
         ], 200);
     }
 
-
+    /**
+    * @OA\Post(
+    *     path="/api/roles/role-self-assignment",
+    *     summary="Role Self Assignment",
+    *     tags={"Roles"},
+    *     description="Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+    *     @OA\Parameter(
+    *         name="github_id",
+    *         in="query",
+    *         description="GitHub ID of the user",
+    *         required=true,
+    *         @OA\Schema(type="integer", example=6729608)
+    *     ),
+    *     @OA\Parameter(
+    *         name="role",
+    *         in="query",
+    *         description="Role to be assigned",
+    *         required=true,
+    *         @OA\Schema(type="string", example="admin")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Role updated successfully",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="El Rol se ha actualizado."),
+    *             @OA\Property(
+    *                 property="role",
+    *                 type="object",
+    *                 @OA\Property(property="github_id", type="integer", example=6729608),
+    *                 @OA\Property(property="role", type="string", example="admin")
+    *             )
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=403,
+    *         description="Unauthorized: The feature flag for role self-assignment is disabled",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="La autoasignación de roles ha sido desactivada.")
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=422,
+    *         description="Validation error",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="message", type="string", example="La petición contiene un github_id inexistente en nuestro sistema.")
+    *         )
+    *     )
+    * )
+    */
 
 
     // Feature Flag : Role Self Assignment
@@ -190,20 +241,20 @@ class RoleController extends Controller
 
         if (!$role) {
             return response()->json([
-                'message' => 'Role not found.'
+                'message' => 'La petición contiene un github_id inexistente en nuestro sistema.'
             ], 404);
         }
 
         // Check global feature flag
         if (!Config::get('feature_flags.allow_role_self_assignment')) {
-            return response()->json(['message' => 'Role self assignment is disabled.'], 403);
+            return response()->json(['message' => 'La autoasignación de roles ha sido desactivada.'], 403);
         }
 
         $role->role = $validated['role'];
         $role->save();
 
         return response()->json([
-            'message' => 'Role updated successfully.',
+            'message' => 'El Rol se ha actualizado.',
             'role' => [
                'github_id' => $role->github_id,
                'role' => $role->role
