@@ -27,13 +27,21 @@ class ResourceEditController extends Controller
      *             @OA\Property(property="github_id", type="integer", example=6729608),
      *             @OA\Property(property="title", type="string", example="Laravel Best Practices"),
      *             @OA\Property(property="description", type="string", example="A collection of best practices for Laravel development"),
-     *             @OA\Property(property="url", type="string", format="url", example="https://laravelbestpractices.com")
+     *             @OA\Property(property="url", type="string", format="url", example="https://laravelbestpractices.com"),
+     *             @OA\Property(property="tags", type="array", maxItems=5, uniqueItems=true, nullable=true, @OA\Items(type="string", example="testing"), example={"testing", "tdd", "hooks"}),
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Resource updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Resource")
+     *     ),
+     *     @OA\Response(
+     *          response=403,
+     *          description="Forbidden",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="You don't have permission to update this resource.")
+     *          )
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -44,6 +52,7 @@ class ResourceEditController extends Controller
      *                 "title": {"The title field is required.", "Title must be at least 5 characters.", "Title must not exceed 255 characters."},
      *                 "description": {"The description field is required.", "Description must be at least 10 characters.", "Description must not exceed 1000 characters."},
      *                 "url": {"The url field is required.", "The url format is invalid."},
+     *                 "tags": {"The tags field must be an array of strings.", "The selected tags are invalid."},
      *             })
      *         )
      *     )
@@ -55,6 +64,11 @@ class ResourceEditController extends Controller
         //Obtenemos los datos validados
         $validated = $request->validated();
         unset($validated['github_id']);
+
+        if (array_key_exists('tags', $validated) && empty($validated['tags'])) {
+            $validated['tags'] = null;
+        }
+
         //Actualizamos los datos
         $resource->update($validated);
 

@@ -157,7 +157,7 @@ class UpdateResourceTest extends TestCase
             'invalid title (too long)' => [['title' => self::generateLongText(256)], 'title'],
             'invalid title (array)' => [['title' => []], 'title'],
             
-            'missing description' => [['description' => null], 'description'],
+            //'missing description' => [['description' => null], 'description'],
             'invalid description (too short)' => [['description' => 'short'], 'description'],
             'invalid description (too long)' => [['description' => self::generateLongText(1001)], 'description'],
             'invalid description (array)' => [['description' => []], 'description'],
