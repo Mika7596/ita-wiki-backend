@@ -26,6 +26,10 @@ class ResourceFactory extends Factory
 
         $validTags = Tag::all()->pluck('name')->toArray();
 
+        $createdAtDate = $this->faker->dateTimeBetween('-2 years', 'now');
+
+        $updatedAtDate = $this->faker->boolean(50)? $createdAtDate : $this->faker->dateTimeBetween($createdAtDate, 'now');
+
         return [
             'github_id' => $role->github_id,
             'title' => $this->faker->sentence(4),
@@ -34,6 +38,8 @@ class ResourceFactory extends Factory
             'category' => $this->faker->randomElement(['Node', 'React', 'Angular', 'JavaScript', 'Java', 'Fullstack PHP', 'Data Science', 'BBDD']),
             'tags' => $this->faker->randomElements($validTags, $this->faker->numberBetween(1, 5)),
             'type' => $this->faker->randomElement(['Video', 'Cursos', 'Blog']),
+            'created_at' => $createdAtDate,
+            'updated_at' => $updatedAtDate,
         ];
     }
 }
