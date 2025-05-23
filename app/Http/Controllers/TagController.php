@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Models\Resource;
+use Illuminate\Http\JsonResponse;
+
 
 class TagController extends Controller
 {
@@ -106,4 +108,29 @@ class TagController extends Controller
 
         return response()->json($frequencies, 200);
     }
+
+    public function getCategoryTagsId () : JsonResponse
+    {
+         $resourcesByCategory = Resource::all()->groupBy('category');
+        $tagsByCategory = [];
+
+    foreach ($resourcesByCategory as $category => $resources) {
+        $tagNames = $resources
+            ->pluck('tags')     
+            ->filter()
+            ->flatten()        
+            ->unique()
+            ->values();
+            
+
+        $tagIds = Tag::whereIn('name', $tagNames)->pluck('id')->all();
+        
+        $tagsByCategory[$category] = $tagIds;
+    }
+
+    return response()->json($tagsByCategory, 200);
+
+    }
+
+    
 }
