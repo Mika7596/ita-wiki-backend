@@ -75,7 +75,7 @@ class ResourceController extends Controller
 
 /**
  * @OA\Post(
- *     path="/api/createResources",
+ *     path="/api/v2/resources",
  *     summary="Create a new resource using tag IDs",
  *     tags={"Resources"},
  *     description="Creates a resource. This version expects an array of tag IDs instead of tag names.",
