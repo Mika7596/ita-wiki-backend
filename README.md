@@ -82,3 +82,5 @@ Frank Pulido (@frankpulido)
 
 Raquel Patiño
 Anna Mercado 
+
+Kawsu Nagib
