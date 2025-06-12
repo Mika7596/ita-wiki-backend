@@ -4,6 +4,7 @@ declare (strict_types= 1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ShowResourceRequest;
 use App\Models\Resource;
 use App\Http\Requests\StoreResourceRequest;
 use App\Http\Requests\StoreResourceV2Request;
@@ -132,6 +133,25 @@ class ResourceController extends Controller
     {
         $resources = Resource::all();
         return response()->json($resources, 200);
+    }
+
+    public function showResource (ShowResourceRequest $request){
+        $validated= $request->validated();
+        $searchTerm = $validated['search'];
+        
+        $resources = Resource::where('title', 'like', '%' . $searchTerm . '%')
+            ->orWhere('description', 'like', '%' . $searchTerm . '%')
+            ->orWhere('url', 'like', '%' . $searchTerm . '%')
+            ->orWhere('category', 'like', '%' . $searchTerm . '%')
+            ->orWhere('type', 'like', '%' . $searchTerm . '%')
+            ->get();
+
+            if($resources->isEmpty()) {
+                return response()->json(['message' => 'No resources found'], 404);
+            }
+        return response()->json($resources, 200);
+
+
     }
 
 }

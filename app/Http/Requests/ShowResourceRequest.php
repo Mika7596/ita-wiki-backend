@@ -13,7 +13,7 @@ class ShowResourceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class ShowResourceRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'search' => 'required|string|max:30|regex:/^[a-zA-Z0-9\s]+$/',
             //
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'search.required'=> 'Search cannot be empty',
+            'search.max'=> 'Search is too long'
         ];
     }
 }

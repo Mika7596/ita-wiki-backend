@@ -13,9 +13,9 @@ class ShowResourceTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_user_can_search_for_resources(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/api/resources?search=javascript'); 
 
         $response->assertStatus(200);
     }
