@@ -135,6 +135,29 @@ class ResourceController extends Controller
         return response()->json($resources, 200);
     }
 
+    /**
+     * @OA\Get(
+     *  path="/api/v2/resources",
+     *  summary="Search resources by title, description, URL, category, or type",
+     *  tags={"Resources"},
+     *  description="Returns resources matching the search term or all resources if no search term is provided",
+     *  @OA\Parameter(
+     *      name="search",
+     *      in="query",
+     *      required=false,
+     *      @OA\Schema(type="string", example="JavaScript")
+     *  ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="List of resources matching the search term or all resources if no search term is provided",
+     *      @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Resource"))
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No resources found"
+     *  )
+     * )
+     */
     public function showResource (ShowResourceRequest $request){
 
         $validated= $request->validated();
