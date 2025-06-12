@@ -17,7 +17,7 @@ Route::post('/v2/resources', [ResourceController::class, 'storeResource'])->name
 
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
-Route::get('/resources', [ResourceController::class, 'showResource'])->name('showResource');
+Route::get('v2/resources', [ResourceController::class, 'showResource'])->name('showResource');
 
 Route::post('/login', [RoleController::class, 'getRoleByGithubId'])->name('login');
 

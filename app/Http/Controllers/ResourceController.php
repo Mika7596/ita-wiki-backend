@@ -136,9 +136,11 @@ class ResourceController extends Controller
     }
 
     public function showResource (ShowResourceRequest $request){
+
         $validated= $request->validated();
-        $searchTerm = $validated['search'];
+        $searchTerm = $validated['search'] ?? null;
         
+        if ($searchTerm && trim($searchTerm) !== '') {
         $resources = Resource::where('title', 'like', '%' . $searchTerm . '%')
             ->orWhere('description', 'like', '%' . $searchTerm . '%')
             ->orWhere('url', 'like', '%' . $searchTerm . '%')
@@ -146,10 +148,16 @@ class ResourceController extends Controller
             ->orWhere('type', 'like', '%' . $searchTerm . '%')
             ->get();
 
-            if($resources->isEmpty()) {
-                return response()->json(['message' => 'No resources found'], 404);
-            }
+        if ($resources->isEmpty()) {
+            return response()->json(['message' => 'No resources found'], 404);
+        }
+
         return response()->json($resources, 200);
+    }
+
+    // Si no hay search, devuelve todos
+    $resources = Resource::all();
+    return response()->json($resources, 200);
 
 
     }
