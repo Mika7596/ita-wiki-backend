@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('ITA_wiki', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -121,6 +121,12 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+    'providers' => [
+      Laravel\Socialite\SocialiteServiceProvider::class,
+    ],
+    'aliases' => [
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

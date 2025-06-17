@@ -1,5 +1,5 @@
 <?php
-
+$isProd = env('APP_ENV') === 'production';
 return [
 
     /*
@@ -13,6 +13,12 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    
+    'github' => [
+    'client_id' => env($isProd ? 'GITHUB_CLIENT_ID_PROD' : 'GITHUB_CLIENT_ID_LOCAL'),
+    'client_secret' => env($isProd ? 'GITHUB_CLIENT_SECRET_PROD' : 'GITHUB_CLIENT_SECRET_LOCAL'),
+    'redirect' => env($isProd ? 'GITHUB_REDIRECT_URI_PROD' : 'GITHUB_REDIRECT_URI_LOCAL'),
+    ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
