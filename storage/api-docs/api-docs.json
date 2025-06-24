@@ -209,6 +209,70 @@
                 }
             }
         },
+        "/api/login-node": {
+            "post": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Retrieve a role by GitHub node_id",
+                "description": "Fetches a role using the provided GitHub node_id. If the role does not exist, it returns an error.",
+                "operationId": "65a22473b9a9ff9e2be253682bb520ca",
+                "parameters": [
+                    {
+                        "name": "node_id",
+                        "in": "query",
+                        "description": "GitHub node_id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "MDQ6VXNlcjY3Mjk2MDg="
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role found."
+                                        },
+                                        "role": {
+                                            "$ref": "#/components/schemas/RoleNode"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role not found."
+                                        },
+                                        "role": {
+                                            "type": "object",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/bookmarks": {
             "post": {
                 "tags": [
