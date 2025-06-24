@@ -12,7 +12,7 @@
                     "RolesNode"
                 ],
                 "summary": "Create a new role using node_id",
-                "description": "Allows an authorized user to create a new role for a specific GitHub node_id.",
+                "description": "Allows an authorized user to create a new role for a specific GitHub node_id.\n     *\n     *     Note: The 'node_id' field must be unique. If you receive a 'has already been taken' error, please use a different value for 'node_id'.",
                 "operationId": "059334212f6a3e439277b3d6281800fe",
                 "requestBody": {
                     "required": true,
@@ -26,17 +26,23 @@
                                 ],
                                 "properties": {
                                     "node_id": {
-                                        "description": "GitHub node_id of the user to assign the role",
+                                        "description": "GitHub node_id of the user to assign the role. Must be unique and not already exist in the database.",
                                         "type": "string",
-                                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                                        "example": "MDQ6VXNlcjUNIQUE="
                                     },
                                     "role": {
                                         "description": "Role to be assigned",
                                         "type": "string",
+                                        "enum": [
+                                            "superadmin",
+                                            "admin",
+                                            "mentor",
+                                            "student"
+                                        ],
                                         "example": "mentor"
                                     },
                                     "authorized_node_id": {
-                                        "description": "GitHub node_id of the user making the request (must have permissions)",
+                                        "description": "GitHub node_id of the user making the request (must have permissions, e.g. superadmin)",
                                         "type": "string",
                                         "example": "MDQ6VXNlcjE="
                                     }
@@ -85,6 +91,15 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "authorized_node_id": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "The selected authorized node id is invalid."
+                                            ]
+                                        },
                                         "message": {
                                             "type": "string",
                                             "example": "The request contains an invalid role."

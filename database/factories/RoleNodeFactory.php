@@ -21,7 +21,7 @@ class RoleNodeFactory extends Factory
     {
         
             do {
-            $nodeId  = $this->faker->uuid;  //or  aunique string generator (unique()->regexify('[A-Za-z0-9]{10,15}');)
+            $nodeId  = $this->faker->unique()->regexify('MDQ6VXNlcj[0-9]{1,5}=');// faker->uuid;  //or  aunique string generator (unique()->regexify('[A-Za-z0-9]{10,15}');)
         } while (RoleNode::where('node_id', $nodeId )->exists());
         return [
             'node_id' => $nodeId,
