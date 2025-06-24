@@ -7,6 +7,102 @@
     },
     "paths": {
         "/api/roles-node": {
+            "put": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Update an existing role using node_id",
+                "description": "Allows an authorized user to update the role of a specific GitHub node_id.",
+                "operationId": "21da04f149f343df852087700cd96884",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "node_id",
+                                    "role",
+                                    "authorized_node_id"
+                                ],
+                                "properties": {
+                                    "node_id": {
+                                        "description": "GitHub node_id of the user to update the role",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "enum": [
+                                            "superadmin",
+                                            "admin",
+                                            "mentor",
+                                            "student"
+                                        ],
+                                        "example": "mentor"
+                                    },
+                                    "authorized_node_id": {
+                                        "description": "GitHub node_id of the user making the request (must have permissions, e.g. superadmin)",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjE="
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You cannot update a role that is equal or higher than your own."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The request contains an invalid role."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "RolesNode"
@@ -1534,6 +1630,33 @@
                         "description": "The GitHub ID of the user",
                         "type": "integer",
                         "example": 6729608
+                    },
+                    "role": {
+                        "description": "The role of the user",
+                        "type": "string",
+                        "example": "student"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "RoleNode": {
+                "title": "RoleNode",
+                "description": "RoleNode object representing a user's role and associated GitHub node_id",
+                "properties": {
+                    "node_id": {
+                        "description": "The GitHub node_id of the user",
+                        "type": "string",
+                        "example": "MDQ6VXNlcjY3Mjk2MDg="
                     },
                     "role": {
                         "description": "The role of the user",
