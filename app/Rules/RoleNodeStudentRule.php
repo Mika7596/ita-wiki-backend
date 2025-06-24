@@ -18,6 +18,7 @@ class RoleNodeStudentRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $role = RoleNode::where('node_id', $value)->first();
+          
         if (!$role || $role->role !== 'student') {
             $fail('The node_id must belong to a student role.');
         }

@@ -19,7 +19,7 @@ class NodeIdRule implements ValidationRule
     {
         $validator = Validator::make(
             [$attribute => $value],
-            [$attribute => ['required', 'string', 'exists:roles_node, node_id']]
+            [$attribute => ['required', 'string', 'exists:roles_node,node_id']]
         );
 
         if ($validator->fails()) {

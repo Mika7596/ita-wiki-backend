@@ -79,14 +79,53 @@ class RoleNodeController extends Controller
         return $createRoleNodeService($request->validated());
     }
 
-
-    
-    //to be added as the transition advances
+    /**
+     * @OA\Put(
+     *     path="/api/roles-node",
+     *     summary="Update an existing role using node_id",
+     *     tags={"RolesNode"},
+     *     description="Allows an authorized user to update the role of a specific GitHub node_id.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"node_id", "role", "authorized_node_id"},
+     *             @OA\Property(property="node_id", type="string", example="MDQ6VXNlcjY3Mjk2MDg=", description="GitHub node_id of the user to update the role"),
+     *             @OA\Property(property="role", type="string", enum={"superadmin", "admin", "mentor", "student"}, example="mentor", description="Role to be assigned"),
+     *             @OA\Property(property="authorized_node_id", type="string", example="MDQ6VXNlcjE=", description="GitHub node_id of the user making the request (must have permissions, e.g. superadmin)")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Role updated successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Role updated successfully.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="You cannot update a role that is equal or higher than your own.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="The request contains an invalid role.")
+     *         )
+     *     )
+     * )
+     */
     public function updateRoleNode(UpdateRoleNodeRequest $request, UpdateRoleNodeService $updateRoleNodeService): JsonResponse
     {
         return $updateRoleNodeService($request->validated());
     }
 
+    //to be added as the transition advances
     public function getRoleByGithubId(Request $request)
     {
         //
