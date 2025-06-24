@@ -61,4 +61,4 @@ Route::put('/feature-flags/role-self-assignment', [RoleController::class, 'roleS
 
 //new github_id to node_id transition routes
 Route::post('/roles-node', [RoleNodeController::class, 'createRoleNode'])->name('roles-node.create');
-//Route::put('/roles-node',  [RoleNodeController::class, 'updateRoleNode'])->name('roles-node.update');
+Route::put('/roles-node',  [RoleNodeController::class, 'updateRoleNode'])->name('roles-node.update');
