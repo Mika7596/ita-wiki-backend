@@ -125,12 +125,71 @@ class RoleNodeController extends Controller
         return $updateRoleNodeService($request->validated());
     }
 
-    //to be added as the transition advances
-    public function getRoleByGithubId(Request $request)
+    /**
+     * @OA\Post(
+     *     path="/api/login-node",
+     *     summary="Retrieve a role by GitHub node_id",
+     *     tags={"RolesNode"},
+     *     description="Fetches a role using the provided GitHub node_id. If the role does not exist, it returns an error.",
+     *     @OA\Parameter(
+     *         name="node_id",
+     *         in="query",
+     *         description="GitHub node_id of the user",
+     *         required=true,
+     *         @OA\Schema(type="string", example="MDQ6VXNlcjY3Mjk2MDg=")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Role found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Role found."),
+     *             @OA\Property(
+     *                 property="role",
+     *                 type="object",
+     *                 ref="#/components/schemas/RoleNode"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Role not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Role not found."),
+     *             @OA\Property(
+     *                 property="role",
+     *                 type="object",
+     *                 nullable=true,
+     *                 example=null
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function getRoleByNodeId(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'node_id' => 'required|string',
+        ]);
+
+        $role = \App\Models\RoleNode::where('node_id', $validated['node_id'])->first();
+
+        if (! $role) {
+            return response()->json([
+                'message' => 'Role not found.',
+            ], 404);
+        }
+        return response()->json([
+            'message' => 'Role found.',
+            'role'    => [
+                'node_id' => $role->node_id,
+                'role'    => $role->role,
+            ],
+        ], 200);
     }
 
+    //to be added as the transition advances
     // Feature Flag : Role Self Assignment
     public function roleSelfAssignment(Request $request)
     {
