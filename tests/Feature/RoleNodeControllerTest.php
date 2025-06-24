@@ -112,4 +112,39 @@ class RoleNodeControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
+    
+    public function testCanGetRoleByNodeId(): void
+    {
+        $roleNode = RoleNode::factory()->create([
+            'role' => 'student'
+        ]);
+
+        $response = $this->post(route('login-node'), [
+            'node_id' => $roleNode->node_id
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'message' => 'Role found.',
+                'role' => [
+                    'node_id' => $roleNode->node_id,
+                    'role' => 'student'
+                ]
+            ]);
+    }
+
+
+    public function testRoleNotFound(): void
+    {
+        $random_node_id = 'MDQ6VXNlcj' . random_int(100000, 999999) . '=';
+        $response = $this->post(route('login-node'), [
+            'node_id' => $random_node_id
+        ]);
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Role not found.'
+            ]);
+    }
+
 }
