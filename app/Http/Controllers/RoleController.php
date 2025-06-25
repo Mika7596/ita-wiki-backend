@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types= 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 use App\Http\Requests\CreateRoleRequest;
@@ -13,6 +13,9 @@ use Illuminate\Http\JsonResponse;
 use App\Rules\GithubIdRule;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * @deprecated 
+ */
 class RoleController extends Controller
 {
     /**
