@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\GitHubAuthController;
+use App\Http\Controllers\Api\TagNodeController;
 use App\Http\Controllers\Api\RoleNodeController;
 use App\Http\Controllers\ResourceEditController;
 use App\Http\Controllers\Api\BookmarkNodeController;
@@ -64,10 +65,23 @@ Route::post('/roles-node', [RoleNodeController::class, 'createRoleNode'])->name(
 Route::put('/roles-node',  [RoleNodeController::class, 'updateRoleNode'])->name('roles-node.update');
 Route::post('/login-node', [RoleNodeController::class, 'getRoleByNodeId'])->name('login-node');
 
-//BOOKMARK ENDPOINTS
+//FEATURE FLAGS ENDPOINTS for node
+Route::put('/feature-flags/role-self-assignment-node', [RoleNodeController::class, 'roleSelfAssignmentNode'])->name('feature-flags.role-self-assignment-node');
+
+//BOOKMARKNODE ENDPOINTS
 Route::post('/bookmarks-node',   [BookmarkNodeController::class, 'createStudentBookmarkNode'])->name('bookmark-node.create');
 Route::delete('/bookmarks-node', [BookmarkNodeController::class, 'deleteStudentBookmarkNode'])->name('bookmark-node.delete');
 Route::get('/bookmarks-node/{node_id}', [BookmarkNodeController::class, 'getStudentBookmarksNode'])->name('bookmarks-node');
 
-//FEATURE FLAGS ENDPOINTS for node
-Route::put('/feature-flags/role-self-assignment-node', [RoleNodeController::class, 'roleSelfAssignmentNode'])->name('feature-flags.role-self-assignment-node');
+
+//TAGSNODE ENDPOINTS
+Route::get('/tags-node', [TagNodeController::class, 'index'])->name('tags-node');
+Route::get('/tags-node/frequency', [TagNodeController::class, 'getTagsFrequency'])->name('tags-node.frequency');
+Route::get('/tags-node/category-frequency', [TagNodeController::class, 'getCategoryTagsFrequency'])->name('category.tags-node.frequency');
+Route::get('/tags-node/by-category', [TagNodeController::class, 'getCategoryTagsId'])->name('category.tags-node.id');
+
+//LIKESNODE ENDPOINTS
+
+
+
+//RESOURCESNODE ENDPOINTS
