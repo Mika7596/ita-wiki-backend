@@ -534,6 +534,122 @@
                 }
             }
         },
+        "/api/tags-node": {
+            "get": {
+                "tags": [
+                    "TagsNode"
+                ],
+                "summary": "Get all tags (node_id version)",
+                "description": "Tags used in resources_node",
+                "operationId": "db9fcdaa338069c8cfe3341288556e00",
+                "responses": {
+                    "200": {
+                        "description": "A list of tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TagNode"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags-node/frequency": {
+            "get": {
+                "tags": [
+                    "TagsNode"
+                ],
+                "summary": "Get tag-node frequencies",
+                "description": "Frequencies of tags used in resources_node",
+                "operationId": "0b3f3b6c219fa7893a4ad383548936a4",
+                "responses": {
+                    "200": {
+                        "description": "An object with tag names as keys and frequencies as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "mongodb": 3,
+                                    "tdd": 10
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags-node/category-frequency": {
+            "get": {
+                "tags": [
+                    "TagsNode"
+                ],
+                "summary": "Get tag-node frequencies grouped by category",
+                "description": "Frequencies of tags used in resources_node grouped by category",
+                "operationId": "4d4d714ddd652885fa143ba47c8066d6",
+                "responses": {
+                    "200": {
+                        "description": "An object with tag names as keys and frequencies as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": {
+                                        "mongodb": 3,
+                                        "tdd": 10
+                                    },
+                                    "React": {
+                                        "hooks": 2,
+                                        "dependencies": 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags-node/by-category": {
+            "get": {
+                "tags": [
+                    "TagsNode"
+                ],
+                "summary": "Get tag-node IDs grouped by category",
+                "description": "Returns the IDs of tags used in resources_node, grouped by resource_node category. This does not require a pivot table and is based on matching tag names from a JSON column.",
+                "operationId": "b79a07e516ecc8c719e0fa3804fbb553",
+                "responses": {
+                    "200": {
+                        "description": "An object with category names as keys and arrays of tag-node IDs as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": [
+                                        1,
+                                        5,
+                                        6
+                                    ],
+                                    "React": [
+                                        3,
+                                        7
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/bookmarks": {
             "post": {
                 "tags": [
@@ -2174,6 +2290,10 @@
         {
             "name": "RolesNode",
             "description": "RolesNode"
+        },
+        {
+            "name": "TagsNode",
+            "description": "TagsNode"
         },
         {
             "name": "Bookmarks",
