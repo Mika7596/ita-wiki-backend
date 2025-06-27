@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types= 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -9,7 +9,9 @@ use App\Models\Tag;
 use App\Models\Resource;
 use Illuminate\Http\JsonResponse;
 
-
+/**
+ * @deprecated  
+ */
 class TagController extends Controller
 {
     /**
