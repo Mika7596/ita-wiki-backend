@@ -68,3 +68,6 @@ Route::post('/login-node', [RoleNodeController::class, 'getRoleByNodeId'])->name
 Route::post('/bookmarks-node',   [BookmarkNodeController::class, 'createStudentBookmarkNode'])->name('bookmark-node.create');
 Route::delete('/bookmarks-node', [BookmarkNodeController::class, 'deleteStudentBookmarkNode'])->name('bookmark-node.delete');
 Route::get('/bookmarks-node/{node_id}', [BookmarkNodeController::class, 'getStudentBookmarksNode'])->name('bookmarks-node');
+
+//FEATURE FLAGS ENDPOINTS for node
+Route::put('/feature-flags/role-self-assignment-node', [RoleNodeController::class, 'roleSelfAssignmentNode'])->name('feature-flags.role-self-assignment-node');
