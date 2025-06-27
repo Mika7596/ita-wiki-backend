@@ -6,6 +6,273 @@
         "version": "1.0.0.0"
     },
     "paths": {
+        "/api/roles-node": {
+            "put": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Update an existing role using node_id",
+                "description": "Allows an authorized user to update the role of a specific GitHub node_id.",
+                "operationId": "21da04f149f343df852087700cd96884",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "node_id",
+                                    "role",
+                                    "authorized_node_id"
+                                ],
+                                "properties": {
+                                    "node_id": {
+                                        "description": "GitHub node_id of the user to update the role",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "enum": [
+                                            "superadmin",
+                                            "admin",
+                                            "mentor",
+                                            "student"
+                                        ],
+                                        "example": "mentor"
+                                    },
+                                    "authorized_node_id": {
+                                        "description": "GitHub node_id of the user making the request (must have permissions, e.g. superadmin)",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjE="
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You cannot update a role that is equal or higher than your own."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The request contains an invalid role."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Create a new role using node_id",
+                "description": "Allows an authorized user to create a new role for a specific GitHub node_id.\n     *\n     *     Note: The 'node_id' field must be unique. If you receive a 'has already been taken' error, please use a different value for 'node_id'.",
+                "operationId": "059334212f6a3e439277b3d6281800fe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "node_id",
+                                    "role",
+                                    "authorized_node_id"
+                                ],
+                                "properties": {
+                                    "node_id": {
+                                        "description": "GitHub node_id of the user to assign the role. Must be unique and not already exist in the database.",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjUNIQUE="
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "enum": [
+                                            "superadmin",
+                                            "admin",
+                                            "mentor",
+                                            "student"
+                                        ],
+                                        "example": "mentor"
+                                    },
+                                    "authorized_node_id": {
+                                        "description": "GitHub node_id of the user making the request (must have permissions, e.g. superadmin)",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjE="
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Role created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot create a role equal or higher than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You cannot create a role equal or higher than your own."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "authorized_node_id": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "The selected authorized node id is invalid."
+                                            ]
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The request contains an invalid role."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login-node": {
+            "post": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Retrieve a role by GitHub node_id",
+                "description": "Fetches a role using the provided GitHub node_id. If the role does not exist, it returns an error.",
+                "operationId": "65a22473b9a9ff9e2be253682bb520ca",
+                "parameters": [
+                    {
+                        "name": "node_id",
+                        "in": "query",
+                        "description": "GitHub node_id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "MDQ6VXNlcjY3Mjk2MDg="
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role found."
+                                        },
+                                        "role": {
+                                            "$ref": "#/components/schemas/RoleNode"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role not found."
+                                        },
+                                        "role": {
+                                            "type": "object",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/bookmarks": {
             "post": {
                 "tags": [
@@ -412,8 +679,8 @@
                 "tags": [
                     "Resources"
                 ],
-                "summary": "Create a new resource",
-                "description": "Creates a new resource and returns the created resource",
+                "summary": "Create a new resource (deprecated, use /api/v2/resources instead)",
+                "description": "This endpoint is deprecated and will be removed soon. Please use the new endpoint /api/v2/resources instead.\n     *      Creates a new resource and returns the created resource",
                 "operationId": "0da436b1bb56ca9fcbc4523e6be6b1cc",
                 "requestBody": {
                     "required": true,
@@ -554,6 +821,124 @@
                                 }
                             }
                         }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/api/v2/resources": {
+            "get": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Search resources by title, description, URL, category, or type",
+                "description": "Returns resources matching the search term or all resources if no search term is provided",
+                "operationId": "0612df8cd34b7f736c03701247fe1979",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "JavaScript"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of resources matching the search term or all resources if no search term is provided",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Resource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No resources found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Create a new resource using tag IDs",
+                "description": "Creates a resource. This version expects an array of tag IDs instead of tag names.",
+                "operationId": "757ef4fae40deb8850e02c5cd5562271",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "title",
+                                    "url",
+                                    "category",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 123456
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Aprende Laravel en 10 días"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Curso completo de Laravel para principiantes."
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://miweb.com/laravel"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Fullstack PHP"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            3,
+                                            5
+                                        ]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Video"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resource created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Resource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
                 }
             }
@@ -1121,6 +1506,39 @@
                     }
                 }
             }
+        },
+        "/api/tags/by-category": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag IDs grouped by category",
+                "description": "Returns the IDs of tags used in resources, grouped by resource category. This does not require a pivot table and is based on matching tag names from a JSON column.",
+                "operationId": "492b2938f86869f4a413d6b4bd79c814",
+                "responses": {
+                    "200": {
+                        "description": "An object with category names as keys and arrays of tag IDs as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": [
+                                        1,
+                                        5,
+                                        6
+                                    ],
+                                    "React": [
+                                        3,
+                                        7
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1295,6 +1713,33 @@
                 },
                 "type": "object"
             },
+            "RoleNode": {
+                "title": "RoleNode",
+                "description": "RoleNode object representing a user's role and associated GitHub node_id",
+                "properties": {
+                    "node_id": {
+                        "description": "The GitHub node_id of the user",
+                        "type": "string",
+                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                    },
+                    "role": {
+                        "description": "The role of the user",
+                        "type": "string",
+                        "example": "student"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
             "Tag": {
                 "title": "Tag",
                 "description": "Tags used in resources",
@@ -1323,6 +1768,10 @@
         }
     },
     "tags": [
+        {
+            "name": "RolesNode",
+            "description": "RolesNode"
+        },
         {
             "name": "Bookmarks",
             "description": "Bookmarks"

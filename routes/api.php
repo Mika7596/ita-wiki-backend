@@ -1,15 +1,16 @@
 <?php
 
-declare (strict_types= 1);
+declare(strict_types=1);
 
-use App\Http\Controllers\BookmarkController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\ResourceEditController;
-use App\Http\Controllers\LikeController;
-use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\GitHubAuthController;
+use App\Http\Controllers\Api\RoleNodeController;
+use App\Http\Controllers\ResourceEditController;
 
 Route::get('/auth/github/redirect', [GitHubAuthController::class, 'redirect']);
 Route::get('/auth/github/callback', [GitHubAuthController::class, 'callback']);
@@ -54,3 +55,11 @@ Route::get('/tags/by-category', [TagController::class, 'getCategoryTagsId'])->na
 // FEATURE FLAGS ENDPOINTS
 
 Route::put('/feature-flags/role-self-assignment', [RoleController::class, 'roleSelfAssignment'])->name('feature-flags.role-self-assignment');
+
+
+
+
+//new github_id to node_id transition routes
+Route::post('/roles-node', [RoleNodeController::class, 'createRoleNode'])->name('roles-node.create');
+Route::put('/roles-node',  [RoleNodeController::class, 'updateRoleNode'])->name('roles-node.update');
+Route::post('/login-node', [RoleNodeController::class, 'getRoleByNodeId'])->name('login-node');
