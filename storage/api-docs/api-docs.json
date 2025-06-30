@@ -412,8 +412,8 @@
                 "tags": [
                     "Resources"
                 ],
-                "summary": "Create a new resource",
-                "description": "Creates a new resource and returns the created resource",
+                "summary": "Create a new resource (deprecated, use /api/v2/resources instead)",
+                "description": "This endpoint is deprecated and will be removed soon. Please use the new endpoint /api/v2/resources instead.\n     *      Creates a new resource and returns the created resource",
                 "operationId": "0da436b1bb56ca9fcbc4523e6be6b1cc",
                 "requestBody": {
                     "required": true,
@@ -554,6 +554,124 @@
                                 }
                             }
                         }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/api/v2/resources": {
+            "get": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Search resources by title, description, URL, category, or type",
+                "description": "Returns resources matching the search term or all resources if no search term is provided",
+                "operationId": "0612df8cd34b7f736c03701247fe1979",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "JavaScript"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of resources matching the search term or all resources if no search term is provided",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Resource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No resources found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Create a new resource using tag IDs",
+                "description": "Creates a resource. This version expects an array of tag IDs instead of tag names.",
+                "operationId": "757ef4fae40deb8850e02c5cd5562271",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "title",
+                                    "url",
+                                    "category",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 123456
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Aprende Laravel en 10 días"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Curso completo de Laravel para principiantes."
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://miweb.com/laravel"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Fullstack PHP"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            3,
+                                            5
+                                        ]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Video"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resource created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Resource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
                 }
             }
@@ -1121,6 +1239,159 @@
                     }
                 }
             }
+        },
+        "/api/tags/by-category": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag IDs grouped by category",
+                "description": "Returns the IDs of tags used in resources, grouped by resource category. This does not require a pivot table and is based on matching tag names from a JSON column.",
+                "operationId": "492b2938f86869f4a413d6b4bd79c814",
+                "responses": {
+                    "200": {
+                        "description": "An object with category names as keys and arrays of tag IDs as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": [
+                                        1,
+                                        5,
+                                        6
+                                    ],
+                                    "React": [
+                                        3,
+                                        7
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/technicaltests": {
+            "post": {
+                "tags": [
+                    "Technical Tests"
+                ],
+                "summary": "Crear una nueva prueba técnica",
+                "description": "Crea una nueva prueba técnica en el sistema",
+                "operationId": "6fe54ab6666dbe0210d5fb53c31b290c",
+                "requestBody": {
+                    "description": "Datos de la prueba técnica",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "language"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 5,
+                                        "example": "Examen PHP Básico"
+                                    },
+                                    "language": {
+                                        "type": "string",
+                                        "enum": [
+                                            "PHP",
+                                            "JavaScript",
+                                            "Java",
+                                            "React",
+                                            "TypeScript",
+                                            "Python",
+                                            "SQL"
+                                        ],
+                                        "example": "PHP"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "example": "Examen sobre conceptos básicos de PHP",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Prueba técnica creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Technical test created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 123
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Examen PHP Básico"
+                                                },
+                                                "language": {
+                                                    "type": "string",
+                                                    "example": "PHP"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Examen sobre conceptos básicos de PHP"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-06-26T16:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-06-26T16:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The title field is required."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1323,6 +1594,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Technical Tests",
+            "description": "API Endpoints para gestión de pruebas técnicas"
+        },
         {
             "name": "Bookmarks",
             "description": "Bookmarks"

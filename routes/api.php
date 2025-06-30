@@ -10,6 +10,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitHubAuthController;
+use App\Http\Controllers\TechnicalTestController;
 
 Route::get('/auth/github/redirect', [GitHubAuthController::class, 'redirect']);
 Route::get('/auth/github/callback', [GitHubAuthController::class, 'callback']);
@@ -49,6 +50,8 @@ Route::get('/tags/frequency', [TagController::class, 'getTagsFrequency'])->name(
 Route::get('/tags/category-frequency', [TagController::class, 'getCategoryTagsFrequency'])->name('category.tags.frequency');
 
 Route::get('/tags/by-category', [TagController::class, 'getCategoryTagsId'])->name('category.tags.id');
+
+Route::post('/technicaltests', [TechnicalTestController::class, 'store']);
 
 
 // FEATURE FLAGS ENDPOINTS
