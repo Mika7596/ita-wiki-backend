@@ -6,695 +6,14 @@
         "version": "1.0.0.0"
     },
     "paths": {
-        "/api/bookmarks": {
-            "post": {
-                "tags": [
-                    "Bookmarks"
-                ],
-                "summary": "Create a bookmark",
-                "description": "Creates a new bookmark and returns a confirmation message",
-                "operationId": "3ef5b66b351fa996ad037e264208b30a",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "github_id",
-                                    "resource_id"
-                                ],
-                                "properties": {
-                                    "github_id": {
-                                        "description": "GitHub ID of the user creating the bookmark",
-                                        "type": "integer",
-                                        "example": 6729608
-                                    },
-                                    "resource_id": {
-                                        "description": "ID of the resource being bookmarked by the user",
-                                        "type": "integer",
-                                        "example": 10
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
-                                        "github_id": {
-                                            "type": "integer",
-                                            "example": 6729608
-                                        },
-                                        "resource_id": {
-                                            "type": "integer",
-                                            "example": 10
-                                        },
-                                        "created_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2025-04-03T15:27:09.000000Z"
-                                        },
-                                        "updated_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2025-04-03T15:27:09.000000Z"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bookmark already exists."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Bookmarks"
-                ],
-                "summary": "Delete a bookmark",
-                "description": "Deletes a bookmark and returns a confirmation message",
-                "operationId": "41bfde9ffcfb74e92d350e61b45c157b",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "github_id",
-                                    "resource_id"
-                                ],
-                                "properties": {
-                                    "github_id": {
-                                        "type": "integer",
-                                        "example": 6729608
-                                    },
-                                    "resource_id": {
-                                        "type": "integer",
-                                        "example": 10
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bookmark deleted successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bookmark not found"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/bookmarks/{github_id}": {
-            "get": {
-                "tags": [
-                    "Bookmarks"
-                ],
-                "summary": "Get all bookmarks for a student",
-                "description": "If the student's github_id exists it returns all bookmarks for that student or an empty array in case there is not any",
-                "operationId": "615226efbbbcd8b51e9f0a3cc43f526f",
-                "parameters": [
-                    {
-                        "name": "github_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 6729608
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Bookmark"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/likes": {
-            "post": {
-                "tags": [
-                    "Likes"
-                ],
-                "summary": "Create a like",
-                "description": "Creates a new like and returns a confirmation message",
-                "operationId": "5ac3202f731f8f61051e941be69be36a",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "github_id",
-                                    "resource_id"
-                                ],
-                                "properties": {
-                                    "github_id": {
-                                        "type": "integer",
-                                        "example": 6729608
-                                    },
-                                    "resource_id": {
-                                        "type": "integer",
-                                        "example": 10
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
-                                        "github_id": {
-                                            "type": "integer",
-                                            "example": 6729608
-                                        },
-                                        "resource_id": {
-                                            "type": "integer",
-                                            "example": 10
-                                        },
-                                        "created_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2025-04-03T15:27:09.000000Z"
-                                        },
-                                        "updated_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2025-04-03T15:27:09.000000Z"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Like already exists."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Likes"
-                ],
-                "summary": "Delete a like",
-                "description": "Deletes a like and returns a confirmation message",
-                "operationId": "20e338aa7fcb7d52fa22762125b1a3ea",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "github_id",
-                                    "resource_id"
-                                ],
-                                "properties": {
-                                    "github_id": {
-                                        "type": "integer",
-                                        "example": 6729608
-                                    },
-                                    "resource_id": {
-                                        "type": "integer",
-                                        "example": 10
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Like deleted successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Like not found"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/likes/{github_id}": {
-            "get": {
-                "tags": [
-                    "Likes"
-                ],
-                "summary": "Get all likes for a student",
-                "description": "If the student's github_id exists it returns all likes for that student or an empty array in case there is not any",
-                "operationId": "f550cb3cd10c52a7b8a033b17039f72c",
-                "parameters": [
-                    {
-                        "name": "github_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 6729608
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Like"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/resources": {
-            "get": {
-                "tags": [
-                    "Resources"
-                ],
-                "summary": "Get all resources",
-                "description": "Returns a list of all resources",
-                "operationId": "ee96de2f37d473ea4740b7700ddd1daf",
-                "responses": {
-                    "200": {
-                        "description": "Resource list",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Resource"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Resources"
-                ],
-                "summary": "Create a new resource (deprecated, use /api/v2/resources instead)",
-                "description": "This endpoint is deprecated and will be removed soon. Please use the new endpoint /api/v2/resources instead.\n     *      Creates a new resource and returns the created resource",
-                "operationId": "0da436b1bb56ca9fcbc4523e6be6b1cc",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "github_id",
-                                    "title",
-                                    "description",
-                                    "url",
-                                    "category",
-                                    "type"
-                                ],
-                                "properties": {
-                                    "github_id": {
-                                        "description": "GitHub ID of an existing user role creating the resource",
-                                        "type": "integer",
-                                        "example": 6729608
-                                    },
-                                    "title": {
-                                        "description": "Title of the resource",
-                                        "type": "string",
-                                        "maxLength": 255,
-                                        "minLength": 5,
-                                        "example": "Laravel Best Practices"
-                                    },
-                                    "description": {
-                                        "description": "Description of the resource (10-1000 characters)",
-                                        "type": "string",
-                                        "maxLength": 1000,
-                                        "minLength": 10,
-                                        "example": "A collection of best practices for Laravel development"
-                                    },
-                                    "url": {
-                                        "description": "URL of the resource",
-                                        "type": "string",
-                                        "format": "url",
-                                        "example": "https://laravelbestpractices.com"
-                                    },
-                                    "category": {
-                                        "description": "Category of the resource",
-                                        "type": "string",
-                                        "enum": [
-                                            "Node",
-                                            "React",
-                                            "Angular",
-                                            "JavaScript",
-                                            "Java",
-                                            "Fullstack PHP",
-                                            "Data Science",
-                                            "BBDD"
-                                        ],
-                                        "example": "React"
-                                    },
-                                    "tags": {
-                                        "description": "Array of tags validated against available options (nullable)",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "oop"
-                                        }
-                                    },
-                                    "type": {
-                                        "description": "Type of the resource",
-                                        "type": "string",
-                                        "enum": [
-                                            "Video",
-                                            "Cursos",
-                                            "Blog"
-                                        ],
-                                        "example": "Video"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Resource created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Resource"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "example": {
-                                                "github_id": [
-                                                    "The github_id field is required.",
-                                                    "The selected github_id is invalid."
-                                                ],
-                                                "title": [
-                                                    "The title field is required.",
-                                                    "Title must be at least 5 characters.",
-                                                    "Title must not exceed 255 characters."
-                                                ],
-                                                "description": [
-                                                    "The description field is required.",
-                                                    "Description must be at least 10 characters.",
-                                                    "Description must not exceed 1000 characters."
-                                                ],
-                                                "url": [
-                                                    "The url field is required.",
-                                                    "The url format is invalid."
-                                                ],
-                                                "category": [
-                                                    "The category field is required.",
-                                                    "The selected category is invalid."
-                                                ],
-                                                "tags": [
-                                                    "The tags field must be an array of strings.",
-                                                    "The selected tags are invalid."
-                                                ],
-                                                "type": [
-                                                    "The type field is required.",
-                                                    "The selected type is invalid."
-                                                ]
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "deprecated": true
-            }
-        },
-        "/api/v2/resources": {
-            "get": {
-                "tags": [
-                    "Resources"
-                ],
-                "summary": "Search resources by title, description, URL, category, or type",
-                "description": "Returns resources matching the search term or all resources if no search term is provided",
-                "operationId": "0612df8cd34b7f736c03701247fe1979",
-                "parameters": [
-                    {
-                        "name": "search",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "JavaScript"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of resources matching the search term or all resources if no search term is provided",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Resource"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No resources found"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Resources"
-                ],
-                "summary": "Create a new resource using tag IDs",
-                "description": "Creates a resource. This version expects an array of tag IDs instead of tag names.",
-                "operationId": "757ef4fae40deb8850e02c5cd5562271",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "github_id",
-                                    "title",
-                                    "url",
-                                    "category",
-                                    "type"
-                                ],
-                                "properties": {
-                                    "github_id": {
-                                        "type": "integer",
-                                        "example": 123456
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Aprende Laravel en 10 días"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Curso completo de Laravel para principiantes."
-                                    },
-                                    "url": {
-                                        "type": "string",
-                                        "format": "url",
-                                        "example": "https://miweb.com/laravel"
-                                    },
-                                    "category": {
-                                        "type": "string",
-                                        "example": "Fullstack PHP"
-                                    },
-                                    "tags": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            3,
-                                            5
-                                        ]
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "example": "Video"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Resource created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Resource"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                }
-            }
-        },
-        "/api/resources/{resource}": {
+        "/api/roles-node": {
             "put": {
                 "tags": [
-                    "Resources"
+                    "RolesNode"
                 ],
-                "summary": "Update a resource",
-                "description": "Update an existing resource with validation",
-                "operationId": "2fb72cef844f47cbfbad3db9664d992c",
-                "parameters": [
-                    {
-                        "name": "resource",
-                        "in": "path",
-                        "description": "ID of the resource to update",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
+                "summary": "Update an existing role using node_id",
+                "description": "Allows an authorized user to update the role of a specific GitHub node_id.",
+                "operationId": "21da04f149f343df852087700cd96884",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1566,6 +885,33 @@
                 },
                 "type": "object"
             },
+            "RoleNode": {
+                "title": "RoleNode",
+                "description": "RoleNode object representing a user's role and associated GitHub node_id",
+                "properties": {
+                    "node_id": {
+                        "description": "The GitHub node_id of the user",
+                        "type": "string",
+                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                    },
+                    "role": {
+                        "description": "The role of the user",
+                        "type": "string",
+                        "example": "student"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
             "Tag": {
                 "title": "Tag",
                 "description": "Tags used in resources",
@@ -1595,6 +941,1911 @@
     },
     "tags": [
         {
+            "name": "RolesNode",
+            "description": "RolesNode"
+        },
+        {
+            "name": "Technical Tests",
+            "description": "API Endpoints para gestión de pruebas técnicas"
+        },
+        {
+            "name": "Bookmarks",
+            "description": "Bookmarks"
+        },
+        {
+            "name": "Likes",
+            "description": "Likes"
+        },
+        {
+            "name": "Resources",
+            "description": "Resources"
+        },
+        {
+            "name": "Roles",
+            "description": "Roles"
+        },
+        {
+            "name": "Tags",
+            "description": "Tags"
+        }
+    ]
+}": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "node_id",
+                                    "role",
+                                    "authorized_node_id"
+                                ],
+                                "properties": {
+                                    "node_id": {
+                                        "description": "GitHub node_id of the user to update the role",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "enum": [
+                                            "superadmin",
+                                            "admin",
+                                            "mentor",
+                                            "student"
+                                        ],
+                                        "example": "mentor"
+                                    },
+                                    "authorized_node_id": {
+                                        "description": "GitHub node_id of the user making the request (must have permissions, e.g. superadmin)",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjE="
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You cannot update a role that is equal or higher than your own."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The request contains an invalid role."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Create a new role using node_id",
+                "description": "Allows an authorized user to create a new role for a specific GitHub node_id.\n     *\n     *     Note: The 'node_id' field must be unique. If you receive a 'has already been taken' error, please use a different value for 'node_id'.",
+                "operationId": "059334212f6a3e439277b3d6281800fe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "node_id",
+                                    "role",
+                                    "authorized_node_id"
+                                ],
+                                "properties": {
+                                    "node_id": {
+                                        "description": "GitHub node_id of the user to assign the role. Must be unique and not already exist in the database.",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjUNIQUE="
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "enum": [
+                                            "superadmin",
+                                            "admin",
+                                            "mentor",
+                                            "student"
+                                        ],
+                                        "example": "mentor"
+                                    },
+                                    "authorized_node_id": {
+                                        "description": "GitHub node_id of the user making the request (must have permissions, e.g. superadmin)",
+                                        "type": "string",
+                                        "example": "MDQ6VXNlcjE="
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Role created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot create a role equal or higher than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You cannot create a role equal or higher than your own."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "authorized_node_id": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "The selected authorized node id is invalid."
+                                            ]
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The request contains an invalid role."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login-node": {
+            "post": {
+                "tags": [
+                    "RolesNode"
+                ],
+                "summary": "Retrieve a role by GitHub node_id",
+                "description": "Fetches a role using the provided GitHub node_id. If the role does not exist, it returns an error.",
+                "operationId": "65a22473b9a9ff9e2be253682bb520ca",
+                "parameters": [
+                    {
+                        "name": "node_id",
+                        "in": "query",
+                        "description": "GitHub node_id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "MDQ6VXNlcjY3Mjk2MDg="
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role found."
+                                        },
+                                        "role": {
+                                            "$ref": "#/components/schemas/RoleNode"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role not found."
+                                        },
+                                        "role": {
+                                            "type": "object",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/bookmarks": {
+            "post": {
+                "tags": [
+                    "Bookmarks"
+                ],
+                "summary": "Create a bookmark",
+                "description": "Creates a new bookmark and returns a confirmation message",
+                "operationId": "3ef5b66b351fa996ad037e264208b30a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "resource_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "description": "GitHub ID of the user creating the bookmark",
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "resource_id": {
+                                        "description": "ID of the resource being bookmarked by the user",
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "github_id": {
+                                            "type": "integer",
+                                            "example": 6729608
+                                        },
+                                        "resource_id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-04-03T15:27:09.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-04-03T15:27:09.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bookmark already exists."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Bookmarks"
+                ],
+                "summary": "Delete a bookmark",
+                "description": "Deletes a bookmark and returns a confirmation message",
+                "operationId": "41bfde9ffcfb74e92d350e61b45c157b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "resource_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "resource_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bookmark deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bookmark not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/bookmarks/{github_id}": {
+            "get": {
+                "tags": [
+                    "Bookmarks"
+                ],
+                "summary": "Get all bookmarks for a student",
+                "description": "If the student's github_id exists it returns all bookmarks for that student or an empty array in case there is not any",
+                "operationId": "615226efbbbcd8b51e9f0a3cc43f526f",
+                "parameters": [
+                    {
+                        "name": "github_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 6729608
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Bookmark"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/likes": {
+            "post": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "Create a like",
+                "description": "Creates a new like and returns a confirmation message",
+                "operationId": "5ac3202f731f8f61051e941be69be36a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "resource_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "resource_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "github_id": {
+                                            "type": "integer",
+                                            "example": 6729608
+                                        },
+                                        "resource_id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-04-03T15:27:09.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-04-03T15:27:09.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Like already exists."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "Delete a like",
+                "description": "Deletes a like and returns a confirmation message",
+                "operationId": "20e338aa7fcb7d52fa22762125b1a3ea",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "resource_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "resource_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Like deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Like not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/likes/{github_id}": {
+            "get": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "Get all likes for a student",
+                "description": "If the student's github_id exists it returns all likes for that student or an empty array in case there is not any",
+                "operationId": "f550cb3cd10c52a7b8a033b17039f72c",
+                "parameters": [
+                    {
+                        "name": "github_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 6729608
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Like"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/resources": {
+            "get": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Get all resources",
+                "description": "Returns a list of all resources",
+                "operationId": "ee96de2f37d473ea4740b7700ddd1daf",
+                "responses": {
+                    "200": {
+                        "description": "Resource list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Resource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Create a new resource (deprecated, use /api/v2/resources instead)",
+                "description": "This endpoint is deprecated and will be removed soon. Please use the new endpoint /api/v2/resources instead.\n     *      Creates a new resource and returns the created resource",
+                "operationId": "0da436b1bb56ca9fcbc4523e6be6b1cc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "title",
+                                    "description",
+                                    "url",
+                                    "category",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "description": "GitHub ID of an existing user role creating the resource",
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "title": {
+                                        "description": "Title of the resource",
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 5,
+                                        "example": "Laravel Best Practices"
+                                    },
+                                    "description": {
+                                        "description": "Description of the resource (10-1000 characters)",
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "minLength": 10,
+                                        "example": "A collection of best practices for Laravel development"
+                                    },
+                                    "url": {
+                                        "description": "URL of the resource",
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://laravelbestpractices.com"
+                                    },
+                                    "category": {
+                                        "description": "Category of the resource",
+                                        "type": "string",
+                                        "enum": [
+                                            "Node",
+                                            "React",
+                                            "Angular",
+                                            "JavaScript",
+                                            "Java",
+                                            "Fullstack PHP",
+                                            "Data Science",
+                                            "BBDD"
+                                        ],
+                                        "example": "React"
+                                    },
+                                    "tags": {
+                                        "description": "Array of tags validated against available options (nullable)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "oop"
+                                        }
+                                    },
+                                    "type": {
+                                        "description": "Type of the resource",
+                                        "type": "string",
+                                        "enum": [
+                                            "Video",
+                                            "Cursos",
+                                            "Blog"
+                                        ],
+                                        "example": "Video"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resource created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Resource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "github_id": [
+                                                    "The github_id field is required.",
+                                                    "The selected github_id is invalid."
+                                                ],
+                                                "title": [
+                                                    "The title field is required.",
+                                                    "Title must be at least 5 characters.",
+                                                    "Title must not exceed 255 characters."
+                                                ],
+                                                "description": [
+                                                    "The description field is required.",
+                                                    "Description must be at least 10 characters.",
+                                                    "Description must not exceed 1000 characters."
+                                                ],
+                                                "url": [
+                                                    "The url field is required.",
+                                                    "The url format is invalid."
+                                                ],
+                                                "category": [
+                                                    "The category field is required.",
+                                                    "The selected category is invalid."
+                                                ],
+                                                "tags": [
+                                                    "The tags field must be an array of strings.",
+                                                    "The selected tags are invalid."
+                                                ],
+                                                "type": [
+                                                    "The type field is required.",
+                                                    "The selected type is invalid."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/api/v2/resources": {
+            "get": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Search resources by title, description, URL, category, or type",
+                "description": "Returns resources matching the search term or all resources if no search term is provided",
+                "operationId": "0612df8cd34b7f736c03701247fe1979",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "JavaScript"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of resources matching the search term or all resources if no search term is provided",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Resource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No resources found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Create a new resource using tag IDs",
+                "description": "Creates a resource. This version expects an array of tag IDs instead of tag names.",
+                "operationId": "757ef4fae40deb8850e02c5cd5562271",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "title",
+                                    "url",
+                                    "category",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 123456
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Aprende Laravel en 10 días"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Curso completo de Laravel para principiantes."
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://miweb.com/laravel"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Fullstack PHP"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            3,
+                                            5
+                                        ]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Video"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resource created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Resource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/resources/{resource}": {
+            "put": {
+                "tags": [
+                    "Resources"
+                ],
+                "summary": "Update a resource",
+                "description": "Update an existing resource with validation",
+                "operationId": "2fb72cef844f47cbfbad3db9664d992c",
+                "parameters": [
+                    {
+                        "name": "resource",
+                        "in": "path",
+                        "description": "ID of the resource to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                      "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "title",
+                                    "description",
+                                    "url"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Laravel Best Practices"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "A collection of best practices for Laravel development"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://laravelbestpractices.com"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "testing"
+                                        },
+                                        "maxItems": 5,
+                                        "uniqueItems": true,
+                                        "example": [
+                                            "testing",
+                                            "tdd",
+                                            "hooks"
+                                        ],
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resource updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Resource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You don't have permission to update this resource."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "title": [
+                                                    "The title field is required.",
+                                                    "Title must be at least 5 characters.",
+                                                    "Title must not exceed 255 characters."
+                                                ],
+                                                "description": [
+                                                    "The description field is required.",
+                                                    "Description must be at least 10 characters.",
+                                                    "Description must not exceed 1000 characters."
+                                                ],
+                                                "url": [
+                                                    "The url field is required.",
+                                                    "The url format is invalid."
+                                                ],
+                                                "tags": [
+                                                    "The tags field must be an array of strings.",
+                                                    "The selected tags are invalid."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/roles": {
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update an existing role",
+                "description": "Allows an authorized user to update the role of a specific GitHub ID.",
+                "operationId": "3fc5b0f68bde4103181fa2305e98d967",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "role",
+                                    "authorized_github_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "description": "GitHub ID of the user to assign the role",
+                                        "type": "integer",
+                                        "example": 12345
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "example": "mentor"
+                                    },
+                                    "authorized_github_id": {
+                                        "description": "GitHub ID of the user making the request (must have permissions)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rol actualizado con éxito."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot update a role of user of equal or higher role rank or make an update to an equal or higher rank than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No puedes actualizar un rol que ya es de orden igual o superior al tuyo."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La petición contiene un rol inexistente."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Create a new role",
+                "description": "Allows an authorized user to create a new role for a specific GitHub ID.",
+                "operationId": "4131bb39b430bdf2d95b73111d2e126a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "role",
+                                    "authorized_github_id"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "description": "GitHub ID of the user to assign the role",
+                                        "type": "integer",
+                                        "example": 12345
+                                    },
+                                    "role": {
+                                        "description": "Role to be assigned",
+                                        "type": "string",
+                                        "example": "mentor"
+                                    },
+                                    "authorized_github_id": {
+                                        "description": "GitHub ID of the user making the request (must have permissions)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Role created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rol creado con éxito."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: Cannot create a role equal or higher than your own",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No puedes crear un rol igual o superior al tuyo."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La petición contiene un rol inexistente."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Retrieve a role by GitHub ID",
+                "description": "Fetches a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+                "operationId": "b381f169e17b927e71d392ff0f3d4ce5",
+                "parameters": [
+                    {
+                        "name": "github_id",
+                        "in": "query",
+                        "description": "GitHub ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 6729608
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role found."
+                                        },
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Role not found."
+                                        },
+                                        "role": {
+                                            "type": "object",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/feature-flags/role-self-assignment": {
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Role Self Assignment",
+                "description": "Updates a role using the provided GitHub ID. If the role does not exist, it returns an error.",
+                "operationId": "6b823bc6608dd65054c546a68628b23a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "github_id",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "github_id": {
+                                        "type": "integer",
+                                        "example": 6729608
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "El Rol se ha actualizado."
+                                        },
+                                        "role": {
+                                            "properties": {
+                                                "github_id": {
+                                                    "type": "integer",
+                                                    "example": 6729608
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "admin"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized: The feature flag for role self-assignment is disabled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La autoasignación de roles ha sido desactivada."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La petición contiene un github_id inexistente en nuestro sistema."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get all tags",
+                "description": "Tags used in resources",
+                "operationId": "4d0f4baf9e6fa992c0d85fbf140ebf17",
+                "responses": {
+                    "200": {
+                        "description": "A list of tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tag"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags/frequency": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag frequencies",
+                "description": "Frequencies of tags used in resources",
+                "operationId": "7ba6cfbebeddc69fac4a37ad216924ab",
+                "responses": {
+                    "200": {
+                        "description": "An object with tag names as keys and frequencies as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "mongodb": 3,
+                                    "tdd": 10
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags/category-frequency": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag frequencies grouped by category",
+                "description": "Frequencies of tags used in resources grouoped by category",
+                "operationId": "ab99904db8b3f73579135af62493ea10",
+                "responses": {
+                    "200": {
+                        "description": "An object with tag names as keys and frequencies as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": {
+                                        "mongodb": 3,
+                                        "tdd": 10
+                                    },
+                                    "React": {
+                                        "hooks": 2,
+                                        "dependencies": 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags/by-category": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get tag IDs grouped by category",
+                "description": "Returns the IDs of tags used in resources, grouped by resource category. This does not require a pivot table and is based on matching tag names from a JSON column.",
+                "operationId": "492b2938f86869f4a413d6b4bd79c814",
+                "responses": {
+                    "200": {
+                        "description": "An object with category names as keys and arrays of tag IDs as values",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Fullstack PHP": [
+                                        1,
+                                        5,
+                                        6
+                                    ],
+                                    "React": [
+                                        3,
+                                        7
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/technicaltests": {
+            "post": {
+                "tags": [
+                    "Technical Tests"
+                ],
+                "summary": "Crear una nueva prueba técnica",
+                "description": "Crea una nueva prueba técnica en el sistema",
+                "operationId": "6fe54ab6666dbe0210d5fb53c31b290c",
+                "requestBody": {
+                    "description": "Datos de la prueba técnica",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "language"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 5,
+                                        "example": "Examen PHP Básico"
+                                    },
+                                    "language": {
+                                        "type": "string",
+                                        "enum": [
+                                            "PHP",
+                                            "JavaScript",
+                                            "Java",
+                                            "React",
+                                            "TypeScript",
+                                            "Python",
+                                            "SQL"
+                                        ],
+                                        "example": "PHP"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "example": "Examen sobre conceptos básicos de PHP",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Prueba técnica creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Technical test created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 123
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Examen PHP Básico"
+                                                },
+                                                "language": {
+                                                    "type": "string",
+                                                    "example": "PHP"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Examen sobre conceptos básicos de PHP"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-06-26T16:30:00.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-06-26T16:30:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The title field is required."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Bookmark": {
+                "title": "Bookmark",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "github_id": {
+                        "description": "Foreign key representing the GitHub ID of the user",
+                        "type": "integer",
+                        "example": 6729608
+                    },
+                    "resource_id": {
+                        "description": "Foreign key representing the ID of the bookmarked resource",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Like": {
+                "title": "Like",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "github_id": {
+                        "description": "Foreign key representing the GitHub ID of the user",
+                        "type": "integer",
+                        "example": 6729608
+                    },
+                    "resource_id": {
+                        "description": "Foreign key representing the ID of the liked resource",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Resource": {
+                "title": "Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "github_id": {
+                        "type": "integer",
+                        "example": 12345
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Lorem Ipsum ...",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Lorem Ipsum ...",
+                        "nullable": true
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://www.hola.com",
+                        "nullable": true
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "Node",
+                            "React",
+                            "Angular",
+                            "JavaScript",
+                            "Java",
+                            "Fullstack PHP",
+                            "Data Science",
+                            "BBDD"
+                        ],
+                        "example": "Node"
+                    },
+                    "tags": {
+                        "description": "Array of tags",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "kubernetes",
+                            "sql",
+                            "azure"
+                        ]
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "Video",
+                            "Cursos",
+                            "Blog"
+                        ],
+                        "example": "Video"
+                    },
+                    "bookmark_count": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "like_count": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "title": "Role",
+                "description": "Role object representing a user's role and associated GitHub ID",
+                "properties": {
+                    "github_id": {
+                        "description": "The GitHub ID of the user",
+                        "type": "integer",
+                        "example": 6729608
+                    },
+                    "role": {
+                        "description": "The role of the user",
+                        "type": "string",
+                        "example": "student"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "RoleNode": {
+                "title": "RoleNode",
+                "description": "RoleNode object representing a user's role and associated GitHub node_id",
+                "properties": {
+                    "node_id": {
+                        "description": "The GitHub node_id of the user",
+                        "type": "string",
+                        "example": "MDQ6VXNlcjY3Mjk2MDg="
+                    },
+                    "role": {
+                        "description": "The role of the user",
+                        "type": "string",
+                        "example": "student"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Tag": {
+                "title": "Tag",
+                "description": "Tags used in resources",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "debugging"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-17T19:23:41.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "RolesNode",
+            "description": "RolesNode"
+        },
+        {
             "name": "Technical Tests",
             "description": "API Endpoints para gestión de pruebas técnicas"
         },
@@ -1620,3 +2871,4 @@
         }
     ]
 }
+                  
