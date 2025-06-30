@@ -84,3 +84,4 @@ Anna Mercado
 Lena Prado 
 Kawsu Nagib 
 Simón Menendez Bravo
+Ivonne Cantor Páez
