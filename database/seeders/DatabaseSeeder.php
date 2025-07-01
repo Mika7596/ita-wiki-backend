@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Database\Seeders\RoleNodeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleSeeder::class,
+            RoleSeeder::class,        RoleNodeSeeder::class, // for node_id transition
             TagSeeder::class,
             ResourceSeeder::class,
             BookmarkSeeder::class,
