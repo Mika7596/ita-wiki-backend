@@ -57,13 +57,4 @@ class ResourceNode extends Model
     {
         return $this->hasMany(BookmarkNode::class, 'resource_node_id', 'id');
     }
-
-
-/*
-to be added later
-    public function likesNode()
-    {
-        return $this->hasMany(LikeNode::class, 'resource_node_id', 'id');
-    }
-*/
 }
