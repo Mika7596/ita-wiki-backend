@@ -31,10 +31,6 @@ class BookmarkNodeSeeder extends Seeder
             ]);
         }
 
-        // Creating 5 additional bookmarks
-        //BookmarkNode::factory(5)->create();
-
-
     // Calculate max possible unique bookmarks and match
     $students = RoleNode::where('role', 'student')->pluck('node_id');
     $resources = ResourceNode::pluck('id');
