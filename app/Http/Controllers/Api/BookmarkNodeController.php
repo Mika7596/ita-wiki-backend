@@ -130,10 +130,6 @@ public function deleteStudentBookmarkNode(BookmarkNodeRequest $request)
  */
 public function getStudentBookmarksNode(BookmarkNodeRequest $request)
 {
-    // if (!RoleNode::where('node_id', $node_id)->exists()) {
-    //     return response()->json(['message' => 'Role not found'], 422);
-    // }
-    
     $bookmarks = BookmarkNode::where('node_id', $request->validated('node_id'))->get();
     return response()->json($bookmarks, 200);
 }
