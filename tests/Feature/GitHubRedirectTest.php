@@ -14,4 +14,14 @@ class GitHubRedirectTest extends TestCase
         $response->assertStatus(302);
     }
 
+    public function test_github_redirect_contains_github_oauth_url()
+    {
+        $response = $this->get('/api/auth/github/redirect');
+
+        $response->assertStatus(302);
+        
+        $redirectUrl = $response->headers->get('Location');
+        $this->assertStringContainsString('github.com/login/oauth/authorize', $redirectUrl);
+    }
+
 } 
