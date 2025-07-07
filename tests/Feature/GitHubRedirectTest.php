@@ -19,9 +19,22 @@ class GitHubRedirectTest extends TestCase
         $response = $this->get('/api/auth/github/redirect');
 
         $response->assertStatus(302);
-        
+
         $redirectUrl = $response->headers->get('Location');
         $this->assertStringContainsString('github.com/login/oauth/authorize', $redirectUrl);
+    }
+
+    public function test_github_redirect_contains_required_parameters()
+    {
+        $response = $this->get('/api/auth/github/redirect');
+
+        $response->assertStatus(302);
+        
+        $redirectUrl = $response->headers->get('Location');
+        
+        $this->assertStringContainsString('client_id=', $redirectUrl);
+        $this->assertStringContainsString('redirect_uri=', $redirectUrl);
+        $this->assertStringContainsString('scope=', $redirectUrl);
     }
 
 } 
