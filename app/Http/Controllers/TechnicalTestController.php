@@ -60,13 +60,25 @@ class TechnicalTestController extends Controller
      */
     public function store(StoreTechnicalTestRequest $request)
     {
-        $technicalTest = TechnicalTest::create([
+        $data = [
             'title' => $request->title,
             'language' => $request->language,
             'description' => $request->description,
             'tags' => $request->tags,
             // github_id lo agregaremos después con autenticación
-        ]);
+        ];
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('technical-tests', $fileName, 'local');
+            
+            $data['file_path'] = $filePath;
+            $data['file_original_name'] = $file->getClientOriginalName();
+            $data['file_size'] = $file->getSize();
+        }
+
+        $technicalTest = TechnicalTest::create($data);
 
         return response()->json([
             'message' => 'Technical test created successfully',

@@ -11,7 +11,7 @@ class TechnicalTestUploadPdfTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_upload_a_pdf_file()
     {
         Storage::fake('local');
@@ -38,6 +38,6 @@ class TechnicalTestUploadPdfTest extends TestCase
             'file_original_name' => 'prueba.pdf',
             'file_path' => $data['file_path'],
         ]);
-        Storage::disk('local')->assertExists($data['file_path']);
+        $this->assertTrue(Storage::disk('local')->exists($data['file_path']));
     }
 }
