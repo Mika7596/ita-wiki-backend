@@ -31,8 +31,8 @@ class GitHubAuthController extends Controller
         // Genera un token de Sanctum
         $token = $user->createToken('github')->plainTextToken;
 
-        // Redirige al frontend con el token como query param
-        return redirect(env('FRONTEND_URL', 'http://localhost:5173') . '/oauth/callback?token=' . $token);
+        // Redirige al frontend con el token en el fragmento de la URL
+        return redirect(env('FRONTEND_URL', 'http://localhost:5173') . '/oauth/callback#token=' . $token);
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,

@@ -8,31 +8,10 @@ use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Mockery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class GitHubAuthControllerTest extends TestCase
+class GitHubAuthCallbackControllerTest extends TestCase
 {
     use RefreshDatabase;
     
-
-    public function test_callback_redirects_with_token_only()
-    {
-        $abstractUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
-        $abstractUser->shouldReceive('getId')->andReturn('12345');
-        $abstractUser->shouldReceive('getName')->andReturn('Test User');
-        $abstractUser->shouldReceive('getNickname')->andReturn('testuser');
-        $abstractUser->shouldReceive('getEmail')->andReturn('unique_test@example.com');
-        $abstractUser->shouldReceive('getAvatar')->andReturn('https://avatar.url');
-        $abstractUser->id = '12345'; // Asegura la propiedad id
-
-        \Laravel\Socialite\Facades\Socialite::shouldReceive('driver->stateless->user')
-            ->andReturn($abstractUser);
-
-        $response = $this->get('/api/auth/github/callback');
-        $response->assertRedirect();
-        $redirectUrl = $response->headers->get('Location');
-        $this->assertStringContainsString('/oauth/callback?token=', $redirectUrl);
-        $this->assertStringNotContainsString('email', $redirectUrl);
-        $this->assertStringNotContainsString('password', $redirectUrl);
-    }
 
     public function test_callback_creates_new_user()
     {
@@ -66,5 +45,32 @@ class GitHubAuthControllerTest extends TestCase
             'success' => false,
             'error' => 'GitHub error',
         ]);
+    }
+
+    public function test_callback_redirects_with_token_in_fragment_and_no_sensitive_data()
+    {
+        $abstractUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
+        $abstractUser->shouldReceive('getId')->andReturn('99999');
+        $abstractUser->shouldReceive('getName')->andReturn('Safe User');
+        $abstractUser->shouldReceive('getNickname')->andReturn('safeuser');
+        $abstractUser->shouldReceive('getEmail')->andReturn('safeuser@example.com');
+        $abstractUser->shouldReceive('getAvatar')->andReturn('https://avatar.url');
+        $abstractUser->id = '99999';
+
+        \Laravel\Socialite\Facades\Socialite::shouldReceive('driver->stateless->user')
+            ->andReturn($abstractUser);
+
+        $response = $this->get('/api/auth/github/callback');
+        $response->assertRedirect();
+
+        $redirectUrl = $response->headers->get('Location');
+
+        $this->assertStringContainsString('/oauth/callback#token=', $redirectUrl);
+        $this->assertStringNotContainsString('?token=', $redirectUrl);
+
+        $this->assertStringNotContainsString('email', $redirectUrl);
+        $this->assertStringNotContainsString('password', $redirectUrl);
+        $this->assertStringNotContainsString('Safe User', $redirectUrl);
+        $this->assertStringNotContainsString('safeuser@example.com', $redirectUrl);
     }
 }
