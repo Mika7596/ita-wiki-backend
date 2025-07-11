@@ -12,9 +12,14 @@ use App\Http\Controllers\TechnicalTestController;
 use App\Http\Controllers\Api\RoleNodeController;
 use App\Http\Controllers\ResourceEditController;
 use App\Http\Controllers\Api\BookmarkNodeController;
+use Illuminate\Http\Request;
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return response()->json($request->user());
+});
 Route::get('/auth/github/redirect', [GitHubAuthController::class, 'redirect']);
 Route::get('/auth/github/callback', [GitHubAuthController::class, 'callback']);
+
 Route::post('/resources', [ResourceController::class, 'store'])->name('resources.store');
 Route::post('/v2/resources', [ResourceController::class, 'storeResource'])->name('resources.store.v2');
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
