@@ -32,4 +32,13 @@ class UserModelTest extends TestCase
         $this->assertEquals($githubId, $user->github_id);
     }
 
+    public function testGithubNameIsAccessible(): void
+    {
+        $githubUserName = 'Cristina';
+        $user = User::factory()->create(['github_user_name' =>$githubUserName]);
+
+        $this->assertEquals($githubUserName, $user->github_user_name);
+    }
+
+
 }

@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
             'github_id' => '999999999',
+            'github_user_name' => 'Github Test User',
         ]);
 
         User::factory(20)->create();
