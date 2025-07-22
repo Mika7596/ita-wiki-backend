@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('github_id')->unsigned()->unique();
+            $table->string('github_user_name');
         });
     }
 
