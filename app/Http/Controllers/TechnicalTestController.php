@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers;
+
 use App\Http\Requests\IndexTechnicalTestRequest;
 use App\Http\Requests\StoreTechnicalTestRequest;
 use App\Models\TechnicalTest;

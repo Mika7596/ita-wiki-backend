@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature;
 
 use App\Models\TechnicalTest;
@@ -12,7 +14,6 @@ use Tests\TestCase;
 class TechnicalTestIndexTest extends TestCase
 {
     use RefreshDatabase;
-
 
     protected function setUp(): void
     {

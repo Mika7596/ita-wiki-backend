@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RoleController;
@@ -15,6 +16,12 @@ use App\Http\Controllers\Api\BookmarkNodeController;
 
 Route::get('/auth/github/redirect', [GitHubAuthController::class, 'redirect']);
 Route::get('/auth/github/callback', [GitHubAuthController::class, 'callback']);
+
+// Public routes
+Route::post('/register', [AuthController::class, 'register'])->name('users.register');
+
+
+// 
 Route::post('/resources', [ResourceController::class, 'store'])->name('resources.store');
 Route::post('/v2/resources', [ResourceController::class, 'storeResource'])->name('resources.store.v2');
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
