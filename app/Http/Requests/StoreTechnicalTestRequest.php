@@ -16,7 +16,7 @@ class StoreTechnicalTestRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:5|max:255',
-            'language' => 'sometimes|string|in:'. implode(',', LanguageEnum::values()),
+            'language' => ['required', 'string', 'in:' . implode(',', LanguageEnum::values())],
             'description' => 'nullable|string|max:1000',
             'tags' => 'nullable|array|max:5',
             'tags.*' => 'string|max:50',
