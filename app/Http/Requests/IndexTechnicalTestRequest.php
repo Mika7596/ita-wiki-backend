@@ -16,7 +16,7 @@ class IndexTechnicalTestRequest extends FormRequest
     {
         return [
             'search' => 'sometimes|string|max:255',
-            'language' => ['sometimes', 'string', 'in:' . implode(',', LanguageEnum::values())],
+            'sometimes|string|in:'. implode(',', LanguageEnum::values()),
             'description' => 'sometimes|string|max:1000',
         ];
     }
